@@ -8,7 +8,7 @@
     // /echipă → dist/echipă.html; /echipă/ → 301 /echipă (parity cu Wix: fără slash final)
     "html_handling": "drop-trailing-slash",
     // rutele inexistente primesc dist/404.html cu status 404
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
   },
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
 }
