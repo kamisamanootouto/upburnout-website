@@ -10,7 +10,9 @@ interface Props {
 const { member, eager = false } = Astro.props;
 ---
 
-<li class="reveal">
+<li
+  class="reveal w-full max-w-[22rem] sm:w-[calc((100%-1.5rem)/2)] sm:max-w-none lg:w-[calc((100%-4.5rem)/4)]"
+>
   <figure class="m-0">
     <div class="bg-surface-tint border-line aspect-[3/4] overflow-hidden rounded-[1.25rem] border">
       <Image
