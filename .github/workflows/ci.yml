@@ -21,6 +21,7 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run check
+      - run: npm test
       - run: npm run build
       - name: Content fidelity (content/pages VERBATIM vs dist)
         run: npm run verify-content
