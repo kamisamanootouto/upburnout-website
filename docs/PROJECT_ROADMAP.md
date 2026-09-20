@@ -11,8 +11,8 @@ așa că roadmap-ul are 8 sesiuni.
 |---|---|---|---|
 | 1 | Business Analysis + Architecture | **DONE — 2026-09-20, aprobată implicit prin „începe sesiunea 2”** | inventar `content/`, 13 documente, întrebări deschise |
 | 2 | Design + Website Frontend Foundation | **DONE — 2026-09-20; deploy pe Workers făcut de client; design aprobat, cu 2 corecții aplicate (credit Vecteezy scos, rânduri echipă centrate)** | `verify-content` 71/71 |
-| 3 | Contact Form Backend | **DONE local — 2026-09-20; așteaptă push + secretele Resend/`CONTACT_TO_EMAIL` în dashboard + test real de e-mail** | Worker `/api/contact` + Resend + Turnstile + rate limit; 16 teste Vitest |
-| 4 | SEO, Accesibilitate, Performanță | după S3 | depinde de #2, #11 |
+| 3 | Contact Form Backend | **DONE — 2026-09-20; e-mail real primit de client pe preview („perfect, acum merge”)** | Worker `/api/contact` + Resend (sandbox → Yahoo-ul clientului) + Turnstile (chei de test) + rate limit; 16 teste Vitest |
+| 4 | SEO, Accesibilitate, Performanță | așteaptă „go” + răspuns la #2 (implicit: rămâne `noindex`) | depinde de #2, #11 |
 | 5 | Security Review | după S4 | headere, teste de abuz |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
 | 7 | Domain Cut-over | după S6 + aprobarea sorei | runbook `DEPLOYMENT_PLAN.md` §4 |

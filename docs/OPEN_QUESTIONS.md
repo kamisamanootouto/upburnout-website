@@ -122,7 +122,7 @@ suprapuse, trepte, rețea de puncte). Creditul din footer a fost scos (#23 ✅).
 
 **#31 Echipă: rândurile incomplete sunt centrate** (cerință client 2026-09-20) — implementat.
 
-**#32 Pentru ca formularul să trimită e-mailuri reale pe preview** (Sesiunea 3) avem nevoie de la client: (a) cont Resend pe
+**#32 ✅ REZOLVAT (2026-09-20):** cont Resend creat de client pe `bogdan.gandila@yahoo.com` (sandbox → trimite doar către această adresă), secretele `RESEND_API_KEY` + `CONTACT_TO_EMAIL` puse în *Runtime variables and secrets* (nu în cele de Build!), e-mail de test primit. Text inițial: avem nevoie de la client: (a) cont Resend pe
 `gandilabogdan10@gmail.com` + un API key; (b) secretele `RESEND_API_KEY` și `CONTACT_TO_EMAIL` setate în Cloudflare (Worker →
 Settings → Variables and Secrets). Turnstile rulează deocamdată cu cheile de test (banner „Numai pentru testare” vizibil) —
 cheile reale (`PUBLIC_TURNSTILE_SITE_KEY` ca variabilă de build + `TURNSTILE_SECRET_KEY` secret) se pun înainte de lansare.

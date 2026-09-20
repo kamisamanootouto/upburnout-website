@@ -27,8 +27,9 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
    Worker-ul `upburnout-website` → `https://upburnout-website.bogdan-gandila.workers.dev` (preview).
 3. **Variabile de mediu** (Production și Preview separat): vezi `API_DESIGN.md` §3. Pe Preview: chei Turnstile de test + `CONTACT_TO_EMAIL` de test.
 4. **Turnstile**: Cloudflare → Turnstile → Add widget → hostnames `upburnout.pages.dev`, `www.upburnout.com`, `upburnout.com`; mod Managed.
-5. **Resend**: cont pe adresa clientului → API key (Production) → până la verificarea domeniului, `from = onboarding@resend.dev`
-   (funcționează doar către adresa contului — exact adresa de test dorită).
+5. **Resend**: cont creat pe `bogdan.gandila@yahoo.com` (2026-09-20) → API key → până la verificarea domeniului, `from = onboarding@resend.dev`
+   (funcționează doar către adresa contului, deci `CONTACT_TO_EMAIL` = adresa de Yahoo până la cut-over).
+   Secretele se pun în Worker → Settings → **Runtime variables and secrets** (nu în „Build → Variables and secrets”, care sunt doar pentru build).
 6. **CI (GitHub Actions)**: `npm ci`, `tsc --noEmit`, `npm run lint`, `vitest`, `astro build`, `verify-content`, Playwright (pe build local) — pe PR și pe `main`.
 
 ## 3. Fluxul de deploy curent
