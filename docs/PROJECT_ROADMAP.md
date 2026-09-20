@@ -1,0 +1,79 @@
+# PROJECT_ROADMAP.md
+
+Regula din prompt: fiecare sesiune este **independentă, testabilă, verificabilă**. După fiecare sesiune: stop, raport
+(fișiere modificate, funcționalități implementate, probleme identificate, teste propuse), apoi **aprobare explicită**
+înainte de următoarea. Template-ul are 15 sesiuni; cele de CRM/DB/Auth/AI/Portal/Integrations nu se aplică (fără CRM),
+așa că roadmap-ul are 8 sesiuni.
+
+## Status
+
+| # | Sesiune | Status | Observații |
+|---|---|---|---|
+| 1 | Business Analysis + Architecture | **DONE — 2026-09-20, așteaptă aprobare** | inventar `content/`, 13 documente, 20 întrebări deschise |
+| 2 | Design + Website Frontend Foundation | #1 și #15 răspunse; așteaptă „go” explicit pentru S2 | livrează site-ul complet pe `pages.dev`; checkpoint de design la mijloc |
+| 3 | Contact Form Backend | după S2 | Pages Function (sau Render) + Resend + Turnstile |
+| 4 | SEO, Accesibilitate, Performanță | după S3 | depinde de #2, #11 |
+| 5 | Security Review | după S4 | headere, teste de abuz |
+| 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
+| 7 | Domain Cut-over | după S6 + aprobarea sorei | runbook `DEPLOYMENT_PLAN.md` §4 |
+| 8 | Final Polish + Handover | după S7 | verificare completă pe domeniul real, documentație de întreținere |
+
+## Sesiunea 1 — Business Analysis + Architecture (DONE)
+- Inventar complet al site-ului Wix (text verbatim inclusiv cele 8 slide-uri ascunse, 17 imagini originale, SEO, design, screenshot-uri).
+- Cele 13 documente din template (4 marcate N/A cu justificare).
+- Test de acceptare: clientul citește `OPEN_QUESTIONS.md` și răspunde; sora confirmă că `content/pages/*.md` reflectă exact site-ul.
+
+## Sesiunea 2 — Design + Website Frontend Foundation
+Scop: site-ul complet, static, cu tot conținutul, pe `https://upburnout.pages.dev`, în designul nou.
+1. Init `frontend/` (Astro 5, Tailwind v4, TypeScript strict, ESLint/Prettier, fontsource), repo GitHub privat, proiect Cloudflare Pages, CI de bază.
+2. `scripts/prepare-images.mjs` → `src/assets/` (CMYK→RGB, resize); originalele în `.gitignore`.
+3. Tokens + layout (`Base.astro`, Header, Footer) + **propunere de design** livrată ca pagină reală (hero + o secțiune) pe un preview URL → **checkpoint de aprobare vizuală cu sora** înainte de a continua.
+4. Toate secțiunile Acasă + Echipă din `src/data/*.ts` (transcriere VERBATIM), slideshow, meniu mobil, 404, `_redirects`, `_headers` (fără CSP finală).
+5. Formularul: markup + validare client + stări (fără backend încă; submit → mesaj „în curând”).
+6. `scripts/verify-content.mjs` rulat → 0 diferențe.
+- Livrabil: URL de preview + screenshot-uri desktop/mobil + raport. Test: parcurgere manuală a ambelor pagini pe telefon real + `verify-content` verde.
+
+## Sesiunea 3 — Contact Form Backend
+1. `functions/api/contact.ts` (sau `backend/` Fastify) conform `API_DESIGN.md`; schema zod partajată; Turnstile; honeypot; rate limit.
+2. Resend: cont, API key, `onboarding@resend.dev` → e-mailul clientului; e-mail text+HTML; `Reply-To`.
+3. Vitest pentru schemă + funcție (mock-uri); Playwright pentru fluxul de formular.
+4. Test real: mesaj trimis de pe `pages.dev` → primit în inbox-ul clientului (dovadă: screenshot).
+- Test de acceptare: cazurile din `API_DESIGN.md` §6 trec; niciun mesaj pierdut în 10 trimiteri consecutive (cu pauze).
+
+## Sesiunea 4 — SEO, Accesibilitate, Performanță
+1. Head complet (lang=ro, canonical www, OG/Twitter, JSON-LD, robots/sitemap conform #2, description/OG image dacă aprobate).
+2. Audit axe + tastatură + VoiceOver/NVDA pe carousel, meniu, formular; contrast; focus.
+3. Lighthouse mobil ≥ 95 ×4; bugete din `WEBSITE_ARCHITECTURE.md` §7; `prefers-reduced-motion` verificat.
+- Test de acceptare: rapoarte Lighthouse + axe atașate; verificare pe 320/390/768/1024/1440.
+
+## Sesiunea 5 — Security Review
+- Checklist `SECURITY_PLAN.md` §9 complet: CSP fără `unsafe-inline` (hash-uri la build), HSTS, teste de abuz, `npm audit`, Dependabot, repo privat, 2FA.
+- Test de acceptare: toate `curl`/testele din §9 cu rezultatul așteptat, documentate în raport.
+
+## Sesiunea 6 — QA & Content Fidelity
+- Diff automat `verify-content` + verificare umană pagină cu pagină cu screenshot-urile din `content/screenshots/` alături.
+- Toate linkurile (interne, ancore, QuestionPro, Vecteezy), toate slide-urile, formularul, 404, redirecturile.
+- Cross-browser (Chrome/Edge/Firefox/Safari/iOS) + telefon real.
+- Test de acceptare: **0 diferențe de conținut** neaprobate; lista abaterilor aprobate în `content/approved-deviations.json`.
+
+## Sesiunea 7 — Domain Cut-over
+- Runbook `DEPLOYMENT_PLAN.md` §4, executat împreună cu clientul (pașii din Wix îi face clientul, ghidat).
+- Resend domain verification, redirect www/apex, Search Console (dacă e cazul), export DNS.
+- Test de acceptare: site + formular funcționale pe `www.upburnout.com` cu expeditor `@upburnout.com`; Wix intact ca fallback.
+
+## Sesiunea 8 — Final Polish + Handover
+- Re-verificare completă pe domeniul real (fiecare pagină, fiecare link, formularul, headerele, Lighthouse).
+- `README.md` de întreținere: cum se schimbă un text/o fotografie (editare `src/data`, PR, deploy), cum se rotesc cheile, cum se face rollback, ce se anulează la Wix și când.
+- Închidere: lista finală de întrebări rămase (ex. politica de confidențialitate), recomandări (transfer domeniu, analytics).
+
+## Template de raport de sesiune (obligatoriu la final de sesiune)
+
+```
+## Raport Sesiunea N — <nume>
+1. Fișiere create/modificate: …
+2. Funcționalități implementate: …
+3. Probleme identificate (și ce am făcut cu ele): …
+4. Teste propuse / efectuate (cu rezultat): …
+5. Întrebări noi pentru client: … (se adaugă și în OPEN_QUESTIONS.md)
+6. Ce urmează (Sesiunea N+1) — NU începe fără aprobare.
+```

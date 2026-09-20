@@ -1,0 +1,48 @@
+---
+import { site } from '../data/site';
+const { footer } = site;
+---
+
+<footer class="bg-surface-tint border-line mt-10 border-t">
+  <div class="container-site grid gap-10 py-14 md:grid-cols-[1.4fr_1fr] md:gap-16">
+    <div>
+      <p class="font-display text-ink text-[1.125rem] font-bold">{footer.title}</p>
+      <p class="text-ink-soft mt-3 text-[0.9375rem] leading-relaxed">
+        {
+          footer.lines.map((line, i) => (
+            <>
+              {line}
+              {i < footer.lines.length - 1 && <br />}
+            </>
+          ))
+        }
+      </p>
+    </div>
+    <nav aria-label="Linkuri footer">
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-2">
+        {
+          footer.links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="text-ink text-[0.9375rem] font-medium no-underline hover:text-accent-strong hover:underline"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="border-line/80 border-t">
+    <div class="container-site text-ink-muted py-4 text-[0.8125rem]">
+      <span
+        >{footer.creditLabel}
+        <a href={site.links.vecteezy} rel="noopener noreferrer" target="_blank" class="link-inline"
+          >{footer.creditLink}</a
+        ></span
+      >
+    </div>
+  </div>
+</footer>

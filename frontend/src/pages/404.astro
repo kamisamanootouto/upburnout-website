@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+
+<Base title={site.titles.notFound} path="/404">
+  <section class="container-site py-24 text-center sm:py-32">
+    <p class="eyebrow">Eroare 404</p>
+    <h1 class="h-section mt-4">Pagina nu a fost găsită</h1>
+    <p class="lead mx-auto mt-5 max-w-xl">
+      Adresa pe care ai deschis-o nu există sau a fost mutată.
+    </p>
+    <a href="/" class="btn btn-primary mt-9">Înapoi la pagina principală</a>
+  </section>
+</Base>

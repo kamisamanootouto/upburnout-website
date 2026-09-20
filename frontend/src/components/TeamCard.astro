@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import type { Membru } from '../data/echipa';
+
+interface Props {
+  member: Membru;
+  /** prima imagine vizibilă se încarcă eager (LCP) */
+  eager?: boolean;
+}
+const { member, eager = false } = Astro.props;
+---
+
+<li class="reveal">
+  <figure class="m-0">
+    <div class="bg-surface-tint border-line aspect-[3/4] overflow-hidden rounded-[1.25rem] border">
+      <Image
+        src={member.photo}
+        alt={member.name}
+        widths={[320, 480, 640, 900]}
+        sizes="(min-width: 1024px) 260px, (min-width: 640px) 33vw, 80vw"
+        class="h-full w-full object-cover object-center"
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </div>
+    <figcaption class="mt-4">
+      <p class="font-display text-ink text-[1.0625rem] leading-snug font-semibold">{member.name}</p>
+      {member.role && <p class="text-ink-muted mt-0.5 text-[0.9375rem]">{member.role}</p>}
+    </figcaption>
+  </figure>
+</li>

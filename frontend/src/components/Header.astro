@@ -1,0 +1,145 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  current?: '/' | '/echipă';
+}
+const { current } = Astro.props;
+---
+
+<header class="site-header sticky top-0 z-50 border-b border-line/70 backdrop-blur-md">
+  <div class="container-site flex h-[4.25rem] items-center justify-between gap-6">
+    <a
+      href="/"
+      class="font-display text-ink flex min-w-0 items-center gap-3 font-semibold no-underline"
+    >
+      <span
+        class="bg-ink text-surface hidden size-8 shrink-0 place-items-center rounded-lg text-[0.75rem] font-bold tracking-tight md:grid"
+        aria-hidden="true">UP</span
+      >
+      <span class="hidden truncate text-[1.0625rem] md:inline">{site.name}</span>
+      <span class="truncate text-[1.0625rem] md:hidden">{site.nameShort}</span>
+    </a>
+
+    <nav aria-label="Navigare principală" class="hidden items-center gap-7 md:flex">
+      {
+        site.nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={current === item.href ? 'page' : undefined}
+            class="nav-link text-ink-soft text-[0.9375rem] font-medium no-underline transition-colors hover:text-ink aria-[current=page]:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={site.paths.inscriere} class="btn btn-primary btn-sm">Înscrie-te acum!</a>
+    </nav>
+
+    <button
+      type="button"
+      class="menu-toggle text-ink -mr-2 inline-flex size-11 items-center justify-center rounded-lg md:hidden"
+      aria-expanded="false"
+      aria-controls="meniu-mobil"
+      aria-label="Deschide meniul"
+    >
+      <svg
+        class="icon-open size-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+      <svg
+        class="icon-close hidden size-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div id="meniu-mobil" class="border-line bg-surface hidden border-t md:hidden" hidden>
+    <nav aria-label="Navigare mobilă" class="container-site flex flex-col gap-1 py-3">
+      {
+        site.nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={current === item.href ? 'page' : undefined}
+            class="text-ink rounded-lg px-3 py-3 text-[1.0625rem] font-medium no-underline aria-[current=page]:bg-surface-tint"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={site.paths.inscriere} class="btn btn-primary mt-2 w-full">Înscrie-te acum!</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    position: relative;
+    padding-block: 0.25rem;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.35rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .nav-link[aria-current='page']::after,
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+</style>
+
+<script>
+  // Meniul mobil: toggle cu aria-expanded, închidere cu Esc, la click în afară și la navigare.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  const panel = header?.querySelector<HTMLElement>('#meniu-mobil');
+  if (header && toggle && panel) {
+    const iconOpen = toggle.querySelector<SVGElement>('.icon-open');
+    const iconClose = toggle.querySelector<SVGElement>('.icon-close');
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+      panel.hidden = !open;
+      panel.classList.toggle('hidden', !open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+    };
+    toggle.addEventListener('click', () =>
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true'),
+    );
+    panel.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target as Node) && toggle.getAttribute('aria-expanded') === 'true')
+        setOpen(false);
+    });
+  }
+</script>

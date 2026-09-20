@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionDespre from '../components/SectionDespre.astro';
+import SectionAbordare from '../components/SectionAbordare.astro';
+import SectionScop from '../components/SectionScop.astro';
+import SectionParticipare from '../components/SectionParticipare.astro';
+import SectionInscriere from '../components/SectionInscriere.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../data/site';
+---
+
+<Base title={site.titles.acasa} path="/" current="/">
+  <Hero />
+  <SectionDespre />
+  <SectionAbordare />
+  <SectionScop />
+  <SectionParticipare />
+  <SectionInscriere />
+  <ContactForm />
+</Base>

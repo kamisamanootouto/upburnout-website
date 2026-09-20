@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-uvt-fpse.png';
+import ArtRings from './ArtRings.astro';
+import { hero } from '../data/acasa';
+---
+
+<section class="relative overflow-hidden">
+  <div
+    class="container-site grid items-center gap-10 pt-10 pb-16 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pt-20 lg:pb-24"
+  >
+    <div class="max-w-2xl">
+      <Image
+        src={logo}
+        alt={hero.logoAlt}
+        widths={[220, 440]}
+        sizes="220px"
+        class="h-auto w-[200px] sm:w-[220px]"
+        loading="eager"
+      />
+      <h1 class="h-display mt-8">{hero.title}</h1>
+      <p class="lead mt-6 max-w-xl">{hero.subtitle}</p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href={hero.ctaHref} class="btn btn-primary">{hero.cta}</a>
+      </div>
+    </div>
+    <div class="relative mx-auto w-full max-w-[520px] lg:max-w-none">
+      <ArtRings class="h-auto w-full" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+---
+import { inscriere } from '../data/acasa';
+---
+
+<section id={inscriere.id} class="py-8 sm:py-10" aria-labelledby="inscriere-titlu">
+  <div class="container-site">
+    <div
+      class="bg-surface-tint border-line reveal grid items-center gap-10 rounded-[1.75rem] border p-7 sm:p-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14 lg:p-14"
+    >
+      <div>
+        <h2 id="inscriere-titlu" class="h-section">{inscriere.title}</h2>
+        <p class="font-display text-ink mt-6 text-[1.125rem] italic">{inscriere.lineItalic}</p>
+        <p class="text-ink-soft mt-3 max-w-xl text-[1.0625rem] leading-[1.7]">
+          {inscriere.paragraph}
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={inscriere.ctaInscriereHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            {inscriere.ctaInscriere}
+            <svg
+              class="size-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 17L17 7M9 7h8v8"></path>
+            </svg>
+            <span class="sr-only">(se deschide într-o filă nouă)</span>
+          </a>
+          <a href={inscriere.ctaContactHref} class="btn btn-secondary">{inscriere.ctaContact}</a>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-[280px]">
+        <div class="card p-5">
+          <img
+            src="/qr-questionpro.png"
+            alt={inscriere.qrAlt}
+            width="256"
+            height="256"
+            loading="lazy"
+            decoding="async"
+            class="mx-auto h-auto w-full"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

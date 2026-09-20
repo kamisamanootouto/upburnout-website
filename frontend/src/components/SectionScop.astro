@@ -1,0 +1,36 @@
+---
+import ArtSteps from './ArtSteps.astro';
+import { scop } from '../data/acasa';
+---
+
+<section
+  class="bg-surface-tint border-line border-y py-16 sm:py-20 lg:py-24"
+  aria-labelledby="scop-titlu"
+>
+  <div class="container-site grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+    <div class="reveal">
+      <h2 id="scop-titlu" class="h-section">{scop.title}</h2>
+      <div class="prose-site text-ink-soft mt-7 max-w-2xl text-[1.0625rem] leading-[1.7]">
+        {scop.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <a href={scop.ctaHref} class="btn btn-secondary mt-9">
+        {scop.cta}
+        <svg
+          class="size-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+    </div>
+    <div class="reveal mx-auto w-full max-w-[460px]">
+      <ArtSteps class="h-auto w-full" />
+    </div>
+  </div>
+</section>

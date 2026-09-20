@@ -1,0 +1,4 @@
+# Paginile poartă <meta name="robots" content="noindex"> (parity cu Wix — OPEN_QUESTIONS #2).
+# Crawling-ul rămâne permis ca motoarele să poată citi directiva noindex.
+User-agent: *
+Allow: /

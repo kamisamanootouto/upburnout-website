@@ -1,0 +1,114 @@
+# OPEN_QUESTIONS.md
+
+Fiecare întrebare are o **recomandare** și un **comportament implicit** (ce facem dacă nu primim răspuns) — implicitul
+este întotdeauna varianta care păstrează site-ul identic. Întrebările marcate 🔴 blochează începerea Sesiunii 2.
+
+## Arhitectură
+
+**#1 ✅ RĂSPUNS (2026-09-20): Cloudflare Pages Functions.** Abatere aprobată de la „Backend: Render” din template.
+(Recomandarea inițială: același deploy, 0 cold start, 0 cost, fără CORS; Render free tier adoarme → 30–60 s la prima trimitere.)
+
+**#15 ✅ RĂSPUNS (2026-09-20): repo privat pe contul personal GitHub `kamisamanootouto`.** Contul Cloudflare: presupus cel
+al clientului (folosit la BacAI) — se confirmă la crearea proiectului Pages în Sesiunea 2.
+
+## Conținut și fidelitate
+
+**#3 Typo-uri din original — le păstrăm sau le corectăm?** Găsite 5:
+1. „…cât de bine este primită **este** abordarea…” (Scopul cercetării, p1 — „este” dublat)
+2. „…în cadrul **Universtății** de Vest…” (Ce presupune participarea ta?, punctul 3 — lipsește „i”)
+3. „…Universității de Vest din **Timșoara**” (footer, ambele pagini — lipsește „i”)
+4. „…beneficiază de supervizare pe parcursul derulării acesteia**,**” (Echipă, Despre noi, p3 — virgulă în loc de punct)
+5. Punctul 5 din „Ce presupune…” are un rând rupt la mijlocul propoziției (după „întrebări”) — presupus accidental.
+Recomandare: corectăm toate 5 (sunt evident neintenționate). Implicit: **verbatim, cu typo-uri**, până spune sora „da”.
+
+**#4 Header pe mobil: pe Wix textul din stânga e „UP-Burnout”, pe desktop „Protocolul Unificat pentru Burnout”. Păstrăm diferența sau unificăm?**
+Recomandare: păstrăm „UP-Burnout” pe mobil (încape, e intenționat). Implicit: păstrăm diferența (parity).
+
+**#5 Linkul „Acasă” din footer: pe Wix doar derulează sus pe pagina curentă (pe Echipă nu duce la Acasă). Îl facem link real către `/`?**
+Recomandare: da (e clar un bug de configurare, nu conținut). Implicit: link către `/`, marcat ca abatere aprobată tacit — spune-ne dacă nu.
+
+**#6 Textul de succes/eroare al formularului de pe Wix.** Nu e în HTML. Te rog: Wix → site → Forms & Submissions (sau
+editor → formular → Settings → „Submit message”) → screenshot cu mesajul de succes (și eventual eroare). Implicit: propunerile din `API_DESIGN.md` §5.
+
+**#7 Destinatarul mesajelor.** Confirmat: inițial `gandilabogdan10@gmail.com` (teste). (a) Care va fi adresa finală (a sorei? o adresă `@e-uvt.ro`?) (b) Vrei o copie BCC de siguranță pe o a doua adresă? (c) Unde ajung acum mesajele din Wix — Wix Inbox + notificare pe ce e-mail? (screenshot din Wix → Inbox / Forms).
+Implicit: doar adresa ta, fără BCC.
+
+**#9 Text alternativ (alt) pentru imagini** — Wix are nume de fișiere (`image.png`, `FPSE-11.png`). Propunere (nevizibil, doar pentru cititoare de ecran/SEO):
+- logo → „Universitatea de Vest din Timișoara — Facultatea de Psihologie și Științe ale Educației”
+- ilustrațiile (4 + bec/puzzle) → alt gol (`alt=""`, decorative) — sunt ilustrații fără informație suplimentară
+- QR → „Cod QR pentru formularul de înscriere QuestionPro”
+- portrete → numele persoanei (ex. „Drd. Athena Gândilă”)
+Implicit: exact propunerea de mai sus.
+
+**#12 URL-ul paginii Echipă: păstrăm `/echipă` (cu diacritic; în linkuri apare ca `/echip%C4%83`) sau facem `/echipa` canonic cu redirect 301 de la `/echipă`?**
+Recomandare: `/echipa` canonic + 301 de la `/echipă` (ambele funcționează; cel fără diacritic e mai curat în WhatsApp/e-mail).
+Implicit: `/echipă` rămâne canonic, `/echipa` alias 301 → `/echipă` (parity maximă).
+
+**#16 Fotografia Prof. Dr. Shannon Sauer-Zavala are doar 480×474 px** (pe Wix e mărită și decupată → ușor neclară). Există o poză mai mare? Opțional. Implicit: folosim ce există.
+
+**#20 Pagina Echipă nu are H1** (începe cu H2 „Despre noi”). Pentru accesibilitate/SEO ar trebui un H1. Variante: (a) „Despre noi” devine H1 (vizual identic), (b) H1 invizibil „Echipă”. Implicit: (a) — nu schimbă niciun text vizibil.
+
+## SEO și vizibilitate
+
+**#2 Site-ul actual este `noindex` (nu apare în Google) pe ambele pagini — intenționat sau din greșeală?** Dacă recrutarea
+se face doar prin canale directe (flyere, e-mailuri, QR), rămâne ascuns. Dacă vreți să fie găsit („burnout Timișoara”, „terapie de grup burnout”), îl indexăm.
+Implicit: **rămâne `noindex`** (parity).
+
+**#11 Dacă răspunsul la #2 este „indexăm”:** avem nevoie de (a) o meta description pe pagină (text nou, ≤ 155 caractere — propunem noi, aprobă sora) și (b) o imagine OG pentru partajări (propunem: ilustrația hero + titlu). Implicit: nimic (dacă rămâne noindex).
+
+**#10 Favicon.** Wix folosește iconița implicită Wix (nu există favicon propriu). Propunere: logo-ul UVT/FPSE simplificat sau un monogram „UP” în bleumarin. Este singurul element vizual nou — cere aprobare. Implicit: monogram „UP” bleumarin pe alb.
+
+**#14 Analytics.** Site-ul nu are niciun analytics acum. Dacă vreți să știți câți oameni ajung pe site și câți apasă „Înscrie-te”: Cloudflare Web Analytics (gratuit, fără cookie-uri, fără banner). Implicit: **fără analytics** (parity).
+
+## Legal / confidențialitate
+
+**#13 Politica de confidențialitate + consimțământ la formular** — amânat de client („vedem când ajungem acolo”).
+Notăm ca **blocker înainte de lansare (Sesiunea 7)**: formularul colectează date personale pentru un studiu academic;
+comisia de etică a UVT are foarte probabil un model de notă de informare. Nu scriem noi textul fără aviz. Implicit: pregătim locul (link sub formular + checkbox opțional, ascunse până există textul).
+
+**#17 Licența ilustrațiilor Vecteezy** — creditul „Ilustrații Vecteezy” din footer sugerează licența gratuită (cere atribuire). Se păstrează creditul indiferent; dacă sora are licență Pro, tot îl păstrăm (e conținut). Doar informativ.
+
+## Domeniu, Wix, operațional
+
+**#18 Confirmare plan domeniu:** rămâne la Wix, schimbăm nameserverele către Cloudflare la Sesiunea 7; transfer la Cloudflare Registrar opțional mai târziu (cu acordul sorei). Implicit: da.
+
+**#19 Când se reînnoiește planul Premium Wix al site-ului (nu domeniul)?** Ca să planificăm anularea după perioada de siguranță și să nu plătiți un an în plus. (Wix → Subscriptions → screenshot.)
+
+**#8 Wix → Domains → ⋯ → Manage DNS records: screenshot cu toate înregistrările** (mai ales dacă apar MX/TXT — e-mail pe domeniu). Nu e urgent (Sesiunea 7), dar dacă îl faci acum eliminăm o necunoscută.
+
+## Design
+
+**#21 Fluxul de aprobare a designului:** în Sesiunea 2 livrăm hero + o secțiune + un card de echipă ca pagină reală pe un
+URL de preview (nu mockup static) și cerem OK-ul sorei înainte de a construi restul. E OK așa? Implicit: da.
+
+**Latitudine de design (clarificată de client, 2026-09-20):** fonturile, culorile, layout-ul și ilustrațiile pot fi schimbate
+**complet**; singura regulă fermă este „fără roșu / culori și imagini care dau triggere”. Rămân fixe pentru că sunt
+*conținut*, nu design: textele, logo-ul UVT/FPSE, portretele celor 10 membri, codul QR, linkurile.
+
+**#22 Ilustrațiile Vecteezy (5 cartoon-uri): le înlocuim sau le păstrăm?**
+Recomandare: **le înlocuim** cu elemente vizuale calme, abstracte (forme moi, linii fine, gradienturi discrete în paleta
+site-ului) — mai „studiu clinic”, mai puțin „cartoon”, și eliminăm ilustrația cu capul întunecat/creierul din „Ce presupune
+participarea ta?”, care e cea mai apăsătoare vizual. Portretele reale ale echipei devin singurele imagini cu oameni.
+Alternativă: păstrăm ilustrațiile actuale (sunt deja fără roșu). Implicit: propunerea de mai sus, arătată la checkpoint-ul
+din Sesiunea 2; se poate reveni la ilustrații fără cost.
+
+**#23 Consecință a #22 — creditul „Ilustrații Vecteezy” din footer:** dacă nu mai folosim nicio ilustrație Vecteezy,
+rândul din footer devine fals și trebuie **scos** (modificare de text → cere acordul sorei). Dacă păstrăm măcar una, rămâne.
+Implicit: se scoate doar dacă #22 = înlocuim și sora aprobă.
+
+**#24 Ce înseamnă exact „trigger” — regulile pe care le aplicăm (spune-ne dacă lipsește ceva):**
+fără roșu, portocaliu-roșu, roz aprins, galben de alertă; fără contraste violente sau fundaluri închise pe suprafețe mari;
+fără animații rapide, pulsante sau autoplay; fără imagini de suferință, epuizare, capete/creiere, ceasuri, alarme; fără
+formulări de urgență adăugate de noi (textele oricum rămân ale voastre). Paletă: bleumarin/albastru profund + alb + gri-albastru
+deschis + un accent calm (verde-salvie sau turcoaz stins), erorile de formular în bleumarin cu iconiță, nu roșu.
+
+---
+
+### Deja răspunse (2026-09-20)
+- Fără CRM → N/A pentru USER_ROLES/CRM/DATABASE.
+- Design: clean, clinic, fără roșu/trigger; **libertate completă** pe fonturi, culori, layout, ilustrații (vezi latitudinea de mai sus).
+- #1 Backend formular: Cloudflare Pages Functions. #15 GitHub: `kamisamanootouto` (repo privat).
+- E-mail formular: inițial al clientului, pentru teste.
+- Domeniul expiră/reînnoiește 5 feb 2027 (la Wix).
+- Folderele: `D:\Creatii_Claude\upburnout-website`.
+- Politica de confidențialitate: se discută mai târziu (vezi #13).

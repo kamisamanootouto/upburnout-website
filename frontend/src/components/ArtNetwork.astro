@@ -1,0 +1,39 @@
+---
+/* „Echipă” — puncte conectate prin linii fine; colaborare, fără figuri. */
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg viewBox="0 0 520 400" class={className} aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="n-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e4f2f3"></stop>
+      <stop offset="100%" stop-color="#e4f2f3" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="270" cy="200" r="190" fill="url(#n-glow)"></circle>
+  <g stroke="#2f7c86" stroke-opacity="0.35" stroke-width="1.5" fill="none">
+    <path
+      d="M120 120 L270 200 L420 110 M270 200 L200 320 M270 200 L360 320 M120 120 L200 320 M420 110 L360 320 M120 120 L60 240 L200 320 M420 110 L470 250 L360 320"
+    ></path>
+  </g>
+  <g fill="#eeedfb" stroke="#2f7c86" stroke-opacity="0.5" stroke-width="1.5">
+    <circle cx="120" cy="120" r="22"></circle>
+    <circle cx="420" cy="110" r="22"></circle>
+    <circle cx="200" cy="320" r="22"></circle>
+    <circle cx="360" cy="320" r="22"></circle>
+    <circle cx="60" cy="240" r="16"></circle>
+    <circle cx="470" cy="250" r="16"></circle>
+  </g>
+  <circle cx="270" cy="200" r="30" fill="#2f7c86" fill-opacity="0.9"></circle>
+  <circle
+    cx="270"
+    cy="200"
+    r="46"
+    fill="none"
+    stroke="#2f7c86"
+    stroke-opacity="0.3"
+    stroke-width="1.5"></circle>
+</svg>

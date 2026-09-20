@@ -1,0 +1,21 @@
+---
+import TeamCard from './TeamCard.astro';
+import type { Membru } from '../data/echipa';
+
+interface Props {
+  id: string;
+  title: string;
+  members: readonly Membru[];
+  eagerFirst?: boolean;
+}
+const { id, title, members, eagerFirst = false } = Astro.props;
+---
+
+<section id={id} class="py-12 sm:py-16" aria-labelledby={`${id}-titlu`}>
+  <div class="container-site">
+    <h2 id={`${id}-titlu`} class="h-section reveal">{title}</h2>
+    <ul class="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4" role="list">
+      {members.map((m, i) => <TeamCard member={m} eager={eagerFirst && i < 4} />)}
+    </ul>
+  </div>
+</section>

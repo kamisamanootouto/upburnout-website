@@ -1,0 +1,70 @@
+---
+import { abordare } from '../data/acasa';
+
+// Titlurile sunt verbatim („1. Ce este burnoutul? …”). Numărul se afișează ca marcaj rotund,
+// punctul rămâne în DOM (sr-only) ca textul să fie identic cu originalul.
+const split = (title: string) => {
+  const m = title.match(/^(\d+)\.\s(.*)$/s);
+  return m ? { num: m[1], rest: m[2] } : { num: '', rest: title };
+};
+---
+
+<section class="py-16 sm:py-20 lg:py-24" aria-labelledby="abordare-titlu">
+  <div class="container-site">
+    <div class="reveal grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
+      <h2 id="abordare-titlu" class="h-section">{abordare.title}</h2>
+      <p class="lead max-w-xl">{abordare.intro}</p>
+    </div>
+
+    <ol class="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:mt-14">
+      {
+        abordare.sedinte.map((s) => {
+          const { num, rest } = split(s.title);
+          return (
+            <li class="card reveal p-6 sm:p-7">
+              <h3 class="h-card flex gap-4">
+                {num && (
+                  <>
+                    <span
+                      class="num-badge bg-accent-tint text-accent-strong grid size-10 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold tabular-nums"
+                      data-num={num}
+                      aria-hidden="true"
+                    />
+                    <span class="sr-only">{`${num}. `}</span>
+                  </>
+                )}
+                <span class="pt-1.5">
+                  {rest}
+                  {s.titleLine2 && (
+                    <>
+                      <br />
+                      {s.titleLine2}
+                    </>
+                  )}
+                </span>
+              </h3>
+              {s.bullets && (
+                <ul class="text-ink-soft mt-4 space-y-2 pl-14 text-[0.9375rem] leading-relaxed">
+                  {s.bullets.map((b) => (
+                    <li class="flex gap-2.5">
+                      <span
+                        class="bg-accent mt-[0.62em] size-1.5 shrink-0 rounded-full"
+                        aria-hidden="true"
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {s.paragraph && (
+                <p class="text-ink-soft mt-4 pl-14 text-[0.9375rem] leading-relaxed">
+                  {s.paragraph}
+                </p>
+              )}
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>

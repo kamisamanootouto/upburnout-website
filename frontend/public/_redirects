@@ -1,0 +1,4 @@
+# Alias fără diacritic → forma canonică (parity cu Wix: /echipă). OPEN_QUESTIONS #12.
+/echipa   /echip%C4%83   301
+/acasa    /              301
+/acas%C4%83   /          301

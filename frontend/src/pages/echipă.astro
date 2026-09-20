@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import ArtNetwork from '../components/ArtNetwork.astro';
+import TeamGrid from '../components/TeamGrid.astro';
+import { site } from '../data/site';
+import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa';
+---
+
+<Base title={site.titles.echipa} path="/echipă" current="/echipă">
+  <section class="border-line border-b py-14 sm:py-20" aria-labelledby="despre-noi-titlu">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div>
+        <!-- „Despre noi” este H1 aici (pe Wix era H2 și pagina nu avea H1) — OPEN_QUESTIONS #20 (a) -->
+        <h1 id="despre-noi-titlu" class="h-section">{despreNoi.title}</h1>
+        <div class="prose-site text-ink-soft mt-7 max-w-2xl text-[1.0625rem] leading-[1.7]">
+          {despreNoi.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-[440px]">
+        <ArtNetwork class="h-auto w-full" />
+      </div>
+    </div>
+  </section>
+
+  <div class="pt-6">
+    <TeamGrid
+      id={echipaCercetare.id}
+      title={echipaCercetare.title}
+      members={echipaCercetare.members}
+      eagerFirst
+    />
+    <TeamGrid
+      id={echipaPsihoterapeuti.id}
+      title={echipaPsihoterapeuti.title}
+      members={echipaPsihoterapeuti.members}
+    />
+  </div>
+</Base>

@@ -1,0 +1,44 @@
+---
+/* Grafică abstractă pentru hero — cercuri concentrice „de respirație”, fără figuri, fără culori tari. */
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg viewBox="0 0 560 560" class={className} aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="r-teal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e4f2f3"></stop>
+      <stop offset="70%" stop-color="#e4f2f3" stop-opacity="0.6"></stop>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="r-lilac" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#eeedfb"></stop>
+      <stop offset="100%" stop-color="#eeedfb" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="300" cy="270" r="250" fill="url(#r-teal)"></circle>
+  <circle cx="180" cy="380" r="170" fill="url(#r-lilac)"></circle>
+  <g fill="none" stroke="#2f7c86" stroke-width="1.5">
+    <circle cx="280" cy="280" r="220" stroke-opacity="0.14"></circle>
+    <circle cx="280" cy="280" r="176" stroke-opacity="0.2"></circle>
+    <circle cx="280" cy="280" r="132" stroke-opacity="0.28"></circle>
+    <circle cx="280" cy="280" r="88" stroke-opacity="0.38"></circle>
+    <circle cx="280" cy="280" r="44" stroke-opacity="0.5"></circle>
+  </g>
+  <circle cx="280" cy="280" r="18" fill="#2f7c86" fill-opacity="0.85"></circle>
+  <g fill="#14213d">
+    <circle cx="280" cy="60" r="4" fill-opacity="0.55"></circle>
+    <circle cx="456" cy="192" r="4" fill-opacity="0.45"></circle>
+    <circle cx="412" cy="412" r="4" fill-opacity="0.4"></circle>
+    <circle cx="148" cy="412" r="4" fill-opacity="0.4"></circle>
+    <circle cx="104" cy="192" r="4" fill-opacity="0.45"></circle>
+  </g>
+  <g fill="#2f7c86" fill-opacity="0.35">
+    <circle cx="368" cy="280" r="3"></circle>
+    <circle cx="280" cy="192" r="3"></circle>
+    <circle cx="192" cy="280" r="3"></circle>
+    <circle cx="280" cy="368" r="3"></circle>
+  </g>
+</svg>

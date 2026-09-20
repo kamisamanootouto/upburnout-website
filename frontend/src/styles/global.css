@@ -1,0 +1,223 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens — direcția „clinical calm”: alb + bleumarin profund,
+   accent turcoaz stins, nuanțe reci deschise. Fără roșu/portocaliu/roz
+   aprins (regula anti-trigger, docs/OPEN_QUESTIONS.md #24).
+   Toate perechile text/fundal folosite trec WCAG AA (≥ 4.5:1).
+   ------------------------------------------------------------------ */
+@theme {
+  --font-display:
+    'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-ink: #14213d; /* text principal, butoane primare (15.9:1 pe alb) */
+  --color-ink-soft: #4a5875; /* text secundar (7.1:1) */
+  --color-ink-muted: #5f6e8a; /* etichete mici, meta (5.1:1) */
+  --color-surface: #ffffff;
+  --color-surface-tint: #f4f7fb; /* secțiuni alternate, footer */
+  --color-surface-card: #ffffff;
+  --color-line: #e3e8f0; /* borduri, separatoare */
+  --color-line-strong: #c9d2e0;
+  --color-accent: #2f7c86; /* turcoaz stins: linkuri, focus, marcaje (4.8:1 pe alb) */
+  --color-accent-strong: #256670; /* text pe fundal accent-tint (5.7:1) */
+  --color-accent-tint: #e4f2f3;
+  --color-lilac-tint: #eeedfb; /* ecou discret al lavandei din site-ul vechi, doar decor */
+  --color-sky-tint: #e9f0fa;
+
+  --radius-pill: 999px;
+  --radius-card: 1.25rem;
+
+  --shadow-card: 0 1px 2px rgb(20 33 61 / 0.04), 0 8px 24px -12px rgb(20 33 61 / 0.12);
+  --shadow-header: 0 1px 0 rgb(20 33 61 / 0.06), 0 6px 20px -16px rgb(20 33 61 / 0.25);
+
+  --animate-reveal: reveal-in linear both;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-surface font-body text-ink antialiased;
+    font-size: 1.0625rem; /* 17px, ca pe site-ul actual */
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-accent-tint);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  /* Ancorele să nu se ascundă sub header-ul sticky */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-[72rem] px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-display text-[0.8125rem] font-semibold tracking-[0.08em] text-accent-strong uppercase;
+  }
+
+  .h-display {
+    font-size: clamp(2.25rem, 1.4rem + 3.2vw, 4rem);
+    line-height: 1.08;
+    font-weight: 700;
+  }
+  .h-section {
+    font-size: clamp(1.75rem, 1.2rem + 1.9vw, 2.625rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+  .h-card {
+    @apply font-display text-[1.1875rem] leading-snug font-semibold;
+  }
+  .lead {
+    @apply text-ink-soft text-[1.125rem] leading-relaxed sm:text-[1.25rem];
+  }
+  .prose-site p + p {
+    margin-top: 1rem;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill px-6 py-3 font-display text-[0.9375rem] font-semibold transition-[background-color,color,box-shadow,transform] duration-200 select-none;
+    min-height: 3rem;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    @apply bg-ink text-surface;
+  }
+  .btn-primary:hover {
+    background: #1f2f55;
+  }
+  .btn-secondary {
+    @apply text-ink bg-surface;
+    box-shadow: inset 0 0 0 1.5px var(--color-line-strong);
+  }
+  .btn-secondary:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-ink);
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-[0.875rem];
+    min-height: 2.5rem;
+  }
+
+  .card {
+    @apply bg-surface-card rounded-card border border-line;
+    box-shadow: var(--shadow-card);
+  }
+
+  .link-inline {
+    @apply text-accent-strong underline decoration-accent/40 underline-offset-[0.2em] transition-colors;
+  }
+  .link-inline:hover {
+    @apply decoration-accent-strong;
+  }
+
+  /* Câmpurile formularului: linie de subliniere, ca pe Wix, dar cu stări clare */
+  .field-input {
+    @apply w-full border-0 border-b-2 border-line-strong bg-transparent px-0 py-2.5 text-ink transition-colors;
+    border-radius: 0;
+  }
+  .field-input:focus {
+    @apply border-accent outline-none;
+  }
+  .field-input[aria-invalid='true'] {
+    @apply border-ink;
+  }
+  .field-label {
+    @apply text-ink-soft mb-1 block text-[0.9375rem] font-medium;
+  }
+  .field-error {
+    @apply text-ink mt-1.5 flex items-start gap-1.5 text-[0.875rem];
+  }
+}
+
+@layer utilities {
+  /* Intrare discretă la scroll — CSS-only (scroll-driven animations), fără JS.
+     Browserele fără suport afișează conținutul direct. Dezactivat la reduced-motion. */
+  .reveal {
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: var(--animate-reveal);
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+    }
+  }
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Header: umbră doar după ce pagina a fost derulată — tot CSS-only */
+@keyframes header-scrolled {
+  from {
+    box-shadow: none;
+    background-color: rgb(255 255 255 / 0.7);
+  }
+  to {
+    box-shadow: var(--shadow-header);
+    background-color: rgb(255 255 255 / 0.92);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .site-header {
+    animation: header-scrolled linear both;
+    animation-timeline: scroll();
+    animation-range: 0 80px;
+  }
+}
+
+/* Numerele marcajelor vin din CSS (data-num); textul „N. ” rămâne în DOM doar pentru cititoare de ecran
+   și pentru verificarea de fidelitate a conținutului. */
+.num-badge::before {
+  content: attr(data-num);
+}

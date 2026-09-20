@@ -1,0 +1,12 @@
+# Originalele imaginilor (42 MB) rămân local / în backup-ul clientului, nu în repo (docs/SECURITY_PLAN.md §8)
+content/assets/original/
+node_modules/
+dist/
+.astro/
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

@@ -1,0 +1,26 @@
+---
+import ArtCircles from './ArtCircles.astro';
+import { despre } from '../data/acasa';
+---
+
+<section
+  class="bg-surface-tint border-line border-y py-16 sm:py-20 lg:py-24"
+  aria-labelledby="despre-titlu"
+>
+  <div class="container-site grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+    <div class="reveal">
+      <h2 id="despre-titlu" class="h-section">{despre.title}</h2>
+      <div class="prose-site mt-7 max-w-2xl">
+        <p class="text-ink-soft text-[1.0625rem] leading-[1.7]">{despre.paragraphs[0]}</p>
+        <p
+          class="font-display text-ink border-accent border-l-[3px] pl-5 text-[1.125rem] leading-snug font-semibold"
+        >
+          {despre.paragraphs[1]}
+        </p>
+      </div>
+    </div>
+    <div class="reveal mx-auto w-full max-w-[460px]">
+      <ArtCircles class="h-auto w-full" />
+    </div>
+  </div>
+</section>

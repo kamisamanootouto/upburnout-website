@@ -1,0 +1,25 @@
+---
+import { participare } from '../data/acasa';
+---
+
+<section class="py-16 sm:py-20 lg:py-24" aria-labelledby="participare-titlu">
+  <div class="container-site">
+    <h2 id="participare-titlu" class="h-section reveal max-w-3xl">{participare.title}</h2>
+
+    <ol class="mt-10 grid gap-x-12 gap-y-2 lg:mt-12 lg:grid-cols-2">
+      {
+        participare.steps.map((text, i) => (
+          <li class="reveal relative flex gap-5 py-5">
+            <span
+              class="num-badge bg-ink text-surface font-display grid size-10 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold tabular-nums"
+              data-num={i + 1}
+              aria-hidden="true"
+            />
+            <span class="sr-only">{`${i + 1}. `}</span>
+            <p class="text-ink pt-1.5 text-[1.0625rem] leading-relaxed">{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

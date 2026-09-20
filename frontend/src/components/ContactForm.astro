@@ -1,0 +1,198 @@
+---
+import { contact } from '../data/acasa';
+const f = contact.fields;
+---
+
+<section id={contact.id} class="py-16 sm:py-20 lg:py-24" aria-labelledby="contact-titlu">
+  <div class="container-site">
+    <div class="mx-auto max-w-2xl">
+      <h2 id="contact-titlu" class="h-section reveal text-center">{contact.title}</h2>
+
+      <form
+        id="formular-contact"
+        class="card reveal relative mt-10 p-6 sm:p-10"
+        method="post"
+        action="/api/contact"
+        novalidate
+        aria-describedby="form-status"
+      >
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="nume" class="field-label">{f.nume} <span aria-hidden="true">*</span></label>
+            <input
+              id="nume"
+              name="nume"
+              type="text"
+              class="field-input"
+              autocomplete="family-name"
+              required
+              maxlength="100"
+              aria-required="true"
+              aria-describedby="nume-eroare"
+            />
+            <p id="nume-eroare" class="field-error" hidden></p>
+          </div>
+          <div>
+            <label for="prenume" class="field-label"
+              >{f.prenume} <span aria-hidden="true">*</span></label
+            >
+            <input
+              id="prenume"
+              name="prenume"
+              type="text"
+              class="field-input"
+              autocomplete="given-name"
+              required
+              maxlength="100"
+              aria-required="true"
+              aria-describedby="prenume-eroare"
+            />
+            <p id="prenume-eroare" class="field-error" hidden></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="email" class="field-label"
+              >{f.email} <span aria-hidden="true">*</span></label
+            >
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="field-input"
+              autocomplete="email"
+              inputmode="email"
+              required
+              maxlength="254"
+              aria-required="true"
+              aria-describedby="email-eroare"
+            />
+            <p id="email-eroare" class="field-error" hidden></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="telefon" class="field-label">{f.telefon}</label>
+            <input
+              id="telefon"
+              name="telefon"
+              type="tel"
+              class="field-input"
+              autocomplete="tel"
+              inputmode="tel"
+              maxlength="30"
+              aria-describedby="telefon-eroare"
+            />
+            <p id="telefon-eroare" class="field-error" hidden></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="mesaj" class="field-label">{f.mesaj}</label>
+            <textarea
+              id="mesaj"
+              name="mesaj"
+              class="field-input min-h-28 resize-y"
+              rows="4"
+              maxlength="2000"
+              aria-describedby="mesaj-eroare"></textarea>
+            <p id="mesaj-eroare" class="field-error" hidden></p>
+          </div>
+        </div>
+
+        <!-- honeypot: invizibil pentru oameni, completat de boți -->
+        <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="ts" value="" />
+
+        <div
+          class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <button type="submit" class="btn btn-primary min-w-40">{contact.submit}</button>
+          <p id="form-status" class="text-ink text-[0.9375rem]" role="status" aria-live="polite">
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Validare pe client (aceleași reguli ca în docs/API_DESIGN.md §1). Trimiterea către /api/contact
+  // se activează în Sesiunea 3; până atunci formularul validează și afișează o notă.
+  const form = document.getElementById('formular-contact') as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector<HTMLElement>('#form-status')!;
+    const ts = form.querySelector<HTMLInputElement>('input[name="ts"]')!;
+    ts.value = String(Date.now());
+
+    const rules: Record<string, (v: string) => string | null> = {
+      nume: (v) =>
+        !v
+          ? 'Acest câmp este obligatoriu.'
+          : v.length > 100
+            ? 'Textul este prea lung (maximum 100 caractere).'
+            : null,
+      prenume: (v) =>
+        !v
+          ? 'Acest câmp este obligatoriu.'
+          : v.length > 100
+            ? 'Textul este prea lung (maximum 100 caractere).'
+            : null,
+      email: (v) =>
+        !v
+          ? 'Acest câmp este obligatoriu.'
+          : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) || v.length > 254
+            ? 'Adresa de e-mail nu este validă.'
+            : null,
+      telefon: (v) =>
+        v && !/^[+\d\s().-]{3,30}$/.test(v)
+          ? 'Numărul de telefon conține caractere nepermise.'
+          : null,
+      mesaj: (v) => (v.length > 2000 ? 'Textul este prea lung (maximum 2000 caractere).' : null),
+    };
+
+    const setError = (name: string, message: string | null) => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+      const el = form.querySelector<HTMLElement>(`#${name}-eroare`);
+      if (!input || !el) return;
+      if (message) {
+        el.innerHTML = `<svg class="mt-[0.2em] size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4m0 4h.01"></path></svg><span>${message}</span>`;
+        el.hidden = false;
+        input.setAttribute('aria-invalid', 'true');
+      } else {
+        el.textContent = '';
+        el.hidden = true;
+        input.removeAttribute('aria-invalid');
+      }
+    };
+
+    const validate = () => {
+      let firstInvalid: HTMLElement | null = null;
+      for (const [name, rule] of Object.entries(rules)) {
+        const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+        const message = rule(input.value.trim());
+        setError(name, message);
+        if (message && !firstInvalid) firstInvalid = input;
+      }
+      return firstInvalid;
+    };
+
+    for (const name of Object.keys(rules)) {
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+      input.addEventListener('blur', () => setError(name, rules[name]!(input.value.trim())));
+      input.addEventListener('input', () => {
+        if (input.getAttribute('aria-invalid') === 'true')
+          setError(name, rules[name]!(input.value.trim()));
+      });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      const firstInvalid = validate();
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+      // Sesiunea 3 înlocuiește nota de mai jos cu trimiterea reală (fetch → /api/contact).
+      status.textContent = 'Trimiterea mesajelor se activează în etapa următoare a proiectului.';
+    });
+  }
+</script>
