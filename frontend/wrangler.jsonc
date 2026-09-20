@@ -1,7 +1,7 @@
 {
   // Cloudflare Workers — build `npm run build`, deploy `npx wrangler deploy`, Path/root `frontend` (docs/DEPLOYMENT_PLAN.md §2)
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "upburnout",
+  "name": "upburnout-website",
   "main": "worker/index.ts",
   "compatibility_date": "2026-09-01",
   "assets": {
