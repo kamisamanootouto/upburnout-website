@@ -13,9 +13,18 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 
 ## 2. Conturi și configurare inițială (Sesiunea 2)
 
+> **Actualizare 2026-09-20 — Cloudflare Workers (static assets) în loc de Cloudflare Pages.** Dashboard-ul Cloudflare
+> direcționează proiectele noi către Workers cu Git builds (Pages e în mod de întreținere). Este aceeași platformă și
+> același cost (0), dar cu: `frontend/wrangler.jsonc` (`assets.directory = ./dist`, `html_handling = drop-trailing-slash`,
+> `not_found_handling = 404-page`), build `npm run build`, deploy `npx wrangler deploy`, **Path/root = `frontend`**.
+> `_headers`/`_redirects` funcționează la fel. Formularul din Sesiunea 3 devine un Worker (`main`) cu
+> `assets.run_worker_first = ["/api/*"]` în loc de Pages Function — API identic (`API_DESIGN.md`). Domeniile custom se
+> adaugă din Worker → Settings → Domains & Routes. Pașii de mai jos care spun „Pages” se citesc „Worker `upburnout`”.
+
 1. **GitHub**: repo privat `upburnout-website` pe contul personal `kamisamanootouto` (decis 2026-09-20). Branch `main` protejat.
-2. **Cloudflare Pages**: „Create project → Connect to Git” → repo → Root directory `frontend`, Build command `npm run build`,
-   Output `dist`, Node 22 (`NODE_VERSION=22`). Numele proiectului `upburnout` → `upburnout.pages.dev`.
+2. **Cloudflare Workers**: Workers & Pages → Create → Import a repository → `upburnout-website` → Path `frontend`, Build command
+   `npm run build`, Deploy command `npx wrangler deploy` (branch-uri: `npx wrangler versions upload`). Node 22 din `frontend/.node-version`.
+   Worker-ul `upburnout` → `upburnout.<subdomeniu>.workers.dev`.
 3. **Variabile de mediu** (Production și Preview separat): vezi `API_DESIGN.md` §3. Pe Preview: chei Turnstile de test + `CONTACT_TO_EMAIL` de test.
 4. **Turnstile**: Cloudflare → Turnstile → Add widget → hostnames `upburnout.pages.dev`, `www.upburnout.com`, `upburnout.com`; mod Managed.
 5. **Resend**: cont pe adresa clientului → API key (Production) → până la verificarea domeniului, `from = onboarding@resend.dev`

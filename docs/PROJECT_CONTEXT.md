@@ -52,6 +52,7 @@ fără aprobare explicită.
 | 2026-09-20 | Backend formular: **Cloudflare Pages Functions** (abatere aprobată de la „Render” din template) | Client, la recomandarea noastră |
 | 2026-09-20 | Repo GitHub privat pe contul personal **`kamisamanootouto`**; cont Cloudflare al clientului | Client |
 | 2026-09-20 | Design: libertate completă (fonturi, culori, ilustrații înlocuibile); singura regulă: fără trigger-e | Client |
+| 2026-09-20 | Hosting: Cloudflare **Workers static assets** (Git builds) în loc de Pages — dashboard-ul nou; aceeași platformă, 0 cost | Noi, la conectarea repo-ului |
 
 ## Structura repo-ului (țintă)
 

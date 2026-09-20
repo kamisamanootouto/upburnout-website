@@ -10,6 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:cf": "wrangler dev",
+    "deploy": "wrangler deploy",
     "check": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -28,11 +30,13 @@
     "@astrojs/check": "^0.9.0",
     "prettier": "^3.6.0",
     "prettier-plugin-astro": "^0.14.0",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "wrangler": "^4.135.0"
   },
   "allowScripts": {
     "sharp@0.35.4": true,
     "sharp@0.34.5": true,
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "workerd@1.20260918.1": true
   }
 }

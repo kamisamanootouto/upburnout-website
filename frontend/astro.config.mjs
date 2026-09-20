@@ -8,7 +8,7 @@ export default defineConfig({
   site: 'https://www.upburnout.com',
   output: 'static',
   trailingSlash: 'never',
-  build: { format: 'directory' },
+  build: { format: 'file' }, // /echipă → dist/echipă.html (fără slash final, ca pe Wix)
   // v7 folosește regulile JSX de whitespace; păstrăm compresia HTML-aware (lossless)
   // ca textele verbatim să nu piardă spațiile dintre elementele inline.
   compressHTML: true,
