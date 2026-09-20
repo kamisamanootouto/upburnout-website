@@ -1,6 +1,9 @@
 ---
 import { contact } from '../data/acasa';
 const f = contact.fields;
+// Cheia publică Turnstile: variabilă de build PUBLIC_TURNSTILE_SITE_KEY (Workers Builds → Settings → Build variables).
+// Fără ea se folosește cheia de test Cloudflare (widget vizibil, trece întotdeauna) — doar pentru preview.
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
 ---
 
 <section id={contact.id} class="py-16 sm:py-20 lg:py-24" aria-labelledby="contact-titlu">
@@ -15,6 +18,7 @@ const f = contact.fields;
         action="/api/contact"
         novalidate
         aria-describedby="form-status"
+        data-turnstile-sitekey={turnstileSiteKey}
       >
         <div class="grid gap-6 sm:grid-cols-2">
           <div>
@@ -101,27 +105,93 @@ const f = contact.fields;
         </div>
         <input type="hidden" name="ts" value="" />
 
+        <!-- Cloudflare Turnstile (anti-spam, fără puzzle-uri în mod normal); se încarcă doar când formularul e aproape de viewport -->
+        <div class="turnstile-slot mt-8 min-h-[65px]"></div>
+
         <div
-          class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between"
+          class="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
           <button type="submit" class="btn btn-primary min-w-40">{contact.submit}</button>
           <p id="form-status" class="text-ink text-[0.9375rem]" role="status" aria-live="polite">
           </p>
         </div>
+        <noscript>
+          <p class="text-ink-soft mt-4 text-[0.9375rem]">
+            Pentru a trimite formularul, activează JavaScript.
+          </p>
+        </noscript>
       </form>
     </div>
   </div>
 </section>
 
 <script>
-  // Validare pe client (aceleași reguli ca în docs/API_DESIGN.md §1). Trimiterea către /api/contact
-  // se activează în Sesiunea 3; până atunci formularul validează și afișează o notă.
+  // Validare pe client (aceleași reguli și mesaje ca în worker/contact.ts) + trimitere către /api/contact
+  // cu token Turnstile. Specificație: docs/API_DESIGN.md.
+  declare global {
+    interface Window {
+      turnstile?: {
+        render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+        reset: (id?: string) => void;
+        getResponse: (id?: string) => string | undefined;
+      };
+      __onTurnstileLoad?: () => void;
+    }
+  }
+
   const form = document.getElementById('formular-contact') as HTMLFormElement | null;
   if (form) {
     const status = form.querySelector<HTMLElement>('#form-status')!;
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const slot = form.querySelector<HTMLElement>('.turnstile-slot')!;
+    const siteKey = form.dataset.turnstileSitekey!;
     const ts = form.querySelector<HTMLInputElement>('input[name="ts"]')!;
     ts.value = String(Date.now());
 
+    // --- Turnstile: încărcare lazy (script terț) ---
+    let widgetId: string | undefined;
+    let loading = false;
+    const renderWidget = () => {
+      if (widgetId !== undefined || !window.turnstile) return;
+      widgetId = window.turnstile.render(slot, {
+        sitekey: siteKey,
+        theme: 'light',
+        language: 'ro',
+        size: 'flexible',
+        appearance: 'always',
+      });
+    };
+    const loadTurnstile = () => {
+      if (loading || window.turnstile) {
+        renderWidget();
+        return;
+      }
+      loading = true;
+      window.__onTurnstileLoad = renderWidget;
+      const s = document.createElement('script');
+      s.src =
+        'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__onTurnstileLoad';
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            loadTurnstile();
+            io.disconnect();
+          }
+        },
+        { rootMargin: '400px 0px' },
+      );
+      io.observe(form);
+    } else {
+      loadTurnstile();
+    }
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+
+    // --- Validare ---
     const rules: Record<string, (v: string) => string | null> = {
       nume: (v) =>
         !v
@@ -148,12 +218,16 @@ const f = contact.fields;
       mesaj: (v) => (v.length > 2000 ? 'Textul este prea lung (maximum 2000 caractere).' : null),
     };
 
+    const ICON =
+      '<svg class="mt-[0.2em] size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4m0 4h.01"></path></svg>';
+
     const setError = (name: string, message: string | null) => {
-      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+      const input = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
       const el = form.querySelector<HTMLElement>(`#${name}-eroare`);
       if (!input || !el) return;
       if (message) {
-        el.innerHTML = `<svg class="mt-[0.2em] size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4m0 4h.01"></path></svg><span>${message}</span>`;
+        el.innerHTML = ICON;
+        el.appendChild(document.createTextNode(message));
         el.hidden = false;
         input.setAttribute('aria-invalid', 'true');
       } else {
@@ -183,16 +257,79 @@ const f = contact.fields;
       });
     }
 
-    form.addEventListener('submit', (e) => {
+    const setStatus = (text: string, isError = false) => {
+      status.textContent = text;
+      status.classList.toggle('font-semibold', isError);
+    };
+
+    // --- Trimitere ---
+    const MESSAGES: Record<string, string> = {
+      turnstile: 'Verificarea anti-spam nu a reușit. Reîncarcă pagina și încearcă din nou.',
+      rate_limited:
+        'Ai trimis prea multe mesaje într-un timp scurt. Te rugăm să încerci din nou peste câteva minute.',
+      delivery: 'Mesajul nu a putut fi trimis. Te rugăm să încerci din nou.',
+      origin: 'Mesajul nu a putut fi trimis. Te rugăm să încerci din nou.',
+      too_large: 'Textul este prea lung.',
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      status.textContent = '';
+      setStatus('');
       const firstInvalid = validate();
       if (firstInvalid) {
         firstInvalid.focus();
         return;
       }
-      // Sesiunea 3 înlocuiește nota de mai jos cu trimiterea reală (fetch → /api/contact).
-      status.textContent = 'Trimiterea mesajelor se activează în etapa următoare a proiectului.';
+      loadTurnstile();
+      const token = window.turnstile?.getResponse(widgetId) ?? '';
+      if (!token) {
+        setStatus('Așteaptă o clipă verificarea anti-spam, apoi apasă din nou „Trimite”.', true);
+        return;
+      }
+
+      const fd = new FormData(form);
+      const payload: Record<string, string> = {};
+      fd.forEach((v, k) => {
+        payload[k] = String(v);
+      });
+      payload['cf-turnstile-response'] = token;
+
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Se trimite…';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          ok?: boolean;
+          error?: string;
+          errors?: Record<string, string>;
+          text?: string;
+        };
+        if (res.ok && data.ok) {
+          form.reset();
+          ts.value = String(Date.now());
+          window.turnstile?.reset(widgetId);
+          setStatus(
+            data.text ?? 'Mulțumim! Mesajul tău a fost trimis. Îți răspundem cât de curând.',
+          );
+        } else if (res.status === 400 && data.errors) {
+          for (const [name, message] of Object.entries(data.errors)) setError(name, message);
+          const first = Object.keys(data.errors)[0];
+          (form.elements.namedItem(first ?? '') as HTMLElement | null)?.focus();
+        } else {
+          window.turnstile?.reset(widgetId);
+          setStatus(MESSAGES[data.error ?? ''] ?? MESSAGES.delivery!, true);
+        }
+      } catch {
+        setStatus(MESSAGES.delivery!, true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
     });
   }
 </script>

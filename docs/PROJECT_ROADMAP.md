@@ -10,8 +10,8 @@ așa că roadmap-ul are 8 sesiuni.
 | # | Sesiune | Status | Observații |
 |---|---|---|---|
 | 1 | Business Analysis + Architecture | **DONE — 2026-09-20, aprobată implicit prin „începe sesiunea 2”** | inventar `content/`, 13 documente, întrebări deschise |
-| 2 | Design + Website Frontend Foundation | **DONE local — 2026-09-20; așteaptă: push pe GitHub (clientul), conectarea Cloudflare Pages (clientul), aprobarea designului de către soră** | site complet, build verde, `verify-content` 71/71; commit `90fcdc2` |
-| 3 | Contact Form Backend | după aprobarea designului (S2) | Pages Function + Resend + Turnstile (decis: Pages Functions) |
+| 2 | Design + Website Frontend Foundation | **DONE — 2026-09-20; deploy pe Workers făcut de client; design aprobat, cu 2 corecții aplicate (credit Vecteezy scos, rânduri echipă centrate)** | `verify-content` 71/71 |
+| 3 | Contact Form Backend | **DONE local — 2026-09-20; așteaptă push + secretele Resend/`CONTACT_TO_EMAIL` în dashboard + test real de e-mail** | Worker `/api/contact` + Resend + Turnstile + rate limit; 16 teste Vitest |
 | 4 | SEO, Accesibilitate, Performanță | după S3 | depinde de #2, #11 |
 | 5 | Security Review | după S4 | headere, teste de abuz |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
@@ -40,7 +40,8 @@ Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `d
 - Livrabil: URL de preview + screenshot-uri desktop/mobil + raport. Test: parcurgere manuală a ambelor pagini pe telefon real + `verify-content` verde.
 
 ## Sesiunea 3 — Contact Form Backend
-1. `functions/api/contact.ts` (sau `backend/` Fastify) conform `API_DESIGN.md`; schema zod partajată; Turnstile; honeypot; rate limit.
+**Stare (2026-09-20):** implementat ca Worker (`frontend/worker/contact.ts` + `index.ts`), nu Pages Function — vezi `DEPLOYMENT_PLAN.md` §2. Playwright amânat pentru S6 (QA); S3 are Vitest + verificare manuală în `wrangler dev`.
+1. `worker/contact.ts` conform `API_DESIGN.md`; schema zod (server) + aceleași reguli pe client; Turnstile; honeypot; rate limit binding.
 2. Resend: cont, API key, `onboarding@resend.dev` → e-mailul clientului; e-mail text+HTML; `Reply-To`.
 3. Vitest pentru schemă + funcție (mock-uri); Playwright pentru fluxul de formular.
 4. Test real: mesaj trimis de pe `pages.dev` → primit în inbox-ul clientului (dovadă: screenshot).

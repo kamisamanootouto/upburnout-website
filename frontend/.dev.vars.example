@@ -1,0 +1,5 @@
+# Copiază în .dev.vars pentru rulare locală (npx wrangler dev). Producția folosește secretele din dashboard.
+RESEND_API_KEY=re_xxx
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+CONTACT_TO_EMAIL=adresa@exemplu.ro
+# MAIL_MODE=log   # doar local/preview: nu trimite e-mail, loghează

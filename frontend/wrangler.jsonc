@@ -1,14 +1,32 @@
 {
-  // Cloudflare Workers (static assets) — build: `npm run build`, deploy: `npx wrangler deploy`, Path/root: `frontend`
+  // Cloudflare Workers — build `npm run build`, deploy `npx wrangler deploy`, Path/root `frontend` (docs/DEPLOYMENT_PLAN.md §2)
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "upburnout",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-09-01",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    // doar /api/* trece prin Worker; restul e servit direct din static assets
+    "run_worker_first": ["/api/*"],
     // /echipă → dist/echipă.html; /echipă/ → 301 /echipă (parity cu Wix: fără slash final)
     "html_handling": "drop-trailing-slash",
     // rutele inexistente primesc dist/404.html cu status 404
     "not_found_handling": "404-page",
   },
+  // Variabile ne-secrete. Secretele (RESEND_API_KEY, TURNSTILE_SECRET_KEY, CONTACT_TO_EMAIL) se setează în
+  // dashboard: Worker → Settings → Variables and Secrets (docs/API_DESIGN.md §3).
+  "vars": {
+    "CONTACT_FROM_EMAIL": "onboarding@resend.dev",
+    "ALLOWED_ORIGINS": "https://www.upburnout.com,https://upburnout.com,*.workers.dev",
+  },
+  // 5 trimiteri / minut / IP (Workers Rate Limiting, gratuit)
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMIT",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 },
+    },
+  ],
   "observability": { "enabled": true },
 }

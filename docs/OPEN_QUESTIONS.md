@@ -92,7 +92,7 @@ participarea ta?”, care e cea mai apăsătoare vizual. Portretele reale ale ec
 Alternativă: păstrăm ilustrațiile actuale (sunt deja fără roșu). Implicit: propunerea de mai sus, arătată la checkpoint-ul
 din Sesiunea 2; se poate reveni la ilustrații fără cost.
 
-**#23 Consecință a #22 — creditul „Ilustrații Vecteezy” din footer:** dacă nu mai folosim nicio ilustrație Vecteezy,
+**#23 ✅ RĂSPUNS (2026-09-20): creditul a fost scos** (client: „scoate chestia aia cu Vecteezy”). Abaterea e înregistrată în `content/approved-deviations.json`. Text inițial: dacă nu mai folosim nicio ilustrație Vecteezy,
 rândul din footer devine fals și trebuie **scos** (modificare de text → cere acordul sorei). Dacă păstrăm măcar una, rămâne.
 Implicit: se scoate doar dacă #22 = înlocuim și sora aprobă.
 
@@ -118,8 +118,14 @@ pe suprafețe mari” (#24). Implicit: rămâne deschis.
 cu celelalte titluri de secțiune. Implicit: H2.
 
 **#29 Ilustrațiile Vecteezy au fost înlocuite** (vezi #22) cu 4 grafici abstracte proprii (cercuri concentrice, cercuri
-suprapuse, trepte, rețea de puncte). Creditul „Ilustrații Vecteezy” din footer **a rămas** până la acordul sorei de a-l
-scoate (#23) — acum nu mai corespunde realității.
+suprapuse, trepte, rețea de puncte). Creditul din footer a fost scos (#23 ✅).
+
+**#31 Echipă: rândurile incomplete sunt centrate** (cerință client 2026-09-20) — implementat.
+
+**#32 Pentru ca formularul să trimită e-mailuri reale pe preview** (Sesiunea 3) avem nevoie de la client: (a) cont Resend pe
+`gandilabogdan10@gmail.com` + un API key; (b) secretele `RESEND_API_KEY` și `CONTACT_TO_EMAIL` setate în Cloudflare (Worker →
+Settings → Variables and Secrets). Turnstile rulează deocamdată cu cheile de test (banner „Numai pentru testare” vizibil) —
+cheile reale (`PUBLIC_TURNSTILE_SITE_KEY` ca variabilă de build + `TURNSTILE_SECRET_KEY` secret) se pun înainte de lansare.
 
 **#30 Fonturi noi:** Plus Jakarta Sans (titluri) + Inter (text), self-hostate. Paleta: bleumarin #14213D, turcoaz stins
 #2F7C86, tint-uri reci. Toate combinațiile text/fundal ≥ 4,5:1.
