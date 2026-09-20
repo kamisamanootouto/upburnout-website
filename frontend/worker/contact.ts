@@ -226,7 +226,8 @@ async function sendEmail(data: ContactInput, env: ContactEnv, deps: ContactDeps)
       });
       clearTimeout(timer);
       if (res.ok) return true;
-      deps.log('resend error', res.status);
+      // Resend răspunde cu {message} (ex. sandbox: „You can only send testing emails to your own email address”)
+      deps.log('resend error', res.status, (await res.text().catch(() => '')).slice(0, 300));
       if (res.status >= 400 && res.status < 500) return false; // nu reîncerca erori de client (cheie, validare)
     } catch (err) {
       clearTimeout(timer);

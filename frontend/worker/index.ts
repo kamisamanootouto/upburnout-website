@@ -20,6 +20,21 @@ export default {
         log: (...args) => console.log('[contact]', ...args),
       });
     }
+    // Diagnostic fără secrete: spune doar DACĂ sunt configurate, nu valorile.
+    if (url.pathname === '/api/health') {
+      return Response.json(
+        {
+          ok: true,
+          resendKey: Boolean(env.RESEND_API_KEY),
+          contactTo: Boolean(env.CONTACT_TO_EMAIL),
+          contactFrom: env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev',
+          turnstileSecret: env.TURNSTILE_SECRET_KEY ? 'set' : 'test-key',
+          rateLimit: Boolean(env.CONTACT_RATE_LIMIT),
+          mailMode: env.MAIL_MODE ?? 'send',
+        },
+        { headers: { 'cache-control': 'no-store' } },
+      );
+    }
     if (url.pathname.startsWith('/api/')) {
       return new Response('Not found', { status: 404, headers: { 'cache-control': 'no-store' } });
     }

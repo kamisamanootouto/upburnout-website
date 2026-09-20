@@ -322,7 +322,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x0000000
           (form.elements.namedItem(first ?? '') as HTMLElement | null)?.focus();
         } else {
           window.turnstile?.reset(widgetId);
-          setStatus(MESSAGES[data.error ?? ''] ?? MESSAGES.delivery!, true);
+          const code = data.error ? ` (cod: ${data.error}, ${res.status})` : ` (${res.status})`;
+          setStatus((MESSAGES[data.error ?? ''] ?? MESSAGES.delivery!) + code, true);
         }
       } catch {
         setStatus(MESSAGES.delivery!, true);
