@@ -5,7 +5,7 @@ este întotdeauna varianta care păstrează site-ul identic. Întrebările marca
 
 ## Arhitectură
 
-**#1 ✅ RĂSPUNS (2026-09-20): Cloudflare Pages Functions.** Abatere aprobată de la „Backend: Render” din template.
+**#1 ✅ RĂSPUNS (2026-09-20): Cloudflare Pages Functions.** (repo creat de client; push + conectare Pages: vezi raportul S2) Abatere aprobată de la „Backend: Render” din template.
 (Recomandarea inițială: același deploy, 0 cold start, 0 cost, fără CORS; Render free tier adoarme → 30–60 s la prima trimitere.)
 
 **#15 ✅ RĂSPUNS (2026-09-20): repo privat pe contul personal GitHub `kamisamanootouto`.** Contul Cloudflare: presupus cel
@@ -101,6 +101,28 @@ fără roșu, portocaliu-roșu, roz aprins, galben de alertă; fără contraste 
 fără animații rapide, pulsante sau autoplay; fără imagini de suferință, epuizare, capete/creiere, ceasuri, alarme; fără
 formulări de urgență adăugate de noi (textele oricum rămân ale voastre). Paletă: bleumarin/albastru profund + alb + gri-albastru
 deschis + un accent calm (verde-salvie sau turcoaz stins), erorile de formular în bleumarin cu iconiță, nu roșu.
+
+## Decizii de design luate în Sesiunea 2 (de confirmat la review — se pot schimba fără cost)
+
+**#25 Cele 8 ședințe: grilă de carduri numerotate în loc de slideshow.** Pe Wix un singur slide era vizibil; acum
+toate cele 8 sunt vizibile (2 coloane pe desktop, 1 pe mobil). Motiv: nimic ascuns, mai ușor de parcurs, accesibil.
+Alternativă: carusel cu săgeți (parity). Implicit: grila.
+
+**#26 Buton „Înscrie-te acum!” și în header** (desktop + meniul mobil), pe lângă cele 2 linkuri. Textul există deja
+pe site (butonul din hero); e doar un al doilea loc pentru același link. Implicit: rămâne.
+
+**#27 Footer deschis (gri-albastru foarte deschis) în loc de bandă bleumarin**, conform regulii „fără fundaluri închise
+pe suprafețe mari” (#24). Implicit: rămâne deschis.
+
+**#28 „Scopul cercetării” este H2** (pe Wix era H3, singurul H3 din pagină — inconsecvență de ierarhie). Vizual identic
+cu celelalte titluri de secțiune. Implicit: H2.
+
+**#29 Ilustrațiile Vecteezy au fost înlocuite** (vezi #22) cu 4 grafici abstracte proprii (cercuri concentrice, cercuri
+suprapuse, trepte, rețea de puncte). Creditul „Ilustrații Vecteezy” din footer **a rămas** până la acordul sorei de a-l
+scoate (#23) — acum nu mai corespunde realității.
+
+**#30 Fonturi noi:** Plus Jakarta Sans (titluri) + Inter (text), self-hostate. Paleta: bleumarin #14213D, turcoaz stins
+#2F7C86, tint-uri reci. Toate combinațiile text/fundal ≥ 4,5:1.
 
 ---
 

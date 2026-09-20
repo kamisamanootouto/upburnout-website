@@ -9,9 +9,9 @@ așa că roadmap-ul are 8 sesiuni.
 
 | # | Sesiune | Status | Observații |
 |---|---|---|---|
-| 1 | Business Analysis + Architecture | **DONE — 2026-09-20, așteaptă aprobare** | inventar `content/`, 13 documente, 20 întrebări deschise |
-| 2 | Design + Website Frontend Foundation | #1 și #15 răspunse; așteaptă „go” explicit pentru S2 | livrează site-ul complet pe `pages.dev`; checkpoint de design la mijloc |
-| 3 | Contact Form Backend | după S2 | Pages Function (sau Render) + Resend + Turnstile |
+| 1 | Business Analysis + Architecture | **DONE — 2026-09-20, aprobată implicit prin „începe sesiunea 2”** | inventar `content/`, 13 documente, întrebări deschise |
+| 2 | Design + Website Frontend Foundation | **DONE local — 2026-09-20; așteaptă: push pe GitHub (clientul), conectarea Cloudflare Pages (clientul), aprobarea designului de către soră** | site complet, build verde, `verify-content` 71/71; commit `90fcdc2` |
+| 3 | Contact Form Backend | după aprobarea designului (S2) | Pages Function + Resend + Turnstile (decis: Pages Functions) |
 | 4 | SEO, Accesibilitate, Performanță | după S3 | depinde de #2, #11 |
 | 5 | Security Review | după S4 | headere, teste de abuz |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
@@ -25,6 +25,12 @@ așa că roadmap-ul are 8 sesiuni.
 
 ## Sesiunea 2 — Design + Website Frontend Foundation
 Scop: site-ul complet, static, cu tot conținutul, pe `https://upburnout.pages.dev`, în designul nou.
+
+**Stare (2026-09-20):** implementat integral local (`frontend/`), commit `90fcdc2` pe `main`. Abatere de la planul
+inițial: în loc de checkpoint „hero + o secțiune”, s-a construit tot site-ul (transcrierea conținutului nu depinde de
+design; schimbarea direcției vizuale = schimbare de tokens/componente, fără pierdere de muncă). Checkpoint-ul de design
+devine review-ul acestei sesiuni. Rămân în sarcina clientului: `git push` (blocat în sesiunea automată), conectarea
+Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `docs/OPEN_QUESTIONS.md` #25–#29.
 1. Init `frontend/` (Astro 5, Tailwind v4, TypeScript strict, ESLint/Prettier, fontsource), repo GitHub privat, proiect Cloudflare Pages, CI de bază.
 2. `scripts/prepare-images.mjs` → `src/assets/` (CMYK→RGB, resize); originalele în `.gitignore`.
 3. Tokens + layout (`Base.astro`, Header, Footer) + **propunere de design** livrată ca pagină reală (hero + o secțiune) pe un preview URL → **checkpoint de aprobare vizuală cu sora** înainte de a continua.
