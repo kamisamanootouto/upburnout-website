@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import ArtNetwork from '../components/ArtNetwork.astro';
+import { Image } from 'astro:assets';
+import art from '../assets/illustrations/echipa-despre-noi-bec-puzzle.jpg';
 import TeamGrid from '../components/TeamGrid.astro';
 import { site } from '../data/site';
 import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa';
@@ -16,8 +17,15 @@ import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa
           {despreNoi.paragraphs.map((p) => <p>{p}</p>)}
         </div>
       </div>
-      <div class="mx-auto w-full max-w-[440px]">
-        <ArtNetwork class="h-auto w-full" />
+      <div class="mx-auto w-full max-w-[550px]">
+        <Image
+          src={art}
+          alt=""
+          widths={[480, 720, 1100]}
+          sizes="(min-width: 1024px) 40vw, (min-width: 640px) 550px, 90vw"
+          class="h-auto w-full"
+          loading="eager"
+        />
       </div>
     </div>
   </section>

@@ -1,5 +1,6 @@
 ---
-import ArtCircles from './ArtCircles.astro';
+import { Image } from 'astro:assets';
+import art from '../assets/illustrations/despre-terapie-grup.jpg';
 import { despre } from '../data/acasa';
 ---
 
@@ -19,8 +20,15 @@ import { despre } from '../data/acasa';
         </p>
       </div>
     </div>
-    <div class="reveal mx-auto w-full max-w-[460px]">
-      <ArtCircles class="h-auto w-full" />
+    <div class="mx-auto w-full max-w-[560px]">
+      <Image
+        src={art}
+        alt=""
+        widths={[480, 720, 1120, 1600]}
+        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 560px, 90vw"
+        class="illustration reveal h-auto w-full"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>

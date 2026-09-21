@@ -6,8 +6,7 @@
 // - portretele echipei: crop centrat 3:4 (echivalentul `fill/al_c` din Wix), max 900×1200, JPEG q85, CMYK→sRGB
 // - logo UVT/FPSE: PNG cu transparență, max 900px lățime
 // - codul QR: copiat NEATINS în public/ (trebuie să rămână scanabil)
-// - ilustrațiile Vecteezy: NU se procesează (înlocuite de grafică proprie — OPEN_QUESTIONS #22);
-//   dacă se revine la ele, se adaugă aici.
+// - ilustrațiile Vecteezy (5): reduse la ~2× dimensiunea afișată, JPEG q82 (OPEN_QUESTIONS #22 — clientul le-a cerut înapoi)
 import { mkdir, copyFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -66,6 +65,30 @@ async function main() {
     console.log(
       `portret  ${out.padEnd(28)} ${meta.width}×${meta.height} ${meta.space} → ${info.width}×${info.height}`,
     );
+  }
+
+  // Ilustrațiile Vecteezy — clientul le-a cerut înapoi (2026-09-21): originalele uriașe (până la 7973px)
+  // se reduc la ~2× dimensiunea afișată; fundalul alb se integrează pe secțiuni colorate cu mix-blend-mode: multiply.
+  const illustrations = [
+    ['acasa-02-hero-ilustratie-femeie-plante.jpg', 'hero-femeie-plante.jpg', 1400],
+    ['acasa-03-despre-terapie-grup.jpg', 'despre-terapie-grup.jpg', 1600],
+    ['acasa-04-scopul-cercetarii-ilustratie.jpg', 'scop-cercetare.jpg', 1000],
+    ['acasa-05-participare-ilustratie-cap-creier.jpg', 'participare-cap-creier.jpg', 800],
+    ['echipa-01-despre-noi-ilustratie-bec-puzzle.png', 'echipa-despre-noi-bec-puzzle.jpg', 1200],
+  ];
+  const OUT_ILL = path.join(OUT_ASSETS, 'illustrations');
+  await mkdir(OUT_ILL, { recursive: true });
+  for (const [src, out, width] of illustrations) {
+    const input = path.join(ORIGINALS, src);
+    const output = path.join(OUT_ILL, out);
+    await sharp(input, { limitInputPixels: false })
+      .toColourspace('srgb')
+      .resize({ width, withoutEnlargement: true })
+      .flatten({ background: '#ffffff' })
+      .jpeg({ quality: 82, mozjpeg: true })
+      .toFile(output);
+    const info = await sharp(output).metadata();
+    console.log(`ilustr.  ${out.padEnd(32)} → ${info.width}×${info.height}`);
   }
 
   // Logo UVT / FPSE — păstrăm transparența.

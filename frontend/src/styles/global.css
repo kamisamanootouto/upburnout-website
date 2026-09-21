@@ -216,6 +216,11 @@
   }
 }
 
+/* Ilustrațiile JPEG au fundal alb: pe secțiunile colorate, multiply face albul „transparent”. */
+.illustration {
+  mix-blend-mode: multiply;
+}
+
 /* Numerele marcajelor vin din CSS (data-num); textul „N. ” rămâne în DOM doar pentru cititoare de ecran
    și pentru verificarea de fidelitate a conținutului. */
 .num-badge::before {

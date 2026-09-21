@@ -12,10 +12,10 @@ așa că roadmap-ul are 8 sesiuni.
 | 1 | Business Analysis + Architecture | **DONE — 2026-09-20, aprobată implicit prin „începe sesiunea 2”** | inventar `content/`, 13 documente, întrebări deschise |
 | 2 | Design + Website Frontend Foundation | **DONE — 2026-09-20; deploy pe Workers făcut de client; design aprobat, cu 2 corecții aplicate (credit Vecteezy scos, rânduri echipă centrate)** | `verify-content` 71/71 |
 | 3 | Contact Form Backend | **DONE — 2026-09-20; e-mail real primit de client pe preview („perfect, acum merge”)** | Worker `/api/contact` + Resend (sandbox → Yahoo-ul clientului) + Turnstile (chei de test) + rate limit; 16 teste Vitest |
-| 4 | SEO, Accesibilitate, Performanță | așteaptă „go” + răspuns la #2 (implicit: rămâne `noindex`) | depinde de #2, #11 |
+| 4 | SEO, Accesibilitate, Performanță | așteaptă „go” — #2 răspuns: **se indexează** | meta description doar din text existent (#2), sitemap, OG, a11y, Lighthouse |
 | 5 | Security Review | după S4 | headere, teste de abuz |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
-| 7 | Domain Cut-over | după S6 + aprobarea sorei | runbook `DEPLOYMENT_PLAN.md` §4 |
+| 7 | Domain Cut-over | după S6 + aprobarea sorei — **înainte de ~16 oct 2026** (reînnoirea Premium Wix, #19) | runbook `DEPLOYMENT_PLAN.md` §4 |
 | 8 | Final Polish + Handover | după S7 | verificare completă pe domeniul real, documentație de întreținere |
 
 ## Sesiunea 1 — Business Analysis + Architecture (DONE)

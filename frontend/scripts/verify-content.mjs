@@ -78,9 +78,12 @@ async function collectPages() {
 }
 
 async function main() {
-  let deviations = [];
+  // Abateri aprobate: { original, replacement? } — dacă există replacement, ACELA trebuie să apară în build.
+  let deviations = new Map();
   try {
-    deviations = JSON.parse(await readFile(DEVIATIONS, 'utf8')).map((d) => normalize(d.original));
+    for (const d of JSON.parse(await readFile(DEVIATIONS, 'utf8'))) {
+      deviations.set(normalize(d.original), d.replacement ? normalize(d.replacement) : null);
+    }
   } catch {
     /* fără fișier = fără abateri aprobate */
   }
@@ -91,12 +94,19 @@ async function main() {
   for (const e of expected) {
     const needle = normalize(e.text);
     if (!needle) continue;
+    if (deviations.has(needle)) {
+      const replacement = deviations.get(needle);
+      if (replacement === null || all.includes(replacement)) continue;
+      missing.push({ ...e, text: `${e.text}  → înlocuirea aprobată lipsește` });
+      continue;
+    }
     if (all.includes(needle)) continue;
-    if (deviations.includes(needle)) continue;
     missing.push(e);
   }
   console.log(`Pagini verificate: ${pages.map((p) => p.page).join(', ')}`);
-  console.log(`Blocuri VERBATIM: ${expected.length}; lipsă/diferite: ${missing.length}`);
+  console.log(
+    `Blocuri VERBATIM: ${expected.length} (abateri aprobate: ${deviations.size}); lipsă/diferite: ${missing.length}`,
+  );
   for (const m of missing) console.log(`  ✗ [${m.file}] ${m.text}`);
   if (missing.length) process.exit(1);
   console.log('✓ Conținut identic cu content/pages.');

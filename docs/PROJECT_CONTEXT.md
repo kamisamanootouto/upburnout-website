@@ -14,6 +14,8 @@ fără aprobare explicită.
 
 1. **Conținut identic** — texte caracter cu caracter (inclusiv diacritice), aceleași imagini, aceleași linkuri, aceleași
    câmpuri de formular. Sursa de adevăr: `content/` (inventar complet făcut în Sesiunea 1, vezi `content/README.md`).
+   **Regulă fermă (client, 2026-09-21): nu adăugăm niciun text** — conținutul e scris și verificat de doctori/profesori;
+   excepțiile aprobate (typo-uri) sunt în `content/approved-deviations.json`; mesajele de interfață sunt listate în `OPEN_QUESTIONS.md` #33.
 2. **Domeniul rămâne cumpărat la Wix** (expiră/reînnoiește 5 feb 2027). Se schimbă doar nameserverele către Cloudflare;
    transferul la Cloudflare Registrar este opțional, mai târziu.
 3. **Fără CRM** — decizie client 2026-09-20. Formularul de contact trimite e-mail; nu se stochează nimic într-o bază de date.
@@ -53,6 +55,9 @@ fără aprobare explicită.
 | 2026-09-20 | Repo GitHub privat pe contul personal **`kamisamanootouto`**; cont Cloudflare al clientului | Client |
 | 2026-09-20 | Design: libertate completă (fonturi, culori, ilustrații înlocuibile); singura regulă: fără trigger-e | Client |
 | 2026-09-20 | Hosting: Cloudflare **Workers static assets** (Git builds) în loc de Pages — dashboard-ul nou; aceeași platformă, 0 cost | Noi, la conectarea repo-ului |
+| 2026-09-21 | Site-ul **se indexează** în Google (S4); meta description doar din propoziții existente | Client |
+| 2026-09-21 | Typo-urile (4) se corectează; ilustrațiile cartoon originale revin (+ credit Vecteezy); zero text adăugat | Client |
+| 2026-09-21 | Termen: planul Premium Wix se reînnoiește ~16 oct 2026 → cut-over înainte, apoi anulare Premium | Client |
 
 ## Structura repo-ului (țintă)
 

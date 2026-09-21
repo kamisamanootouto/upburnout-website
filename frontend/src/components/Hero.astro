@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-uvt-fpse.png';
-import ArtRings from './ArtRings.astro';
+import heroArt from '../assets/illustrations/hero-femeie-plante.jpg';
 import { hero } from '../data/acasa';
 ---
 
@@ -24,8 +24,17 @@ import { hero } from '../data/acasa';
         <a href={hero.ctaHref} class="btn btn-primary">{hero.cta}</a>
       </div>
     </div>
-    <div class="relative mx-auto w-full max-w-[520px] lg:max-w-none">
-      <ArtRings class="h-auto w-full" />
+    <div class="mx-auto w-full max-w-[520px] lg:max-w-none">
+      <!-- Ilustrația originală de pe Wix (Vecteezy), afișată ca acolo: portret, decupată centrat -->
+      <Image
+        src={heroArt}
+        alt=""
+        widths={[480, 720, 1080, 1400]}
+        sizes="(min-width: 1024px) 45vw, (min-width: 640px) 520px, 90vw"
+        class="aspect-[11/12] h-auto w-full object-cover object-center"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
   </div>
 </section>

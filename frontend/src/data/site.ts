@@ -23,6 +23,7 @@ export const site = {
   },
   links: {
     questionpro: 'https://e-uvt.questionpro.com/up-burnout',
+    vecteezy: 'https://www.vecteezy.com',
   },
   nav: [
     { label: 'Acasă', href: '/' },
@@ -33,7 +34,7 @@ export const site = {
     lines: [
       'Studiu desfășurat prin intermediul',
       'Școlii Doctorale de Psihologie a',
-      'Universității de Vest din Timșoara',
+      'Universității de Vest din Timișoara',
     ],
     links: [
       { label: 'Acasă', href: '/' },
@@ -41,5 +42,7 @@ export const site = {
       { label: 'Înscrie-te', href: '/#inscrie-te' },
       { label: 'Formular de contact', href: '/#contact' },
     ],
+    creditLabel: 'Ilustrații',
+    creditLink: 'Vecteezy',
   },
 } as const;

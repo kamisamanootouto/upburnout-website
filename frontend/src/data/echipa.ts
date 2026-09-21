@@ -24,7 +24,7 @@ export const despreNoi = {
   paragraphs: [
     'Acest studiu este realizat de o echipă de cercetare cu experiență în domeniul psihologiei clinice, organizaționale și psihoterapie, cu sprijinul Universității de Vest din Timișoara.',
     'Activitatea echipei acoperă arii diverse, incluzând burnoutul și dezvoltarea de intervenții psihologice bazate pe dovezi științifice. În cadrul proiectului, membrii echipei contribuie din roluri complementare (coordonare științifică, metodologie, implementare și analiză), asigurând respectarea standardelor etice și științifice în toate etapele studiului.',
-    'Psihoterapeuții care implementează programul au fost instruiți în prealabil privind componentele intervenției și beneficiază de supervizare pe parcursul derulării acesteia,',
+    'Psihoterapeuții care implementează programul au fost instruiți în prealabil privind componentele intervenției și beneficiază de supervizare pe parcursul derulării acesteia.',
   ],
 } as const;
 

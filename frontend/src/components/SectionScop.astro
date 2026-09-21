@@ -1,5 +1,6 @@
 ---
-import ArtSteps from './ArtSteps.astro';
+import { Image } from 'astro:assets';
+import art from '../assets/illustrations/scop-cercetare.jpg';
 import { scop } from '../data/acasa';
 ---
 
@@ -29,8 +30,15 @@ import { scop } from '../data/acasa';
         </svg>
       </a>
     </div>
-    <div class="reveal mx-auto w-full max-w-[460px]">
-      <ArtSteps class="h-auto w-full" />
+    <div class="mx-auto w-full max-w-[470px]">
+      <Image
+        src={art}
+        alt=""
+        widths={[400, 600, 940]}
+        sizes="(min-width: 1024px) 470px, (min-width: 640px) 470px, 85vw"
+        class="illustration reveal h-auto w-full"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>

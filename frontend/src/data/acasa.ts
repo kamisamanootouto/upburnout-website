@@ -94,7 +94,7 @@ export const abordare = {
 export const scop = {
   title: 'Scopul cercetării',
   paragraphs: [
-    'În cadrul acestei cercetări dorim să evaluăm cât de ușor poate fi utilizată și cât de bine este primită este abordarea pe care o propunem. Aceasta a fost creată cu sprijinul specialiștilor în psihologie, al profesioniștilor din mediul organizațional, precum și al persoanelor care se confruntă sau care au trecut prin burnout, pentru a răspunde cât mai bine nevoilor reale ale participanților.',
+    'În cadrul acestei cercetări dorim să evaluăm cât de ușor poate fi utilizată și cât de bine este primită abordarea pe care o propunem. Aceasta a fost creată cu sprijinul specialiștilor în psihologie, al profesioniștilor din mediul organizațional, precum și al persoanelor care se confruntă sau care au trecut prin burnout, pentru a răspunde cât mai bine nevoilor reale ale participanților.',
     'Înainte ca o intervenție să fie utilizată pe scară largă, este important să verificăm dacă funcționează bine în practică și dacă este acceptată de cei care urmează acest program. Testarea fezabilității ne arată dacă intervenția este ușor de utilizat, dacă poate fi implementată în mod realist și dacă participanții pot parcurge conținutul fără dificultăți. Acceptabilitatea ne ajută să înțelegem dacă intervenția este percepută ca fiind utilă, relevantă și potrivită nevoilor.',
     'Aceste etape ne permit să îmbunătățim intervenția și să ne asigurăm că oferă o experiență valoroasă și benefică pentru cei care o urmează.',
   ],
@@ -108,7 +108,7 @@ export const participare = {
   steps: [
     'Parcurgerea și acceptarea consimțământului informat.',
     'Participarea la o discuție (online, 50 de minute) cu unul dintre membrii echipei de cercetare.',
-    'Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universtății de Vest din Timișoara.',
+    'Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universității de Vest din Timișoara.',
     'Participarea voluntară la un focus grup în cadrul căruia vom reflecta asupra modului în care procesul terapeutic a fost util.',
     'La o lună de la finalizarea ședințelor, vei fi rugat să completezi o serie de întrebări pentru a verifica dacă programul pe care l-ai urmat are efecte pozitive pe termen lung.',
   ],

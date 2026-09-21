@@ -1,16 +1,34 @@
 [
   {
-    "original": "Ilustrații",
-    "where": "footer, credit „Ilustrații Vecteezy”",
-    "change": "eliminat — nu se mai folosesc ilustrații Vecteezy (OPEN_QUESTIONS #22/#23)",
-    "approvedBy": "client (în numele sorei)",
-    "date": "2026-09-20"
+    "original": "În cadrul acestei cercetări dorim să evaluăm cât de ușor poate fi utilizată și cât de bine este primită este abordarea pe care o propunem. Aceasta a fost creată cu sprijinul specialiștilor în psihologie, al profesioniștilor din mediul organizațional, precum și al persoanelor care se confruntă sau care au trecut prin burnout, pentru a răspunde cât mai bine nevoilor reale ale participanților.",
+    "replacement": "În cadrul acestei cercetări dorim să evaluăm cât de ușor poate fi utilizată și cât de bine este primită abordarea pe care o propunem. Aceasta a fost creată cu sprijinul specialiștilor în psihologie, al profesioniștilor din mediul organizațional, precum și al persoanelor care se confruntă sau care au trecut prin burnout, pentru a răspunde cât mai bine nevoilor reale ale participanților.",
+    "where": "Acasă → Scopul cercetării, paragraful 1",
+    "change": "typo: „este primită este” → „este primită” (OPEN_QUESTIONS #3)",
+    "approvedBy": "client",
+    "date": "2026-09-21"
   },
   {
-    "original": "Vecteezy",
-    "where": "footer, link către vecteezy.com",
-    "change": "eliminat odată cu creditul",
-    "approvedBy": "client (în numele sorei)",
-    "date": "2026-09-20"
+    "original": "3. Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universtății de Vest din Timișoara.",
+    "replacement": "3. Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universității de Vest din Timișoara.",
+    "where": "Acasă → Ce presupune participarea ta?, punctul 3",
+    "change": "typo: „Universtății” → „Universității” (OPEN_QUESTIONS #3)",
+    "approvedBy": "client",
+    "date": "2026-09-21"
+  },
+  {
+    "original": "Universității de Vest din Timșoara",
+    "replacement": "Universității de Vest din Timișoara",
+    "where": "footer, ambele pagini",
+    "change": "typo: „Timșoara” → „Timișoara” (OPEN_QUESTIONS #3)",
+    "approvedBy": "client",
+    "date": "2026-09-21"
+  },
+  {
+    "original": "Psihoterapeuții care implementează programul au fost instruiți în prealabil privind componentele intervenției și beneficiază de supervizare pe parcursul derulării acesteia,",
+    "replacement": "Psihoterapeuții care implementează programul au fost instruiți în prealabil privind componentele intervenției și beneficiază de supervizare pe parcursul derulării acesteia.",
+    "where": "Echipă → Despre noi, paragraful 3",
+    "change": "typo: virgulă finală → punct (OPEN_QUESTIONS #3)",
+    "approvedBy": "client",
+    "date": "2026-09-21"
   }
 ]
