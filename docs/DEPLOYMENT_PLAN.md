@@ -42,9 +42,7 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 ### 4.0 Pre-condiții (toate bifate înainte de a atinge DNS-ul)
 - [ ] Sesiunile 2–6 aprobate; `upburnout.pages.dev` verificat pagină cu pagină, formular testat real.
 - [ ] Sora clientului a aprobat designul final și a văzut site-ul pe `pages.dev`.
-- [ ] În Wix → Domains → `upburnout.com` → ⋯ → **Manage DNS records**: screenshot al **tuturor** înregistrărilor existente
-      (A, CNAME, MX, TXT, SRV). Dacă apar **MX** sau TXT (`google-site-verification`, SPF) → există e-mail pe domeniu și
-      trebuie replicate în Cloudflare înainte de schimbare. (Butonul „Get a Business Email” din panou sugerează că nu există — de confirmat.)
+- [x] Wix → Manage DNS records (2026-09-21): A ×3 → IP-uri Wix, CNAME `www`/`en` → `cdn3.wixdns.net`, **fără MX/TXT/SRV** → nimic de replicat. La import în Cloudflare, aceste înregistrări Wix se **șterg** (altfel domeniul ar arăta tot site-ul vechi).
 - [ ] Wix → Domains: domeniul nu are „transfer lock” care să blocheze schimbarea NS (schimbarea NS nu e transfer; ar trebui permisă).
 - [ ] Contul Cloudflare al clientului e pregătit; are 2FA.
 - [ ] Un moment cu trafic mic (seara/weekend) și 1–2 ore disponibile.
@@ -56,9 +54,8 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 3. Notăm cele 2 nameservere afișate de Cloudflare (ex. `ada.ns.cloudflare.com`, `rob.ns.cloudflare.com`).
 
 ### 4.2 Cloudflare Pages — domeniile custom
-4. Pages → `upburnout` → Custom domains → Add `www.upburnout.com` și `upburnout.com`. Cloudflare creează automat CNAME-urile
-   (apex prin CNAME flattening). Certificatele se emit automat după ce NS-urile se propagă.
-5. Rules → Redirect Rules: `upburnout.com/*` → `https://www.upburnout.com/$1` (301) — păstrează varianta canonică `www` de acum.
+4. Workers & Pages → `upburnout-website` → Settings → **Domains & Routes** → *Add* → Custom domain `www.upburnout.com`, apoi încă unul `upburnout.com`. Cloudflare creează singur înregistrările DNS în zonă și emite certificatele (pot dura câteva minute după ce NS-urile sunt active).
+5. Redirect `upburnout.com` → `https://www.upburnout.com` (301): **făcut în worker** (`worker/index.ts`, `CANONICAL_HOST`), nu e nevoie de regulă în dashboard.
 6. SSL/TLS → Full (strict); Edge Certificates → Always Use HTTPS, HSTS (după 48 h de funcționare corectă), Minimum TLS 1.2.
 7. Security → Bots → Bot Fight Mode ON; Security → WAF → Rate limiting rule pentru `/api/contact` (5/min).
 

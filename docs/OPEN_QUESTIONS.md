@@ -72,11 +72,13 @@ comisia de etică a UVT are foarte probabil un model de notă de informare. Nu s
 
 **#18 Confirmare plan domeniu:** rămâne la Wix, schimbăm nameserverele către Cloudflare la Sesiunea 7; transfer la Cloudflare Registrar opțional mai târziu (cu acordul sorei). Implicit: da.
 
-**#19 ✅ RĂSPUNS (2026-09-21): planul Premium Wix se reînnoiește pe ~16 octombrie 2026** („cred” — de confirmat în Wix → Subscriptions). **Consecință: termen-limită.** Cut-over-ul (Sesiunea 7) trebuie făcut înainte de 16 octombrie, apoi se anulează Premium-ul (nu domeniul). NU anulați încă: la Wix anularea oprește reînnoirea, dar site-ul rămâne activ până la finalul perioadei plătite — o facem după ce noul site e verificat pe domeniu. Plan: S4–S6 până la ~3 octombrie, S7 cut-over în săptămâna 5–9 octombrie, anulare Premium imediat după verificare.
+**#19 ✅ ACTUALIZAT (2026-09-21): planul Premium Wix e LUNAR, se reînnoiește pe 16 ale lunii** (următoarea: 16 octombrie 2026); domeniul se reînnoiește separat, în februarie 2027. **Consecință: nu mai e un termen dur** — dacă nu prindem 16 octombrie, costul e o singură lună în plus. Rămâne recomandarea de a face cut-over-ul înainte. Text inițial: Cut-over-ul (Sesiunea 7) trebuie făcut înainte de 16 octombrie, apoi se anulează Premium-ul (nu domeniul). NU anulați încă: la Wix anularea oprește reînnoirea, dar site-ul rămâne activ până la finalul perioadei plătite — o facem după ce noul site e verificat pe domeniu. Plan: S4–S6 până la ~3 octombrie, S7 cut-over în săptămâna 5–9 octombrie, anulare Premium imediat după verificare.
 
-**#8 Wix → Domains → ⋯ → Manage DNS records: screenshot cu toate înregistrările** (mai ales dacă apar MX/TXT — e-mail pe domeniu). Nu e urgent (Sesiunea 7), dar dacă îl faci acum eliminăm o necunoscută.
+**#8 ✅ RĂSPUNS (2026-09-21, screenshot Wix):** A `upburnout.com` → 185.230.63.107 / .186 / .171 (Wix), CNAME `www` și `en` → `cdn3.wixdns.net`, NS `ns0/ns1.wixdns.net`, **fără TXT, fără MX** (niciun e-mail pe domeniu, nicio verificare Google) → cel mai simplu caz: nimic de replicat, doar înregistrările site-ului nou.
 
 ## Design
+
+**#36 Sora vede site-ul abia după ce terminăm toate sesiunile** (client, 2026-09-21). Cut-over-ul (S7) schimbă site-ul public — recomandăm ca ea să vadă preview-ul **înainte** de S7 (5 minute), ca eventualele schimbări de design să nu se facă pe site-ul live. Dacă clientul preferă totuși ordinea „S7 → S8 → îi arăt”, rollback-ul e simplu (nameserverele înapoi la Wix) și corecțiile de design se pot face oricând, pe site-ul live, în minute. Implicit: ordinea aleasă de client.
 
 **#21 Fluxul de aprobare a designului:** în Sesiunea 2 livrăm hero + o secțiune + un card de echipă ca pagină reală pe un
 URL de preview (nu mockup static) și cerem OK-ul sorei înainte de a construi restul. E OK așa? Implicit: da.

@@ -8,10 +8,17 @@ interface Env extends ContactEnv {
 }
 
 const PRODUCTION_HOSTS = new Set(['www.upburnout.com', 'upburnout.com']);
+// Varianta canonică e `www` (ca pe Wix); apex-ul redirecționează 301 (păstrează calea și query-ul).
+const CANONICAL_HOST = 'www.upburnout.com';
 
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
+    if (url.hostname === 'upburnout.com') {
+      url.hostname = CANONICAL_HOST;
+      url.protocol = 'https:';
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === '/api/contact') {
       return handleContact(request, env, {
         fetch: (input, init) => fetch(input, init),
