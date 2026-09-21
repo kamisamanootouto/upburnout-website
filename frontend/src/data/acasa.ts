@@ -108,6 +108,8 @@ export const participare = {
   steps: [
     'Parcurgerea și acceptarea consimțământului informat.',
     'Participarea la o discuție (online, 50 de minute) cu unul dintre membrii echipei de cercetare.',
+    // Adăugat 2026-09-21 la cererea coordonatoarei studiului (Athena Gândilă, WhatsApp) — text verbatim al ei
+    'Participarea la o întâlnire online (aproximativ 50 de minute) alături de membrii grupului din care faceți parte și psihoterapeutul care va facilita ședințele de grup în vederea setării așteptărilor referitoare la procesul terapeutic.',
     'Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universității de Vest din Timișoara.',
     'Participarea voluntară la un focus grup în cadrul căruia vom reflecta asupra modului în care procesul terapeutic a fost util.',
     'La o lună de la finalizarea ședințelor, vei fi rugat să completezi o serie de întrebări pentru a verifica dacă programul pe care l-ai urmat are efecte pozitive pe termen lung.',

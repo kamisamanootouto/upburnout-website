@@ -150,6 +150,13 @@ semitransparent (rgba(255,255,255,0.5)) peste fundal. ]]
 [[ Typo în original, punctul 3: „Universtății” (lipsește „i”). Punctul 5 are în original un line-break forțat după
 „întrebări” — presupus accidental, se redă ca o singură propoziție. Vezi OPEN_QUESTIONS. ]]
 
+### Adăugire aprobată (2026-09-21, Athena Gândilă, prin WhatsApp — OPEN_QUESTIONS #39)
+[[ Nu exista pe Wix. Se inserează ca punctul 3, după „Participarea la o discuție (online, 50 de minute)…”; lista devine 6 puncte,
+restul rămâne neschimbat. Text verbatim al coordonatoarei: ]]
+
+> VERBATIM 3 (nou): `3. Participarea la o întâlnire online (aproximativ 50 de minute) alături de membrii grupului din care faceți parte și psihoterapeutul care va facilita ședințele de grup în vederea setării așteptărilor referitoare la procesul terapeutic.`
+
+
 ---
 
 ## 6. Înscrie-te acum!  (ținta ancorei „Înscrie-te acum!” din hero și „Înscrie-te” din footer)

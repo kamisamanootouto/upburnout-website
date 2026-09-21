@@ -9,9 +9,9 @@
   },
   {
     "original": "3. Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universtății de Vest din Timișoara.",
-    "replacement": "3. Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universității de Vest din Timișoara.",
+    "replacement": "4. Participarea la cele opt ședințe de terapie (2 ore/ ședință) care vor fi organizate în cadrul Universității de Vest din Timișoara.",
     "where": "Acasă → Ce presupune participarea ta?, punctul 3",
-    "change": "typo: „Universtății” → „Universității” (OPEN_QUESTIONS #3)",
+    "change": "typo: „Universtății” → „Universității” (OPEN_QUESTIONS #3) + renumerotat 3 → 4 după inserarea punctului nou (#39)",
     "approvedBy": "client",
     "date": "2026-09-21"
   },
@@ -29,6 +29,22 @@
     "where": "Echipă → Despre noi, paragraful 3",
     "change": "typo: virgulă finală → punct (OPEN_QUESTIONS #3)",
     "approvedBy": "client",
+    "date": "2026-09-21"
+  },
+  {
+    "original": "4. Participarea voluntară la un focus grup în cadrul căruia vom reflecta asupra modului în care procesul terapeutic a fost util.",
+    "replacement": "5. Participarea voluntară la un focus grup în cadrul căruia vom reflecta asupra modului în care procesul terapeutic a fost util.",
+    "where": "Acasă → Ce presupune participarea ta?",
+    "change": "renumerotat 4 → 5 după inserarea punctului nou (OPEN_QUESTIONS #39); textul neschimbat",
+    "approvedBy": "Athena Gândilă (WhatsApp) / client",
+    "date": "2026-09-21"
+  },
+  {
+    "original": "5. La o lună de la finalizarea ședințelor, vei fi rugat să completezi o serie de întrebări pentru a verifica dacă programul pe care l-ai urmat are efecte pozitive pe termen lung.",
+    "replacement": "6. La o lună de la finalizarea ședințelor, vei fi rugat să completezi o serie de întrebări pentru a verifica dacă programul pe care l-ai urmat are efecte pozitive pe termen lung.",
+    "where": "Acasă → Ce presupune participarea ta?",
+    "change": "renumerotat 5 → 6 după inserarea punctului nou (OPEN_QUESTIONS #39); textul neschimbat",
+    "approvedBy": "Athena Gândilă (WhatsApp) / client",
     "date": "2026-09-21"
   }
 ]

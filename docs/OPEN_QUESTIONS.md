@@ -136,6 +136,12 @@ Verificare: `/api/health` arată `"turnstileSecret":"set"`.
 toate cele 8 sunt vizibile (2 coloane pe desktop, 1 pe mobil). Motiv: nimic ascuns, mai ușor de parcurs, accesibil.
 Alternativă: carusel cu săgeți (parity). Implicit: grila.
 
+**#39 ✅ (2026-09-21) Punct nou în „Ce presupune participarea ta?”** — cerut de coordonatoarea studiului (WhatsApp, text al ei, verbatim):
+inserat ca punctul 3, după interviul structurat; cele 5 puncte existente rămân identice (lista are acum 6). Înregistrat în
+`content/pages/acasa.md` (Adăugire aprobată) și verificat automat. *De semnalat Athenei:* noul punct folosește „faceți parte”
+(formă de politețe), în timp ce restul listei e la persoana a II-a singular („vei fi rugat”); dacă vrea uniformizare, ar fi „faci parte” —
+nu modificăm fără acordul ei.
+
 **#37 ✅ (2026-09-21) Badge-ul „UP” din header eliminat** la cererea clientului; header-ul are doar numele site-ului + meniul.
 
 **#38 ✅ (2026-09-21) Ilustrațiile rămân cum sunt** („da, ne plac, rămân așa”).
