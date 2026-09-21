@@ -104,8 +104,10 @@ branch decât `main` produce un preview separat (`<branch>-upburnout-website…w
 2. Cloudflare → zona `upburnout.com` → Overview → „Check nameservers"; statusul devine **Active** (minute–ore).
 3. `https://www.upburnout.com` → site-ul nou; `https://upburnout.com` → redirect la `www`; `/echipă`; `/api/health`.
 4. Formular: trimitere reală de pe domeniu → e-mailul ajunge.
-5. Resend → Domains → `upburnout.com` → **Verify** → Verified → Cloudflare → worker → `CONTACT_FROM_EMAIL` nu e secret: se schimbă
-   în `frontend/wrangler.jsonc` → `vars` la `contact@upburnout.com` → push. De acum mesajele pot merge la **orice** adresă (`CONTACT_TO_EMAIL`).
+5. Resend → Domains → `upburnout.com` → **Verify** → Verified → `CONTACT_FROM_EMAIL` se schimbă în `frontend/wrangler.jsonc` → `vars`
+   la `contact@upburnout.com` → push. Apoi Cloudflare → worker → Runtime variables and secrets → `CONTACT_TO_EMAIL` =
+   `athena.gandila@e-uvt.ro` (decizia #7) și, recomandat pentru prima lună, `CONTACT_BCC_EMAIL` = adresa de Yahoo a clientului
+   (verificare că mesajele nu ajung în spam la e-uvt.ro). Test: un mesaj real → ajunge la ambele.
 6. Google Search Console → Add property → Domain `upburnout.com` → înregistrarea TXT dată de Google → Cloudflare DNS → Verify →
    Sitemaps → `https://www.upburnout.com/sitemap-index.xml`.
 7. Cloudflare → DNS → Export → fișierul salvat în `docs/dns/` (backup).
@@ -115,9 +117,9 @@ branch decât `main` produce un preview separat (`<branch>-upburnout-website…w
 
 ## 8. Ce a rămas deschis la predare (vezi `OPEN_QUESTIONS.md`)
 
-- #7 adresa finală pentru mesaje (după verificarea domeniului în Resend).
-- #13 politica de confidențialitate / nota GDPR — clientul a amânat; site-ul Wix nu avea nici el una (parity), dar pentru un studiu
-  academic e recomandată; locul ei: un link sub formular + eventual un checkbox de consimțământ (`ContactForm.astro`).
+- #7 adresa finală (`athena.gandila@e-uvt.ro`) se setează după verificarea domeniului în Resend (pasul 5 de mai sus).
+- #13 politica de confidențialitate: PROIECT la `/confidentialitate` — de citit și aprobat de coordonatoarea studiului (ideal și de
+  DPO-ul UVT, gdpr@e-uvt.ro) înainte de lansare; textul e în `frontend/src/data/confidentialitate.ts`.
 - #34 chei Turnstile reale (până atunci: cheia de test, bannerul „Numai pentru testare" vizibil).
 - #35 confirmare 2FA; #36 review-ul sorei; ajustări de ilustrații („revenim mai încolo").
 - Firefox: neverificat automat (binarul Playwright de pe PC e corupt) — de deschis o dată manual.

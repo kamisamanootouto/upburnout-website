@@ -44,6 +44,7 @@ export const site = {
       { label: 'Echipă', href: '/echipă' },
       { label: 'Înscrie-te', href: '/#inscrie-te' },
       { label: 'Formular de contact', href: '/#contact' },
+      { label: 'Politica de confidențialitate', href: '/confidentialitate' },
     ],
     creditLabel: 'Ilustrații',
     creditLink: 'Vecteezy',

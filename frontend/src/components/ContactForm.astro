@@ -1,5 +1,6 @@
 ---
 import { contact } from '../data/acasa';
+import { confidentialitate } from '../data/confidentialitate';
 const f = contact.fields;
 // Cheia publică Turnstile: variabilă de build PUBLIC_TURNSTILE_SITE_KEY (Workers Builds → Settings → Build variables).
 // Fără ea se folosește cheia de test Cloudflare (widget vizibil, trece întotdeauna) — doar pentru preview.
@@ -104,6 +105,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x0000000
           <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
         </div>
         <input type="hidden" name="ts" value="" />
+
+        <p class="text-ink-muted mt-6 text-[0.875rem] leading-relaxed">
+          {confidentialitate.formNote}
+          <a href={confidentialitate.path} class="link-inline">{confidentialitate.formNoteLink}</a>.
+        </p>
 
         <!-- Cloudflare Turnstile (anti-spam, fără puzzle-uri în mod normal); se încarcă doar când formularul e aproape de viewport -->
         <div class="turnstile-slot mt-8 min-h-[65px]"></div>

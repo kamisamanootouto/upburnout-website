@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { confidentialitate as c } from '../data/confidentialitate';
+---
+
+<Base title={`${c.title} | ${site.name}`} path={c.path} description={c.intro}>
+  <article class="container-site py-14 sm:py-20">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="h-section">{c.title}</h1>
+      <p class="text-ink-muted mt-3 text-[0.9375rem]">Ultima actualizare: {c.updated}</p>
+      <p class="lead mt-8">{c.intro}</p>
+      {
+        c.sections.map((s) => (
+          <section class="mt-10">
+            <h2 class="font-display text-ink text-[1.375rem] leading-snug font-semibold">
+              {s.heading}
+            </h2>
+            <div class="prose-site text-ink-soft mt-4 text-[1.0625rem] leading-[1.7]">
+              {s.paragraphs.map((p) => (
+                <p>{p}</p>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+      <p class="mt-12">
+        <a href="/#contact" class="btn btn-secondary">Înapoi la formularul de contact</a>
+      </p>
+    </div>
+  </article>
+</Base>

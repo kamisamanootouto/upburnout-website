@@ -30,7 +30,7 @@ Recomandare: da (e clar un bug de configurare, nu conținut). Implicit: link că
 **#6 Textul de succes/eroare al formularului de pe Wix.** Nu e în HTML. Te rog: Wix → site → Forms & Submissions (sau
 editor → formular → Settings → „Submit message”) → screenshot cu mesajul de succes (și eventual eroare). Implicit: propunerile din `API_DESIGN.md` §5.
 
-**#7 Destinatarul mesajelor** — client (2026-09-21): „vedem mai târziu”; până atunci Yahoo-ul clientului (contul Resend). Rămâne deschis pentru Sesiunea 7. Text inițial: Confirmat: inițial `gandilabogdan10@gmail.com` (teste). (a) Care va fi adresa finală (a sorei? o adresă `@e-uvt.ro`?) (b) Vrei o copie BCC de siguranță pe o a doua adresă? (c) Unde ajung acum mesajele din Wix — Wix Inbox + notificare pe ce e-mail? (screenshot din Wix → Inbox / Forms).
+**#7 ✅ RĂSPUNS (2026-09-21): adresa finală = `athena.gandila@e-uvt.ro`.** Se poate seta abia după ce Resend verifică domeniul (în modul sandbox trimite doar către contul Resend) → pas în `MAINTENANCE.md` §7 (`CONTACT_TO_EMAIL`). Recomandare: în prima lună, `CONTACT_BCC_EMAIL` = Yahoo-ul clientului, ca verificare că mesajele trec de filtrele e-uvt.ro. Text inițial: Text inițial: Confirmat: inițial `gandilabogdan10@gmail.com` (teste). (a) Care va fi adresa finală (a sorei? o adresă `@e-uvt.ro`?) (b) Vrei o copie BCC de siguranță pe o a doua adresă? (c) Unde ajung acum mesajele din Wix — Wix Inbox + notificare pe ce e-mail? (screenshot din Wix → Inbox / Forms).
 Implicit: doar adresa ta, fără BCC.
 
 **#9 Text alternativ (alt) pentru imagini** — Wix are nume de fișiere (`image.png`, `FPSE-11.png`). Propunere (nevizibil, doar pentru cititoare de ecran/SEO):
@@ -56,13 +56,13 @@ Implicit: **rămâne `noindex`** (parity).
 
 **#11 ✅ REZOLVAT (2026-09-21) fără text nou:** (a) meta description Acasă = subtitlul din hero („Explorează o nouă abordare…”, 132 caractere); Echipă = prima propoziție din „Despre noi” (Google o va trunchia vizual la ~155 caractere, textul rămâne cel original). (b) Imagine de partajare `/og-image.jpg` (1200×630): logo UVT/FPSE + titlul + subtitlul existent + ilustrația hero — niciun cuvânt nou.
 
-**#10 Favicon.** Wix folosește iconița implicită Wix (nu există favicon propriu). Propunere: logo-ul UVT/FPSE simplificat sau un monogram „UP” în bleumarin. Este singurul element vizual nou — cere aprobare. Implicit: monogram „UP” bleumarin pe alb.
+**#10 ✅ (2026-09-21): favicon = semnul UVT decupat din logo-ul existent** (client: „logo-ul UP să fie scos complet”). Monogramul „UP” a fost eliminat din header și din favicon; nu mai există niciun element grafic inventat.
 
 **#14 Analytics.** Site-ul nu are niciun analytics acum. Dacă vreți să știți câți oameni ajung pe site și câți apasă „Înscrie-te”: Cloudflare Web Analytics (gratuit, fără cookie-uri, fără banner). Implicit: **fără analytics** (parity).
 
 ## Legal / confidențialitate
 
-**#13 Politica de confidențialitate + consimțământ la formular** — amânat din nou de client (2026-09-21: „mai târziu vedem noi”). Site-ul Wix actual nu are nici el una, deci lansarea fără ea este *parity*, nu regres; riscul legal rămâne al proiectului de cercetare, nu al site-ului. Text inițial: amânat de client („vedem când ajungem acolo”).
+**#13 ✅ PROIECT SCRIS (2026-09-21, la cererea clientului: „fă-o tu”)** — pagina `/confidentialitate` (`frontend/src/data/confidentialitate.ts`), link în footer + notă sub formular. Descrie fluxul real: operator UVT / Școala Doctorală de Psihologie, date din formular, temei consimțământ (art. 6(1)(a)) + interes legitim pentru securitate, împuterniciți Cloudflare și Resend (UE), retenție ≤ 12 luni, fără cookie-uri proprii, drepturi + DPO `gdpr@e-uvt.ro` (contact public, verificat pe uvt.ro/gdpr). **De verificat de sora clientului și, ideal, de DPO-ul UVT înainte de lansare**; de confirmat: perioada de 12 luni și dacă doriți și un checkbox de consimțământ (acum e doar notă + link). Este singurul text de pe site care nu provine din Wix — excepție cerută explicit de client. Text inițial: amânat de client. Site-ul Wix actual nu are nici el una, deci lansarea fără ea este *parity*, nu regres; riscul legal rămâne al proiectului de cercetare, nu al site-ului. Text inițial: amânat de client („vedem când ajungem acolo”).
 Notăm ca **blocker înainte de lansare (Sesiunea 7)**: formularul colectează date personale pentru un studiu academic;
 comisia de etică a UVT are foarte probabil un model de notă de informare. Nu scriem noi textul fără aviz. Implicit: pregătim locul (link sub formular + checkbox opțional, ascunse până există textul).
 
@@ -135,6 +135,10 @@ Verificare: `/api/health` arată `"turnstileSecret":"set"`.
 **#25 Cele 8 ședințe: grilă de carduri numerotate în loc de slideshow.** *(Clarificat pentru client 2026-09-21: cele 8 texte EXISTAU pe Wix, în slideshow — un slide vizibil pe rând; nu s-a adăugat niciun cuvânt. Doar afișarea s-a schimbat. Dacă se dorește slideshow ca în original, se poate reveni.)* Pe Wix un singur slide era vizibil; acum
 toate cele 8 sunt vizibile (2 coloane pe desktop, 1 pe mobil). Motiv: nimic ascuns, mai ușor de parcurs, accesibil.
 Alternativă: carusel cu săgeți (parity). Implicit: grila.
+
+**#37 ✅ (2026-09-21) Badge-ul „UP” din header eliminat** la cererea clientului; header-ul are doar numele site-ului + meniul.
+
+**#38 ✅ (2026-09-21) Ilustrațiile rămân cum sunt** („da, ne plac, rămân așa”).
 
 **#26 Buton „Înscrie-te acum!” și în header** (desktop + meniul mobil), pe lângă cele 2 linkuri. Textul există deja
 pe site (butonul din hero); e doar un al doilea loc pentru același link. Implicit: rămâne.

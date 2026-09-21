@@ -182,6 +182,22 @@ test.describe('Echipă', () => {
   });
 });
 
+test.describe('Confidențialitate', () => {
+  test('pagina există, e legată din footer și de sub formular', async ({ page }) => {
+    await page.goto('/');
+    await expect(
+      page.locator('footer').getByRole('link', { name: 'Politica de confidențialitate' }),
+    ).toHaveAttribute('href', '/confidentialitate');
+    await page
+      .locator('#formular-contact')
+      .getByRole('link', { name: 'Politica de confidențialitate' })
+      .click();
+    await expect(page).toHaveURL(/\/confidentialitate$/);
+    await expect(page.locator('h1')).toHaveText('Politica de confidențialitate');
+    await expect(page.getByText('gdpr@e-uvt.ro').first()).toBeVisible();
+  });
+});
+
 test.describe('Rutare', () => {
   test('/echipa → 301 /echipă; slash final → /echipă; 404 în design; /acasa → /', async ({
     request,
