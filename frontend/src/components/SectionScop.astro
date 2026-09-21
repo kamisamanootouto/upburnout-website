@@ -8,7 +8,7 @@ import { scop } from '../data/acasa';
   class="bg-surface-tint border-line border-y py-16 sm:py-20 lg:py-24"
   aria-labelledby="scop-titlu"
 >
-  <div class="container-site grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+  <div class="container-site grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-14">
     <div class="reveal">
       <h2 id="scop-titlu" class="h-section">{scop.title}</h2>
       <div class="prose-site text-ink-soft mt-7 max-w-2xl text-[1.0625rem] leading-[1.7]">
@@ -30,12 +30,12 @@ import { scop } from '../data/acasa';
         </svg>
       </a>
     </div>
-    <div class="mx-auto w-full max-w-[470px]">
+    <div class="mx-auto w-full max-w-[600px]">
       <Image
         src={art}
         alt=""
-        widths={[400, 600, 940]}
-        sizes="(min-width: 1024px) 470px, (min-width: 640px) 470px, 85vw"
+        widths={[480, 720, 1200]}
+        sizes="(min-width: 1024px) 44vw, (min-width: 640px) 600px, 90vw"
         class="illustration reveal h-auto w-full"
         loading="lazy"
       />

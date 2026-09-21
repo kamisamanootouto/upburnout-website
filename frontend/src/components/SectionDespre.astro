@@ -8,7 +8,7 @@ import { despre } from '../data/acasa';
   class="bg-surface-tint border-line border-y py-16 sm:py-20 lg:py-24"
   aria-labelledby="despre-titlu"
 >
-  <div class="container-site grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+  <div class="container-site grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
     <div class="reveal">
       <h2 id="despre-titlu" class="h-section">{despre.title}</h2>
       <div class="prose-site mt-7 max-w-2xl">
@@ -20,12 +20,12 @@ import { despre } from '../data/acasa';
         </p>
       </div>
     </div>
-    <div class="mx-auto w-full max-w-[560px]">
+    <div class="mx-auto w-full max-w-[680px]">
       <Image
         src={art}
         alt=""
         widths={[480, 720, 1120, 1600]}
-        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 560px, 90vw"
+        sizes="(min-width: 1024px) 48vw, (min-width: 640px) 680px, 92vw"
         class="illustration reveal h-auto w-full"
         loading="lazy"
       />

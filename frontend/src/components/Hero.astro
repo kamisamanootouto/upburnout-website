@@ -7,7 +7,7 @@ import { hero } from '../data/acasa';
 
 <section class="relative overflow-hidden">
   <div
-    class="container-site grid items-center gap-10 pt-10 pb-16 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pt-20 lg:pb-24"
+    class="container-site grid items-center gap-10 pt-10 pb-16 sm:pt-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pt-20 lg:pb-24"
   >
     <div class="max-w-2xl">
       <Image
@@ -24,13 +24,13 @@ import { hero } from '../data/acasa';
         <a href={hero.ctaHref} class="btn btn-primary">{hero.cta}</a>
       </div>
     </div>
-    <div class="mx-auto w-full max-w-[520px] lg:max-w-none">
+    <div class="mx-auto w-full max-w-[600px] lg:max-w-none">
       <!-- Ilustrația originală de pe Wix (Vecteezy), afișată ca acolo: portret, decupată centrat -->
       <Image
         src={heroArt}
         alt=""
         widths={[480, 720, 1080, 1400]}
-        sizes="(min-width: 1024px) 45vw, (min-width: 640px) 520px, 90vw"
+        sizes="(min-width: 1024px) 50vw, (min-width: 640px) 600px, 92vw"
         class="aspect-[11/12] h-auto w-full object-cover object-center"
         loading="eager"
         fetchpriority="high"

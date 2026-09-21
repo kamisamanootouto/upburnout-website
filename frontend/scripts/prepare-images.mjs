@@ -72,9 +72,9 @@ async function main() {
   const illustrations = [
     ['acasa-02-hero-ilustratie-femeie-plante.jpg', 'hero-femeie-plante.jpg', 1400],
     ['acasa-03-despre-terapie-grup.jpg', 'despre-terapie-grup.jpg', 1600],
-    ['acasa-04-scopul-cercetarii-ilustratie.jpg', 'scop-cercetare.jpg', 1000],
-    ['acasa-05-participare-ilustratie-cap-creier.jpg', 'participare-cap-creier.jpg', 800],
-    ['echipa-01-despre-noi-ilustratie-bec-puzzle.png', 'echipa-despre-noi-bec-puzzle.jpg', 1200],
+    ['acasa-04-scopul-cercetarii-ilustratie.jpg', 'scop-cercetare.jpg', 1200],
+    ['acasa-05-participare-ilustratie-cap-creier.jpg', 'participare-cap-creier.jpg', 900],
+    ['echipa-01-despre-noi-ilustratie-bec-puzzle.png', 'echipa-despre-noi-bec-puzzle.jpg', 1400],
   ];
   const OUT_ILL = path.join(OUT_ASSETS, 'illustrations');
   await mkdir(OUT_ILL, { recursive: true });

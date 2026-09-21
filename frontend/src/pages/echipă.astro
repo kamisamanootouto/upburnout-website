@@ -9,7 +9,7 @@ import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa
 
 <Base title={site.titles.echipa} path="/echipă" current="/echipă">
   <section class="border-line border-b py-14 sm:py-20" aria-labelledby="despre-noi-titlu">
-    <div class="container-site grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-14">
       <div>
         <!-- „Despre noi” este H1 aici (pe Wix era H2 și pagina nu avea H1) — OPEN_QUESTIONS #20 (a) -->
         <h1 id="despre-noi-titlu" class="h-section">{despreNoi.title}</h1>
@@ -17,12 +17,12 @@ import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa
           {despreNoi.paragraphs.map((p) => <p>{p}</p>)}
         </div>
       </div>
-      <div class="mx-auto w-full max-w-[550px]">
+      <div class="mx-auto w-full max-w-[660px]">
         <Image
           src={art}
           alt=""
-          widths={[480, 720, 1100]}
-          sizes="(min-width: 1024px) 40vw, (min-width: 640px) 550px, 90vw"
+          widths={[480, 720, 1100, 1400]}
+          sizes="(min-width: 1024px) 48vw, (min-width: 640px) 660px, 92vw"
           class="h-auto w-full"
           loading="eager"
         />

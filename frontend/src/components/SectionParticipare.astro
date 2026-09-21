@@ -8,21 +8,21 @@ import { participare } from '../data/acasa';
   <div class="container-site">
     <h2 id="participare-titlu" class="h-section reveal max-w-3xl">{participare.title}</h2>
 
-    <div class="mt-10 grid items-start gap-10 lg:mt-12 lg:grid-cols-[0.55fr_1.45fr] lg:gap-14">
-      <div class="reveal mx-auto w-full max-w-[340px] lg:max-w-none">
+    <div class="mt-10 grid items-center gap-10 lg:mt-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14">
+      <div class="reveal mx-auto w-full max-w-[440px] lg:max-w-none">
         <Image
           src={art}
           alt=""
-          widths={[340, 520, 800]}
-          sizes="(min-width: 1024px) 26vw, 340px"
+          widths={[440, 660, 900]}
+          sizes="(min-width: 1024px) 34vw, 440px"
           class="h-auto w-full"
           loading="lazy"
         />
       </div>
-      <ol class="grid gap-x-12 gap-y-2 md:grid-cols-2">
+      <ol class="flex flex-wrap justify-center gap-x-12 gap-y-2">
         {
           participare.steps.map((text, i) => (
-            <li class="reveal relative flex gap-5 py-5">
+            <li class="reveal relative flex w-full gap-5 py-5 md:w-[calc(50%-1.5rem)]">
               <span
                 class="num-badge bg-ink text-surface font-display grid size-10 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold tabular-nums"
                 data-num={i + 1}
