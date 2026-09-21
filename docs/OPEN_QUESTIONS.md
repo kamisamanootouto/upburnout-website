@@ -70,7 +70,7 @@ comisia de etică a UVT are foarte probabil un model de notă de informare. Nu s
 
 ## Domeniu, Wix, operațional
 
-**#18 Confirmare plan domeniu:** rămâne la Wix, schimbăm nameserverele către Cloudflare la Sesiunea 7; transfer la Cloudflare Registrar opțional mai târziu (cu acordul sorei). Implicit: da.
+**#18 ⚠ REVIZUIT (2026-09-21):** Wix **nu permite** schimbarea nameserverelor pentru domeniile cumpărate de la Wix (Help Center + panou). Planul „rămâne la Wix” nu e posibil → **transfer la un registrar care permite NS custom** (recomandare Porkbun; alternative Namecheap/INWX/Gandi), apoi NS → Cloudflare; Cloudflare Registrar opțional după 60 de zile. Detalii și pași: `DEPLOYMENT_PLAN.md` §4.3. Necesită acordul sorei (domeniul e pe contul ei) și decizia cine deține contul la noul registrar (recomandare: contul clientului, sora ca persoană de contact). Cost ~10–12 $ o dată (include 1 an de reînnoire).
 
 **#19 ✅ ACTUALIZAT (2026-09-21): planul Premium Wix e LUNAR, se reînnoiește pe 16 ale lunii** (următoarea: 16 octombrie 2026); domeniul se reînnoiește separat, în februarie 2027. **Consecință: nu mai e un termen dur** — dacă nu prindem 16 octombrie, costul e o singură lună în plus. Rămâne recomandarea de a face cut-over-ul înainte. Text inițial: Cut-over-ul (Sesiunea 7) trebuie făcut înainte de 16 octombrie, apoi se anulează Premium-ul (nu domeniul). NU anulați încă: la Wix anularea oprește reînnoirea, dar site-ul rămâne activ până la finalul perioadei plătite — o facem după ce noul site e verificat pe domeniu. Plan: S4–S6 până la ~3 octombrie, S7 cut-over în săptămâna 5–9 octombrie, anulare Premium imediat după verificare.
 

@@ -59,7 +59,33 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 6. SSL/TLS → Full (strict); Edge Certificates → Always Use HTTPS, HSTS (după 48 h de funcționare corectă), Minimum TLS 1.2.
 7. Security → Bots → Bot Fight Mode ON; Security → WAF → Rate limiting rule pentru `/api/contact` (5/min).
 
-### 4.3 Wix — schimbarea nameserverelor (clientul, ghidat live)
+### 4.3 ⚠ BLOCAJ DESCOPERIT LA EXECUȚIE (2026-09-21): Wix NU permite schimbarea nameserverelor pentru domeniile cumpărate de la Wix
+
+Confirmat în Help Center Wix („Currently, it is not possible to change the name servers of a Wix domain”) și în panou (meniul
+domeniului nu are opțiunea; secțiunea NS e „not editable”). Wix oferă doar (a) „pointing” prin înregistrări A/CNAME în DNS-ul Wix
+sau (b) „Transfer away from Wix”. **(a) nu funcționează cu Cloudflare Workers/Pages** pentru domeniul apex (Cloudflare cere
+zona pe DNS-ul lui; Wix nu are ALIAS/flattening și Cloudflare nu dă IP fix) → singura cale curată este **(b) transferul
+domeniului la un registrar care permite nameservere custom**, apoi NS → Cloudflare.
+
+RDAP (2026-09-21): înregistrat 2026-02-05 (peste 60 de zile → transferabil), status `clientTransferProhibited` (se deblochează
+din Wix la „Transfer away”), registrar Wix.com Ltd.
+
+**Plan revizuit (Sesiunea 7):**
+1. Wix → Domains → ⋯ → **Transfer away from Wix** → Wix deblochează domeniul și trimite **codul EPP/de autorizare** pe e-mailul
+   de contact al domeniului (al sorei — verificați „Edit contact info”). Dacă cere dezactivarea WHOIS privacy, se acceptă temporar.
+2. Registrar nou (recomandare: **Porkbun** — ieftin, simplu, NS custom imediat; alternative: Namecheap, INWX/Gandi în UE).
+   Cont creat de client; sora ca persoană de contact a domeniului. „Transfer domain” → `upburnout.com` + codul EPP → plata a 1 an
+   (~10–12 $; prelungește expirarea la feb 2028) → se aprobă e-mailul de confirmare a transferului (Wix trimite unul; aprobat
+   explicit, transferul se face în ore în loc de 5 zile).
+3. Când domeniul apare la registrarul nou: Name servers → custom → `aria.ns.cloudflare.com`, `chase.ns.cloudflare.com`.
+   Zona Cloudflare (`upburnout.com`, worker-ul cu ambele domenii custom) e deja pregătită și așteaptă activarea. (Dacă
+   activarea întârzie > ~28 de zile, Cloudflare poate șterge zona pending — se re-adaugă în 5 minute.)
+4. Continuă cu §4.4. Cloudflare Registrar rămâne opțiune ulterioară (după 60 de zile de la transfer).
+
+Wix Premium (lunar, 16 ale lunii) se anulează abia după ce site-ul nou e live pe domeniu. Până atunci site-ul Wix rămâne activ
+— transferul domeniului NU întrerupe nimic (DNS-ul Wix funcționează până schimbăm noi nameserverele la noul registrar).
+
+### 4.3-vechi Wix — schimbarea nameserverelor (NU se aplică — vezi mai sus)
 8. Wix → Domains → `upburnout.com` → ⋯ (Domain Actions) → **Advanced** / **Manage DNS** → **Name Servers** → „Replace name servers” →
    introducem cele 2 nameservere Cloudflare → Save. Wix avertizează că site-ul Wix și serviciile Wix de pe domeniu nu vor mai funcționa — corect, asta vrem.
 9. Propagare: de obicei minute–1 h; teoretic până la 24–48 h. Verificare: `nslookup -type=NS upburnout.com` → NS Cloudflare;
