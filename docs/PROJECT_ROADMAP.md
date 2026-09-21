@@ -12,7 +12,7 @@ așa că roadmap-ul are 8 sesiuni.
 | 1 | Business Analysis + Architecture | **DONE — 2026-09-20, aprobată implicit prin „începe sesiunea 2”** | inventar `content/`, 13 documente, întrebări deschise |
 | 2 | Design + Website Frontend Foundation | **DONE — 2026-09-20; deploy pe Workers făcut de client; design aprobat, cu 2 corecții aplicate (credit Vecteezy scos, rânduri echipă centrate)** | `verify-content` 71/71 |
 | 3 | Contact Form Backend | **DONE — 2026-09-20; e-mail real primit de client pe preview („perfect, acum merge”)** | Worker `/api/contact` + Resend (sandbox → Yahoo-ul clientului) + Turnstile (chei de test) + rate limit; 16 teste Vitest |
-| 4 | SEO, Accesibilitate, Performanță | așteaptă „go” — #2 răspuns: **se indexează** | meta description doar din text existent (#2), sitemap, OG, a11y, Lighthouse |
+| 4 | SEO, Accesibilitate, Performanță | **DONE local — 2026-09-21; așteaptă push + confirmare pe preview** | indexabil, description din text existent, sitemap, OG image, axe 0 violări, Lighthouse 100/100/100/100 (SEO 100 pe domeniul real; pe *.workers.dev e intenționat noindex) |
 | 5 | Security Review | după S4 | headere, teste de abuz |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
 | 7 | Domain Cut-over | după S6 + aprobarea sorei — **înainte de ~16 oct 2026** (reînnoirea Premium Wix, #19) | runbook `DEPLOYMENT_PLAN.md` §4 |
@@ -48,6 +48,7 @@ Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `d
 - Test de acceptare: cazurile din `API_DESIGN.md` §6 trec; niciun mesaj pierdut în 10 trimiteri consecutive (cu pauze).
 
 ## Sesiunea 4 — SEO, Accesibilitate, Performanță
+**Stare (2026-09-21):** implementat local. Rezultate: axe-core (WCAG 2.2 AA + best-practice) — 0 violări pe ambele pagini, desktop și mobil (cu meniul deschis); Lighthouse mobil local: Acasă 99/100/100/100 (LCP 1,8 s local; 1,4 s pe CDN), Echipă 100/100/100/100 (CLS 0,04); fără scroll orizontal la 320/375 px; ordinea de tab logică; H1 unic pe pagină. Lipsește doar Search Console (cere domeniul — Sesiunea 7).
 1. Head complet (lang=ro, canonical www, OG/Twitter, JSON-LD, robots/sitemap conform #2, description/OG image dacă aprobate).
 2. Audit axe + tastatură + VoiceOver/NVDA pe carousel, meniu, formular; contrast; focus.
 3. Lighthouse mobil ≥ 95 ×4; bugete din `WEBSITE_ARCHITECTURE.md` §7; `prefers-reduced-motion` verificat.

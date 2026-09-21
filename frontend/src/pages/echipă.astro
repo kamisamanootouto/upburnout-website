@@ -7,7 +7,12 @@ import { site } from '../data/site';
 import { despreNoi, echipaCercetare, echipaPsihoterapeuti } from '../data/echipa';
 ---
 
-<Base title={site.titles.echipa} path="/echipă" current="/echipă">
+<Base
+  title={site.titles.echipa}
+  path="/echipă"
+  current="/echipă"
+  description={despreNoi.paragraphs[0]}
+>
   <section class="border-line border-b py-14 sm:py-20" aria-labelledby="despre-noi-titlu">
     <div class="container-site grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-14">
       <div>

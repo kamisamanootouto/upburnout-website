@@ -38,7 +38,7 @@ Implicit: doar adresa ta, fără BCC.
 - ilustrațiile (4 + bec/puzzle) → alt gol (`alt=""`, decorative) — sunt ilustrații fără informație suplimentară
 - QR → „Cod QR pentru formularul de înscriere QuestionPro”
 - portrete → numele persoanei (ex. „Drd. Athena Gândilă”)
-Implicit: exact propunerea de mai sus.
+Implicit: exact propunerea de mai sus. *Actualizare S4 (2026-09-21): portretele au `alt=""` — numele e deja scris sub fotografie și cititoarele de ecran îl citeau de două ori (axe: image-redundant-alt).*
 
 **#12 URL-ul paginii Echipă: păstrăm `/echipă` (cu diacritic; în linkuri apare ca `/echip%C4%83`) sau facem `/echipa` canonic cu redirect 301 de la `/echipă`?**
 Recomandare: `/echipa` canonic + 301 de la `/echipă` (ambele funcționează; cel fără diacritic e mai curat în WhatsApp/e-mail).
@@ -54,7 +54,7 @@ Implicit: `/echipă` rămâne canonic, `/echipa` alias 301 → `/echipă` (parit
 se face doar prin canale directe (flyere, e-mailuri, QR), rămâne ascuns. Dacă vreți să fie găsit („burnout Timișoara”, „terapie de grup burnout”), îl indexăm.
 Implicit: **rămâne `noindex`** (parity).
 
-**#11 Dacă răspunsul la #2 este „indexăm”:** avem nevoie de (a) o meta description pe pagină (text nou, ≤ 155 caractere — propunem noi, aprobă sora) și (b) o imagine OG pentru partajări (propunem: ilustrația hero + titlu). Implicit: nimic (dacă rămâne noindex).
+**#11 ✅ REZOLVAT (2026-09-21) fără text nou:** (a) meta description Acasă = subtitlul din hero („Explorează o nouă abordare…”, 132 caractere); Echipă = prima propoziție din „Despre noi” (Google o va trunchia vizual la ~155 caractere, textul rămâne cel original). (b) Imagine de partajare `/og-image.jpg` (1200×630): logo UVT/FPSE + titlul + subtitlul existent + ilustrația hero — niciun cuvânt nou.
 
 **#10 Favicon.** Wix folosește iconița implicită Wix (nu există favicon propriu). Propunere: logo-ul UVT/FPSE simplificat sau un monogram „UP” în bleumarin. Este singurul element vizual nou — cere aprobare. Implicit: monogram „UP” bleumarin pe alb.
 

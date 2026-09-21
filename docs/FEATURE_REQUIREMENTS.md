@@ -69,7 +69,7 @@ Legendă: **[P]** = parity, există identic pe site-ul actual și se reproduce; 
 | Imagini | AVIF/WebP + fallback, `srcset` pe DPR/lățime, `loading="lazy"` sub fold, dimensiuni explicite (fără CLS); niciun original > 400 KB servit | audit build |
 | Fonturi | Fahkwang + Raleway self-hostate, subset latin + latin-ext, `font-display: swap`, preload pentru fontul de titlu | audit network |
 | Accesibilitate | WCAG 2.2 AA: contrast ≥ 4,5:1 (butonul lavandă actual pică — se corectează), focus vizibil, ordine logică a titlurilor (H1 pe fiecare pagină — Echipă nu are H1 acum; vezi OPEN_QUESTIONS #20), formular etichetat, carousel operabil din tastatură, `prefers-reduced-motion` | axe + test manual tastatură + cititor de ecran |
-| SEO tehnic | `lang="ro"`, title-uri păstrate, canonical, OG/Twitter; `noindex` sau indexare conform OPEN_QUESTIONS #2 | validare HTML + Rich Results |
+| SEO tehnic | `lang="ro"`, title-uri păstrate, canonical `www`, OG/Twitter + `og:image`, description din text existent, sitemap, robots; indexabil (decizie #2); preview-urile `noindex` prin header | Lighthouse SEO 100 (S4, local fără header) + Rich Results după cut-over |
 | Responsive | 320 → 1920 px fără scroll orizontal; layout mobil ≤ 750 px (aliniat cu breakpoint-ul Wix), tabletă, desktop | test la 320/390/768/1024/1440 |
 | Browsere | ultimele 2 versiuni Chrome/Edge/Firefox/Safari + iOS Safari; fără JS: conținutul complet vizibil, slide 1 vizibil, formularul afișează mesaj „activează JavaScript pentru trimitere” | test manual |
 | Securitate | headere CSP/HSTS/etc., validare server, secrete în env, vezi `SECURITY_PLAN.md` | curl + teste |

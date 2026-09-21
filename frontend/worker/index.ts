@@ -7,6 +7,8 @@ interface Env extends ContactEnv {
   CONTACT_RATE_LIMIT?: RateLimit;
 }
 
+const PRODUCTION_HOSTS = new Set(['www.upburnout.com', 'upburnout.com']);
+
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
@@ -39,6 +41,17 @@ export default {
       return new Response('Not found', { status: 404, headers: { 'cache-control': 'no-store' } });
     }
     // Orice altceva (inclusiv 404-urile) vine din static assets, cu not_found_handling = 404-page.
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    // Preview-urile (*.workers.dev, localhost) nu trebuie indexate în locul domeniului real.
+    if (!PRODUCTION_HOSTS.has(url.hostname)) {
+      const headers = new Headers(response.headers);
+      headers.set('x-robots-tag', 'noindex');
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+    return response;
   },
 } satisfies ExportedHandler<Env>;

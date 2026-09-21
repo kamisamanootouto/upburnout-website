@@ -1,4 +1,7 @@
-# Paginile poartă <meta name="robots" content="noindex"> (parity cu Wix — OPEN_QUESTIONS #2).
-# Crawling-ul rămâne permis ca motoarele să poată citi directiva noindex.
+# Site indexabil (decizie client 2026-09-21, OPEN_QUESTIONS #2). Preview-urile *.workers.dev primesc
+# X-Robots-Tag: noindex din worker, ca să nu apară în Google în locul domeniului real.
 User-agent: *
 Allow: /
+Disallow: /api/
+
+Sitemap: https://www.upburnout.com/sitemap-index.xml

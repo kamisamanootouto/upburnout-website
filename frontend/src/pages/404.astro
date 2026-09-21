@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 ---
 
-<Base title={site.titles.notFound} path="/404">
+<Base title={site.titles.notFound} path="/404" noindex>
   <section class="container-site py-24 text-center sm:py-32">
     <p class="eyebrow">Eroare 404</p>
     <h1 class="h-section mt-4">Pagina nu a fost găsită</h1>

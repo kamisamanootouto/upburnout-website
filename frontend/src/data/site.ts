@@ -6,8 +6,11 @@ export const site = {
   /** Textul din header pe mobil (parity cu Wix — OPEN_QUESTIONS #4). */
   nameShort: 'UP-Burnout',
   canonicalOrigin: 'https://www.upburnout.com',
-  /** Ambele pagini sunt `noindex` pe Wix; rămâne așa până la decizia din OPEN_QUESTIONS #2. */
-  noindex: true,
+  /** Decizie client 2026-09-21 (OPEN_QUESTIONS #2): site-ul se indexează. Doar pagina 404 rămâne noindex. */
+  noindex: false,
+  /** Imagine pentru partajări (OG/Twitter), 1200×630, generată din elementele existente (titlu + logo + ilustrația hero). */
+  ogImage: '/og-image.jpg',
+  ogImageAlt: 'Protocolul Unificat pentru Burnout',
   titles: {
     acasa: 'Acasă | Protocolul Unificat pentru Burnout',
     echipa: 'Echipă | Protocolul Unificat pentru Burnout',

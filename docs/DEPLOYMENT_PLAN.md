@@ -73,7 +73,7 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 11. Formularul trimis real de pe domeniu → e-mailul ajunge.
 12. **Resend → Domains → Add `upburnout.com`** → adăugăm în Cloudflare DNS înregistrările DKIM (CNAME/TXT), SPF (TXT) și DMARC (TXT `v=DMARC1; p=quarantine; rua=…`) → Verify → schimbăm `CONTACT_FROM_EMAIL` la `contact@upburnout.com` → redeploy → test real.
 13. Export zonă DNS (Cloudflare → DNS → Export) → salvat în repo la `docs/dns/`.
-14. Dacă indexare = da (OPEN_QUESTIONS #2): Search Console → proprietate de domeniu, verificare prin TXT în Cloudflare; trimitem `sitemap.xml`.
+14. Indexare = da (#2): Search Console → proprietate de domeniu `upburnout.com`, verificare prin TXT în Cloudflare DNS; trimitem `https://www.upburnout.com/sitemap-index.xml`; cerem indexarea celor 2 URL-uri. Verificăm că răspunsul de pe domeniu NU are `X-Robots-Tag: noindex` (doar preview-urile îl au).
 15. `_headers` HSTS activat; `curl -I` final; Lighthouse pe domeniul real.
 
 ### 4.5 Perioada de siguranță și curățenie

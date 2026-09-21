@@ -10,6 +10,7 @@ interface Props {
 const { member, eager = false } = Astro.props;
 ---
 
+<!-- Portretul e decorativ pentru cititoarele de ecran: numele e deja în figcaption (axe: image-redundant-alt) -->
 <li
   class="reveal w-full max-w-[22rem] sm:w-[calc((100%-1.5rem)/2)] sm:max-w-none lg:w-[calc((100%-4.5rem)/4)]"
 >
@@ -17,7 +18,7 @@ const { member, eager = false } = Astro.props;
     <div class="bg-surface-tint border-line aspect-[3/4] overflow-hidden rounded-[1.25rem] border">
       <Image
         src={member.photo}
-        alt={member.name}
+        alt=""
         widths={[320, 480, 640, 900]}
         sizes="(min-width: 1024px) 260px, (min-width: 640px) 33vw, 80vw"
         class="h-full w-full object-cover object-center"

@@ -7,8 +7,8 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    // doar /api/* trece prin Worker; restul e servit direct din static assets
-    "run_worker_first": ["/api/*"],
+    // toate cererile trec prin Worker (adaugă X-Robots-Tag: noindex pe preview-urile *.workers.dev)
+    "run_worker_first": true,
     // /echipă → dist/echipă.html; /echipă/ → 301 /echipă (parity cu Wix: fără slash final)
     "html_handling": "drop-trailing-slash",
     // rutele inexistente primesc dist/404.html cu status 404

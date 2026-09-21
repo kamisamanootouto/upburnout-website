@@ -116,9 +116,9 @@ buton hamburger `aria-expanded`, panou cu 2 linkuri, închidere la Esc/click în
 
 - `lang="ro"`; `<title>` identic cu Wix („Acasă | Protocolul Unificat pentru Burnout”, „Echipă | …”).
 - `canonical` = `https://www.upburnout.com/…` (păstrăm `www` ca variantă canonică, la fel ca acum).
-- `robots`: `noindex` **sau** indexare — conform OPEN_QUESTIONS #2; `description`/`og:image` doar dacă se indexează și textul e aprobat.
-- JSON-LD `WebSite` (parity) + eventual `Organization` (UVT/FPSE) dacă se indexează.
-- Sitemap doar la indexare.
+- Indexare activă (decizie #2, 2026-09-21): fără `noindex` (doar 404); `description` = propoziție existentă pe pagină; `og:image` = `/og-image.jpg`; `sitemap-index.xml` (@astrojs/sitemap, 404 exclus); `robots.txt` cu `Allow: /`, `Disallow: /api/`, `Sitemap:`.
+- Preview-urile (`*.workers.dev`, localhost) primesc `X-Robots-Tag: noindex` din worker (`PRODUCTION_HOSTS`), ca Google să indexeze doar domeniul real. De aceea `run_worker_first: true`.
+- JSON-LD: `WebSite` + `WebPage` (name/url/description din datele existente).
 
 ## 6. Redirecturi și URL-uri
 

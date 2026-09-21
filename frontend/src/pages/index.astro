@@ -8,9 +8,10 @@ import SectionParticipare from '../components/SectionParticipare.astro';
 import SectionInscriere from '../components/SectionInscriere.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { site } from '../data/site';
+import { hero } from '../data/acasa';
 ---
 
-<Base title={site.titles.acasa} path="/" current="/">
+<Base title={site.titles.acasa} path="/" current="/" description={hero.subtitle}>
   <Hero />
   <SectionDespre />
   <SectionAbordare />
