@@ -34,7 +34,13 @@ export default {
           rateLimit: Boolean(env.CONTACT_RATE_LIMIT),
           mailMode: env.MAIL_MODE ?? 'send',
         },
-        { headers: { 'cache-control': 'no-store' } },
+        {
+          headers: {
+            'cache-control': 'no-store',
+            'x-content-type-options': 'nosniff',
+            'content-security-policy': "default-src 'none'; frame-ancestors 'none'",
+          },
+        },
       );
     }
     if (url.pathname.startsWith('/api/')) {

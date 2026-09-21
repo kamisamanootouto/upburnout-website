@@ -13,7 +13,7 @@ așa că roadmap-ul are 8 sesiuni.
 | 2 | Design + Website Frontend Foundation | **DONE — 2026-09-20; deploy pe Workers făcut de client; design aprobat, cu 2 corecții aplicate (credit Vecteezy scos, rânduri echipă centrate)** | `verify-content` 71/71 |
 | 3 | Contact Form Backend | **DONE — 2026-09-20; e-mail real primit de client pe preview („perfect, acum merge”)** | Worker `/api/contact` + Resend (sandbox → Yahoo-ul clientului) + Turnstile (chei de test) + rate limit; 16 teste Vitest |
 | 4 | SEO, Accesibilitate, Performanță | **DONE local — 2026-09-21; așteaptă push + confirmare pe preview** | indexabil, description din text existent, sitemap, OG image, axe 0 violări, Lighthouse 100/100/100/100 (SEO 100 pe domeniul real; pe *.workers.dev e intenționat noindex) |
-| 5 | Security Review | după S4 | headere, teste de abuz |
+| 5 | Security Review | **DONE local — 2026-09-21; rămân la client: chei Turnstile reale (#34), confirmare 2FA** | CSP cu hash-uri, HSTS, teste de abuz verzi, audit 0 vulnerabilități, Dependabot |
 | 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
 | 7 | Domain Cut-over | după S6 + aprobarea sorei — **înainte de ~16 oct 2026** (reînnoirea Premium Wix, #19) | runbook `DEPLOYMENT_PLAN.md` §4 |
 | 8 | Final Polish + Handover | după S7 | verificare completă pe domeniul real, documentație de întreținere |
@@ -55,6 +55,7 @@ Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `d
 - Test de acceptare: rapoarte Lighthouse + axe atașate; verificare pe 320/390/768/1024/1440.
 
 ## Sesiunea 5 — Security Review
+**Stare (2026-09-21):** checklist-ul din `SECURITY_PLAN.md` §9 executat local, cu tabelul de rezultate acolo. Rămase pe partea clientului: cheile Turnstile reale, confirmarea 2FA.
 - Checklist `SECURITY_PLAN.md` §9 complet: CSP fără `unsafe-inline` (hash-uri la build), HSTS, teste de abuz, `npm audit`, Dependabot, repo privat, 2FA.
 - Test de acceptare: toate `curl`/testele din §9 cu rezultatul așteptat, documentate în raport.
 

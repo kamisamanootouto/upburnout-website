@@ -69,12 +69,21 @@ export const contactSchema = z.object({
 
 export type ContactInput = z.infer<typeof contactSchema>;
 
+// Headere de securitate pentru răspunsurile generate de worker (cele statice le primesc din public/_headers).
+const SECURITY_HEADERS: Record<string, string> = {
+  'cache-control': 'no-store',
+  'x-content-type-options': 'nosniff',
+  'x-frame-options': 'DENY',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+};
+
 const json = (status: number, body: unknown, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'no-store',
+      ...SECURITY_HEADERS,
+      'content-security-policy': "default-src 'none'; frame-ancestors 'none'",
       ...extra,
     },
   });
@@ -85,7 +94,13 @@ const htmlPage = (status: number, title: string, text: string) =>
     `<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escapeHtml(title)}</title><style>body{font-family:system-ui,sans-serif;color:#14213d;max-width:36rem;margin:4rem auto;padding:0 1.25rem;line-height:1.6}a{color:#256670}</style></head><body><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text)}</p><p><a href="/#contact">Înapoi la formular</a></p></body></html>`,
     {
       status,
-      headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        ...SECURITY_HEADERS,
+        // pagina are un singur <style> propriu, fără scripturi
+        'content-security-policy':
+          "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+      },
     },
   );
 
@@ -194,7 +209,7 @@ async function sendEmail(data: ContactInput, env: ContactEnv, deps: ContactDeps)
   const from = env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev';
   const { subject, text, html } = buildEmail(data, new Date(deps.now()));
   if (env.MAIL_MODE === 'log') {
-    deps.log('MAIL_MODE=log — e-mail netrimis', { to, subject });
+    deps.log('MAIL_MODE=log — e-mail netrimis (fără date personale în log)', { to });
     return true;
   }
   if (!env.RESEND_API_KEY || !to) {

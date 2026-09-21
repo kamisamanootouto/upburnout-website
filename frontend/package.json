@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/inject-csp-hashes.mjs",
     "preview": "astro preview",
     "preview:cf": "wrangler dev",
     "deploy": "wrangler deploy",
@@ -25,7 +25,7 @@
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^7.3.0",
-    "sharp": "^0.34.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.3.0",
     "zod": "^4.6.5"
   },
@@ -35,12 +35,11 @@
     "prettier": "^3.6.0",
     "prettier-plugin-astro": "^0.14.0",
     "typescript": "^5.9.0",
-    "vitest": "^3.2.7",
+    "vitest": "^5.0.1",
     "wrangler": "^4.135.0"
   },
   "allowScripts": {
     "sharp@0.35.4": true,
-    "sharp@0.34.5": true,
     "esbuild@0.28.2": true,
     "workerd@1.20260918.1": true
   }

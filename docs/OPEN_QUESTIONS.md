@@ -119,6 +119,15 @@ tehnic, listate mai jos la #33 pentru aprobare (Wix avea propriile mesaje, în e
 - Butonul „Înscrie-te acum!” din header — text existent pe site, doar un al doilea loc (#26).
 Implicit: rămân așa; dacă sora trimite mesajele originale din Wix (#6), le înlocuim 1:1.
 
+**#34 Chei Turnstile reale (de făcut de client, ~3 minute, oricând înainte de cut-over):**
+1. Cloudflare Dashboard → **Turnstile** → *Add widget* → nume `upburnout`, hostnames: `upburnout.com`, `www.upburnout.com`, `upburnout-website.bogdan-gandila.workers.dev` → mod **Managed** → Create → primești **Site Key** și **Secret Key**.
+2. Worker `upburnout-website` → Settings → **Runtime variables and secrets** → Add → Secret `TURNSTILE_SECRET_KEY` = Secret Key → Deploy.
+3. Worker → Settings → **Build** → *Variables and secrets* (cele de build, de data asta corect!) → Add `PUBLIC_TURNSTILE_SITE_KEY` = Site Key (nu e secret; e pusă în HTML la build).
+4. Un deploy nou (push sau „Retry build” în Deployments) — cheia publică se bakează la build. Bannerul „Numai pentru testare” dispare.
+Verificare: `/api/health` arată `"turnstileSecret":"set"`.
+
+**#35 Confirmare 2FA** pe conturile GitHub, Cloudflare, Resend și Wix (SECURITY_PLAN §1). Implicit: presupunem că e activat; spune-ne dacă nu.
+
 ## Decizii de design luate în Sesiunea 2 (de confirmat la review — se pot schimba fără cost)
 
 **#25 Cele 8 ședințe: grilă de carduri numerotate în loc de slideshow.** *(Clarificat pentru client 2026-09-21: cele 8 texte EXISTAU pe Wix, în slideshow — un slide vizibil pe rând; nu s-a adăugat niciun cuvânt. Doar afișarea s-a schimbat. Dacă se dorește slideshow ca în original, se poate reveni.)* Pe Wix un singur slide era vizibil; acum

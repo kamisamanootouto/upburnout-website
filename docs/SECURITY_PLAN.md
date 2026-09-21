@@ -84,6 +84,23 @@ poate fi publicat temporar oriunde (Netlify/Vercel) din același repo în < 30 m
 
 ## 9. Verificare (Sesiunea 5 — Security Review)
 
+**Rezultate (2026-09-21, local pe runtime-ul Cloudflare `wrangler dev`; de reconfirmat pe preview după push):**
+
+| Verificare | Rezultat |
+|---|---|
+| CSP fără `unsafe-inline` | ✅ `script-src 'self' https://challenges.cloudflare.com` + 2 hash-uri SHA-256 generate la build (`scripts/inject-csp-hashes.mjs`, rulat de `npm run build`); `style-src 'self'` (Astro nu emite stiluri inline); `font-src 'self' data:` (widget-ul Turnstile injectează un font data:); `frame-src`/`connect-src` doar Cloudflare; `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, `frame-ancestors 'none'`, `upgrade-insecure-requests` |
+| 0 violări CSP în browser | ✅ `securitypolicyviolation` = [] pe Acasă cu meniul deschis, widget Turnstile randat și formular trimis; Echipă cu meniul deschis |
+| HSTS | ✅ `max-age=31536000` (fără `includeSubDomains`/`preload` — se adaugă în S8 după 2 săptămâni stabile pe domeniu) |
+| Alte headere | ✅ `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `COOP` pe static; JSON/HTML din worker: `nosniff`, `no-store`, CSP `default-src 'none'` |
+| Teste de abuz | ✅ GET → 405; origine străină → 403; corp 20 KB → 413; `\r\nBcc:` în e-mail → 400 (caracterele de control sunt eliminate, e-mailul devine invalid); honeypot → 200 fără e-mail; fără token Turnstile → 403; 7 cereri rapide de pe același IP → 5×200 apoi 429 |
+| Injecție HTML în e-mail | ✅ test unitar: `<script>` ajunge escapat în partea HTML; `Reply-To` e validat ca e-mail |
+| Date personale în loguri | ✅ worker-ul loghează doar coduri; `MAIL_MODE=log` nu mai scrie subiectul (conținea numele) |
+| `npm audit` | ✅ 0 vulnerabilități după upgrade `sharp` 0.34 → 0.35.4 (CVE-uri libvips/libheif) și `vitest` 3 → 5 |
+| Dependabot | ✅ `.github/dependabot.yml` (npm în `/frontend` + GitHub Actions, săptămânal) |
+| Secrete | ✅ niciun `.dev.vars`/`.env` urmărit de git; secretele doar în Worker → Runtime variables and secrets |
+| Repo privat, 2FA | ⬜ de confirmat de client (GitHub, Cloudflare, Resend, Wix) |
+| Turnstile cu chei reale | ⬜ de făcut de client (pași în `OPEN_QUESTIONS.md` #34) — până atunci cheile de test trec întotdeauna, deci protecția anti-bot reală vine doar din honeypot + timp + rate limit |
+
 - `curl -I` pe producție: toate headerele prezente; CSP fără raportări în consolă pe ambele pagini + formular.
 - Teste de abuz: 6 POST-uri rapide → al 6-lea `429`; honeypot completat → `200` fără e-mail; token Turnstile invalid → `403`; corp 20 KB → `413`; `Origin` străin → `403`.
 - Injecție în câmpuri (`<script>`, `\r\nBcc:`) → e-mailul primit conține textul escapat, fără headere suplimentare.
