@@ -7,7 +7,7 @@ Burnout”**, desfășurat prin Școala Doctorală de Psihologie a Universităț
 este construit în **Wix** de sora clientului (coordonatoarea studiului, Drd. Athena Gândilă, apare în echipa de cercetare).
 
 Obiectivul remaster-ului: **același conținut, design nou (clean, „studiu clinic”), tehnologie nouă (cod propriu,
-Cloudflare Pages), performanță și accesibilitate de nivel premium.** Nu se adaugă funcționalități, pagini sau texte
+Cloudflare Workers), performanță și accesibilitate de nivel premium.** Nu se adaugă funcționalități, pagini sau texte
 fără aprobare explicită.
 
 ## Constrângeri fixe (nu se renegociază fără client)
@@ -24,8 +24,8 @@ fără aprobare explicită.
    UVT/FPSE, portretele echipei, codul QR, linkurile. Regulile „anti-trigger” sunt în `OPEN_QUESTIONS.md` #24.
 5. **Prompt-ul MergeIT** (`C:\Users\kinat\Desktop\uoak\prompt_MergeIT_ClaudeCode_Website.txt`) se respectă strict:
    Sesiunea 1 = doar analiză + documente; fiecare sesiune se oprește cu raport; nimic nu începe fără aprobare explicită.
-6. Hosting per template: frontend pe **Cloudflare Pages**; backend pe **Render** *doar dacă* clientul alege varianta
-   strictă (vezi `OPEN_QUESTIONS.md` #1); bază de date **nu există** în acest proiect.
+6. Hosting: **Cloudflare Workers** (static assets + worker pentru formular) — abatere aprobată de la „Pages + Render” din
+   template (`OPEN_QUESTIONS.md` #1, `DEPLOYMENT_PLAN.md` §2); bază de date **nu există** în acest proiect.
 
 ## Ce știm despre site-ul actual (rezumat; detalii în `content/`)
 
@@ -68,8 +68,8 @@ upburnout-website/
 │   ├── pages/            ← acasa.md, echipa.md (text verbatim + structură)
 │   ├── assets/original/  ← cele 17 imagini originale (~46 MB; NU se copiază ca atare în build)
 │   └── screenshots/      ← referință vizuală desktop/mobil
-├── frontend/             ← Sesiunea 2+: Astro (static) + funcția pentru formular (`functions/api/contact.ts`)
-└── backend/              ← DOAR dacă se alege Render (OPEN_QUESTIONS #1); altfel nu există
+├── frontend/             ← Astro 7 (static) + `worker/` (POST /api/contact) + `tests/e2e` (Playwright) + `scripts/`
+└── (fără backend/ — formularul rulează în worker-ul Cloudflare; Render nu e folosit)
 ```
 
 ## Cum lucrăm (regulile din prompt, aplicate)
@@ -85,10 +85,11 @@ upburnout-website/
 |---|---|
 | Client / dezvoltator-partener | Bogdan (utilizatorul), are acces la contul Wix |
 | Proprietar site și conținut | Sora clientului (coordonatoare studiu) — aprobă designul și orice modificare de text |
-| Cont Cloudflare | Al clientului (folosit deja pentru BacAI) — de confirmat |
-| Cont GitHub pentru repo | De ales (OPEN_QUESTIONS #15) |
-| Cont Resend (e-mail tranzacțional) | De creat, pe adresa clientului (permite testarea înainte de verificarea domeniului) |
-| Cont Wix (domeniu + site vechi) | Al sorei; clientul are acces |
+| Cont Cloudflare | Al clientului (`Bogdan.gandila@ya…`) — zona `upburnout.com` + worker `upburnout-website` |
+| Cont GitHub pentru repo | `kamisamanootouto` (privat) |
+| Cont Resend (e-mail tranzacțional) | `bogdan.gandila@yahoo.com`; domeniul `upburnout.com` adăugat (eu-west-1), Pending până la activarea DNS |
+| Cont Wix (domeniu + site vechi) | Al sorei; clientul are acces. Domeniul se transferă la un registrar extern (Wix nu permite NS custom) |
+| Ghid de întreținere | `docs/MAINTENANCE.md` |
 
 ## Documente
 

@@ -10,7 +10,7 @@ Legendă: **[P]** = parity, există identic pe site-ul actual și se reproduce; 
 - [P] `/echipă` — Echipă, conținut exact din `content/pages/echipa.md`. URL-ul cu diacritic **trebuie să funcționeze**.
 - [?] `/echipa` (fără diacritic) ca alias 301 către forma canonică aleasă (OPEN_QUESTIONS #12).
 - [N] Pagină 404 minimală în același design (Wix are una implicită; nu e conținut).
-- [N] `robots.txt`, `sitemap.xml` (sitemap doar dacă se indexează — OPEN_QUESTIONS #2).
+- [N] `robots.txt`, `sitemap-index.xml` — site indexabil (decizie #2, 2026-09-21).
 
 ### 1.2 Header și navigare
 - [P] Header sticky, alb; stânga: „Protocolul Unificat pentru Burnout” → `/`; dreapta: „Acasă”, „Echipă”.
@@ -22,9 +22,7 @@ Legendă: **[P]** = parity, există identic pe site-ul actual și se reproduce; 
 ### 1.3 Secțiunile paginii Acasă (ordinea fixă)
 1. [P] Hero: logo UVT/FPSE, H1, subtitlu, buton „Înscrie-te acum!” (ancoră la §6), ilustrație.
 2. [P] Despre această terapie: H2, 2 paragrafe, ilustrație.
-3. [P] Abordarea noastră: H2, intro, **slideshow cu 8 slide-uri** (titlu + listă/paragraf), săgeți prev/next + 8 indicatori.
-   - [N] Slideshow accesibil (`role="region"`, `aria-roledescription="carousel"`, butoane cu etichete, navigare tastatură, `aria-live="polite"` la schimbare), fără autoplay (parity), swipe pe mobil, respectă `prefers-reduced-motion`.
-   - [N] **Tot textul celor 8 slide-uri este în HTML** de la început (nu încărcat la click, cum face Wix) — bun pentru fidelitate, SEO și accesibilitate.
+3. [P] Abordarea noastră: H2, intro, cele **8 ședințe** (titlu + listă/paragraf) — pe Wix erau un slideshow cu un slide vizibil; **implementat ca grilă de carduri numerotate, toate vizibile** (decizie de design #25, 2026-09-20; textele identice). Fără JS, fără autoplay, accesibil (listă ordonată, numere prin CSS + text sr-only).
 4. [P] Scopul cercetării: H3, 3 paragrafe, ilustrație, buton „Descoperă echipa proiectului” → `/echipă` (secțiunea „Echipa de cercetare”).
 5. [P] Ce presupune participarea ta?: H2, ilustrație, lista 1–5 (numere bold), pe 2 coloane la desktop.
 6. [P] Înscrie-te acum!: H2 (bold), text (prima propoziție italic), buton „Contactează-ne” (ancoră la §7), imagine QR, buton „Înscrie-te” → QuestionPro în tab nou (`rel="noopener noreferrer"`).
@@ -67,8 +65,8 @@ Legendă: **[P]** = parity, există identic pe site-ul actual și se reproduce; 
 |---|---|---|
 | Performanță | Lighthouse mobil ≥ 95 la toate cele 4 categorii; LCP < 1,5 s pe 4G; CLS < 0,05; JS total < 30 KB gzip (doar slideshow, meniu, formular, Turnstile) | Lighthouse + WebPageTest în Sesiunea 4 |
 | Imagini | AVIF/WebP + fallback, `srcset` pe DPR/lățime, `loading="lazy"` sub fold, dimensiuni explicite (fără CLS); niciun original > 400 KB servit | audit build |
-| Fonturi | Fahkwang + Raleway self-hostate, subset latin + latin-ext, `font-display: swap`, preload pentru fontul de titlu | audit network |
-| Accesibilitate | WCAG 2.2 AA: contrast ≥ 4,5:1 (butonul lavandă actual pică — se corectează), focus vizibil, ordine logică a titlurilor (H1 pe fiecare pagină — Echipă nu are H1 acum; vezi OPEN_QUESTIONS #20), formular etichetat, carousel operabil din tastatură, `prefers-reduced-motion` | axe + test manual tastatură + cititor de ecran |
+| Fonturi | Plus Jakarta Sans (titluri) + Inter (text), self-hostate via @fontsource, subset latin + latin-ext, `font-display: swap` (design nou, aprobat) | audit network |
+| Accesibilitate | WCAG 2.2 AA: contrast ≥ 4,5:1, focus vizibil, H1 unic pe pagină (#20), formular etichetat cu erori `aria-describedby`, meniu mobil cu `aria-expanded` + Esc, `prefers-reduced-motion` — **axe 0 violări, Lighthouse 100 (S4)** | axe + Playwright (S6) |
 | SEO tehnic | `lang="ro"`, title-uri păstrate, canonical `www`, OG/Twitter + `og:image`, description din text existent, sitemap, robots; indexabil (decizie #2); preview-urile `noindex` prin header | Lighthouse SEO 100 (S4, local fără header) + Rich Results după cut-over |
 | Responsive | 320 → 1920 px fără scroll orizontal; layout mobil ≤ 750 px (aliniat cu breakpoint-ul Wix), tabletă, desktop | test la 320/390/768/1024/1440 |
 | Browsere | ultimele 2 versiuni Chrome/Edge/Firefox/Safari + iOS Safari; fără JS: conținutul complet vizibil, slide 1 vizibil, formularul afișează mesaj „activează JavaScript pentru trimitere” | test manual |

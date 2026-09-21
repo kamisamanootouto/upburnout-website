@@ -20,11 +20,11 @@ alternativ CSS vanilla cu variabile; ShadCN/Mantine sunt biblioteci de component
 **Mișcare:** fără Motion/Framer. Reveal-on-scroll cu **CSS scroll-driven animations** (`animation-timeline: view()`)
 și fallback minimal `IntersectionObserver` (~20 linii); totul dezactivat la `prefers-reduced-motion` — preferăm
 mecanisme native în locul JS-ului de poziționare (lecție din BacAI).
-**Slideshow:** componentă vanilla (~80 linii) cu `scroll-snap` + butoane + indicatori, sau **Embla Carousel** (~7 KB)
-dacă vrem swipe robust pe mobil. Swiper (~40 KB) — nu. Decizie finală în Sesiunea 2 după ce vedem cât de bine se
-comportă varianta CSS pe iOS.
-**Fonturi:** `@fontsource/fahkwang` + `@fontsource/raleway` (self-host, subset latin + latin-ext, `font-display: swap`).
-Google Fonts CDN — nu (request terț, implicații GDPR, fără câștig).
+**Cele 8 ședințe:** grilă de carduri, fără carusel (decizia #25) — 0 KB JS.
+**Fonturi (ales în S2, aprobat):** `@fontsource-variable/plus-jakarta-sans` (titluri) + `@fontsource-variable/inter` (text),
+self-host, subset latin + latin-ext, `font-display: swap`. Google Fonts CDN — nu (request terț, implicații GDPR, fără câștig).
+Notă de performanță: Inter variabil (latin + latin-ext) ≈ 135 KB — cea mai mare parte din greutatea paginii; opțional de redus
+cu greutăți statice, dacă se dorește vreodată (Lighthouse e deja 100).
 **Conținut:** textele din `content/pages/*.md` se transpun în fișiere de date tipizate (`src/data/acasa.ts`, `echipa.ts`)
 + un script de verificare care compară build-ul cu blocurile VERBATIM (Sesiunea 6).
 **Limbaj:** TypeScript strict. Node 22 LTS, npm (ca la BacAI).
@@ -93,7 +93,8 @@ Până atunci: `onboarding@resend.dev` → e-mailul clientului (testare).
 
 - Analytics: **niciunul** (parity). Dacă se dorește: Cloudflare Web Analytics (gratuit, fără cookie-uri, fără consimțământ necesar) — OPEN_QUESTIONS #14.
 - Monitorizare formular: Resend dashboard (livrări/bounce-uri) + test lunar manual; opțional un e-mail de alertă la eșec (funcția loghează în Cloudflare).
-- Teste: **Playwright** (E2E: navigare, slideshow, formular pe mobil/desktop, 404, redirecturi), **Vitest** (validare + funcție), script de fidelitate conținut, Lighthouse CI, axe.
+- Teste (implementate): **Vitest** (16 teste worker), **Playwright 1.61** (46 teste: Chromium + WebKit, desktop + mobil; Firefox
+  neacoperit — binar corupt pe mașina de dezvoltare), `verify-content` (fidelitate), Lighthouse + axe rulate manual (S4).
 - Calitate cod: ESLint + Prettier, `tsc --noEmit` în CI (GitHub Actions), Dependabot săptămânal.
 
 ## 9. Recomandarea finală (pe scurt)

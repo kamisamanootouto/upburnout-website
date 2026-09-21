@@ -3,9 +3,10 @@
 ## 1. Vedere de ansamblu
 
 ```
-Vizitator ──HTTPS──▶ Cloudflare CDN ──▶ Cloudflare Pages (HTML/CSS/JS/imagini statice, build Astro)
-                                   │
-                                   └─▶ POST /api/contact ──▶ Pages Function (Workers)
+Vizitator ──HTTPS──▶ Cloudflare ──▶ Worker `upburnout-website` (run_worker_first)
+                                   ├─ static assets din dist/ (build Astro; `_headers` CSP/HSTS, `_redirects`)
+                                   ├─ 301 apex → www; X-Robots-Tag: noindex pe *.workers.dev
+                                   └─▶ POST /api/contact ──▶ worker/contact.ts
                                                               ├─ validare (zod)
                                                               ├─ honeypot + timp + Turnstile siteverify
                                                               ├─ rate limit
@@ -13,9 +14,9 @@ Vizitator ──HTTPS──▶ Cloudflare CDN ──▶ Cloudflare Pages (HTML/C
 Buton „Înscrie-te” / QR ──▶ e-uvt.questionpro.com (extern, neschimbat)
 ```
 
-Tot site-ul este **static** (HTML generat la build). Singurul cod care rulează la cerere este funcția de contact.
-În varianta B (Render), funcția devine un serviciu Fastify separat, iar formularul face `fetch` cross-origin către el
-(vezi `API_DESIGN.md` §7 pentru diferențe).
+Tot site-ul este **static** (HTML generat la build). Singurul cod care rulează la cerere este worker-ul: pentru `/api/contact`
+execută handler-ul, pentru restul servește fișierele din `dist/` prin binding-ul ASSETS (cu `not_found_handling: 404-page`).
+Varianta Render a fost respinsă (`OPEN_QUESTIONS.md` #1).
 
 ## 2. Structura proiectului (`frontend/`)
 
@@ -38,27 +39,27 @@ frontend/
 │   │   └── site.ts           # titluri, linkuri, texte header/footer, URL QuestionPro
 │   ├── layouts/Base.astro    # <html lang="ro">, <head> (SEO, fonturi, preload), Header, <main>, Footer, skip-link
 │   ├── components/
-│   │   ├── Header.astro      # sticky, meniu desktop + hamburger mobil (script mic inline)
+│   │   ├── Header.astro      # sticky, meniu desktop + hamburger mobil (script inline; fără JS panoul rămâne vizibil)
 │   │   ├── Footer.astro
-│   │   ├── Hero.astro, About.astro, Approach.astro (+ Slideshow.astro), Purpose.astro, Participation.astro, SignUp.astro
-│   │   ├── ContactForm.astro # markup + script client (fetch, stări, Turnstile)
-│   │   ├── TeamGrid.astro, TeamCard.astro
-│   │   └── Reveal.astro      # wrapper pentru animația de intrare (CSS scroll-driven + fallback)
+│   │   ├── Hero.astro, SectionDespre.astro, SectionAbordare.astro (grila celor 8 ședințe), SectionScop.astro,
+│   │   │   SectionParticipare.astro, SectionInscriere.astro
+│   │   ├── ContactForm.astro # markup + script client (validare, fetch, Turnstile lazy)
+│   │   └── TeamGrid.astro, TeamCard.astro
 │   ├── pages/
 │   │   ├── index.astro       # /
-│   │   ├── echipă.astro      # /echipă (Astro acceptă nume Unicode; Pages servește /echip%C4%83) — de verificat în Sesiunea 2
-│   │   ├── echipa.astro      # alias sau redirect, conform OPEN_QUESTIONS #12
+│   │   ├── echipă.astro      # /echipă → dist/echipă.html (build.format 'file'); /echipa → 301 (_redirects)
 │   │   └── 404.astro
-│   ├── styles/global.css     # @import "tailwindcss"; @theme { tokens }; reset-uri; reduced-motion
-│   └── lib/contact-schema.ts # schema zod partajată client/server
-├── functions/
-│   └── api/contact.ts        # Pages Function (POST) — vezi API_DESIGN.md
-├── scripts/
-│   ├── prepare-images.mjs    # one-off: originale → src/assets (CMYK→RGB, resize)
-│   └── verify-content.mjs    # build → extrage text → compară cu content/pages VERBATIM
-└── tests/
-    ├── e2e/*.spec.ts         # Playwright
-    └── unit/*.test.ts        # Vitest (schema, funcție cu mock Resend/Turnstile)
+│   └── styles/global.css     # @import "tailwindcss"; @theme { tokens }; .reveal (CSS scroll-driven); reduced-motion
+├── worker/
+│   ├── index.ts              # fetch handler: /api/contact, /api/health, apex→www, noindex pe preview, ASSETS
+│   ├── contact.ts            # logica formularului (zod, origin, honeypot, Turnstile, Resend, rate limit) — vezi API_DESIGN.md
+│   └── contact.test.ts       # Vitest (16 teste)
+├── wrangler.jsonc            # main + assets (drop-trailing-slash, 404-page, run_worker_first) + vars + ratelimits
+├── playwright.config.ts, tests/e2e/site.spec.ts   # Chromium + WebKit, desktop + mobil, pe wrangler dev
+└── scripts/
+    ├── prepare-images.mjs    # originale → src/assets (CMYK→RGB, resize, crop 3:4)
+    ├── verify-content.mjs    # build → text → compară cu content/pages VERBATIM (+ approved-deviations)
+    └── inject-csp-hashes.mjs # hash-uri SHA-256 pentru scripturile inline → dist/_headers
 ```
 
 ## 3. Design tokens (punct de plecare; designul final se aprobă în Sesiunea 2)
@@ -87,13 +88,10 @@ pagina curentă marcată prin `aria-current="page"` + stil. Mobil (≤ 750px): �
 buton hamburger `aria-expanded`, panou cu 2 linkuri, închidere la Esc/click în afară, fără JS → linkurile rămân vizibile
 (progressive enhancement: meniul e ascuns doar când JS e activ).
 
-### Slideshow „Abordarea noastră”
-- Toate cele 8 slide-uri în DOM; container cu `scroll-snap-type: x mandatory`, fiecare slide `scroll-snap-align: start`.
-- Butoane „Ședința anterioară” / „Ședința următoare” (aria-label), 8 indicatori (`role="tablist"` sau butoane cu `aria-label="Ședința N"`),
-  `aria-live="polite"` cu „Ședința N din 8”.
-- Fără autoplay (parity). Swipe = scroll nativ. Tastatură: săgeți stânga/dreapta când containerul are focus.
-- Fără JS: toate slide-urile sunt derulabile orizontal (conținutul e accesibil oricum).
-- Reduced motion: `scroll-behavior: auto` în loc de `smooth`.
+### Cele 8 ședințe („Abordarea noastră”)
+- Implementate ca `<ol>` de carduri (2 coloane desktop, 1 mobil), toate vizibile — decizia #25. Numărul din titlu („1. …”) e text
+  verbatim: badge-ul vizual vine din CSS (`.num-badge::before { content: attr(data-num) }`), iar „1. ” rămâne în DOM ca text sr-only,
+  ca `verify-content` și cititoarele de ecran să vadă textul original.
 
 ### Formular de contact
 - `<form method="post" action="/api/contact">` cu `novalidate` + validare JS (aceeași schemă zod) + validare server.
@@ -109,8 +107,9 @@ buton hamburger `aria-expanded`, panou cu 2 linkuri, închidere la Esc/click în
 - Portretele echipei: `aspect-ratio: 3/4`, `object-fit: cover`, `object-position: center` (= `fill/al_c` Wix).
 
 ### Animații de intrare
-- Wrapper `Reveal.astro`: `opacity` + `translateY(12px)` → normal, prin `animation-timeline: view()`; fallback IO doar unde
-  browserul nu suportă; `@media (prefers-reduced-motion: reduce)` → fără animație. Fără poziționare calculată în JS.
+- Clasa `.reveal`: `opacity` + `translateY(14px)` → normal, prin `animation-timeline: view()` (CSS-only, fără JS, fără fallback —
+  browserele fără suport afișează conținutul direct); `@media (prefers-reduced-motion: no-preference)` gate. **Nu se pune pe
+  părintele unei imagini cu `mix-blend-mode`** (stacking context-ul animației blochează blend-ul) — se pune pe imagine.
 
 ## 5. SEO / head
 
