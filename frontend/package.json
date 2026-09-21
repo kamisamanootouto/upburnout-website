@@ -17,7 +17,8 @@
     "format:check": "prettier --check .",
     "images": "node scripts/prepare-images.mjs",
     "verify-content": "node scripts/verify-content.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@cloudflare/workers-types": "^5.20260920.1",
+    "@playwright/test": "^1.61.0",
     "prettier": "^3.6.0",
     "prettier-plugin-astro": "^0.14.0",
     "typescript": "^5.9.0",

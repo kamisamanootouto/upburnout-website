@@ -216,6 +216,15 @@
   }
 }
 
+/* Meniul mobil — progressive enhancement: cu JS e ascuns până la click (data-open); fără JS rămâne vizibil
+   și butonul hamburger nu apare. */
+html.js .mobile-panel:not([data-open]) {
+  display: none;
+}
+html:not(.js) .menu-toggle {
+  display: none;
+}
+
 /* Ilustrațiile JPEG au fundal alb: pe secțiunile colorate, multiply face albul „transparent”. */
 .illustration {
   mix-blend-mode: multiply;

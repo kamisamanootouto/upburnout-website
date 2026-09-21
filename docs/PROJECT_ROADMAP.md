@@ -14,7 +14,7 @@ așa că roadmap-ul are 8 sesiuni.
 | 3 | Contact Form Backend | **DONE — 2026-09-20; e-mail real primit de client pe preview („perfect, acum merge”)** | Worker `/api/contact` + Resend (sandbox → Yahoo-ul clientului) + Turnstile (chei de test) + rate limit; 16 teste Vitest |
 | 4 | SEO, Accesibilitate, Performanță | **DONE local — 2026-09-21; așteaptă push + confirmare pe preview** | indexabil, description din text existent, sitemap, OG image, axe 0 violări, Lighthouse 100/100/100/100 (SEO 100 pe domeniul real; pe *.workers.dev e intenționat noindex) |
 | 5 | Security Review | **DONE local — 2026-09-21; rămân la client: chei Turnstile reale (#34), confirmare 2FA** | CSP cu hash-uri, HSTS, teste de abuz verzi, audit 0 vulnerabilități, Dependabot |
-| 6 | QA & Content Fidelity | după S5 | diff automat vs `content/`, cross-browser |
+| 6 | QA & Content Fidelity | **DONE local — 2026-09-21; rămâne: verificare manuală pe telefon real + Firefox de către client** | 46 teste Playwright (Chromium + WebKit, desktop + mobil) verzi; conținut 71/71 + 4 corecții; Wix neschimbat față de inventar; live: headere, rute, abuz OK |
 | 7 | Domain Cut-over | după S6 + aprobarea sorei — **înainte de ~16 oct 2026** (reînnoirea Premium Wix, #19) | runbook `DEPLOYMENT_PLAN.md` §4 |
 | 8 | Final Polish + Handover | după S7 | verificare completă pe domeniul real, documentație de întreținere |
 
@@ -60,6 +60,15 @@ Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `d
 - Test de acceptare: toate `curl`/testele din §9 cu rezultatul așteptat, documentate în raport.
 
 ## Sesiunea 6 — QA & Content Fidelity
+**Rezultate (2026-09-21):**
+- **Fidelitate:** `verify-content` 71/71 blocuri + 4 corecții aprobate prezente; site-ul Wix re-crawl-uit — text identic cu inventarul din 2026-09-20 (nicio modificare între timp); QR byte-identic cu originalul; cei 10 membri în ordinea originală (test independent).
+- **Playwright** (`frontend/tests/e2e/site.spec.ts`, 12 teste × 4 proiecte: Chromium/WebKit × desktop/mobil = 46 rulate, 2 sărite intenționat): conținut + titluri + cele 8 ședințe, headere de securitate, meta/canonical/og, ancore interne, QuestionPro în filă nouă, ruta către echipă, validare + trimitere formular cu Turnstile, meniul mobil (deschis/Esc/link), fără scroll orizontal, 404 + redirecturi (`/echipa`, slash final, `/acasa`), sitemap/robots, **fără JavaScript** (conținut + navigare vizibile), **prefers-reduced-motion** (fără animații), API 405/403. Zero erori de consolă și zero violări CSP pe ambele pagini.
+- **Corecție găsită de QA:** fără JavaScript, meniul mobil era invizibil (panoul avea `hidden` în HTML). Acum: cu JS panoul e ascuns până la click (`html.js`), fără JS rămâne vizibil și butonul hamburger dispare.
+- **Local vs. WebKit:** `upgrade-insecure-requests` bloca `http://127.0.0.1` în WebKit → worker-ul scoate directiva doar pe `http:` (local); pe https rămâne.
+- **Live (preview `workers.dev`):** CSP/HSTS/noindex prezente; GET 405, origine străină 403, corp 20 KB 413, honeypot 200; rate limit **funcționează, dar e „eventual consistent”** (Workers Rate Limiting e best-effort, per locație: la 12 cereri rapide → 429 după a 3-a, cu 1–2 scăpări) — acceptabil ca primă linie; regula WAF pe zonă (S7) e a doua.
+- **Responsive:** 320 / 375 / 390 / 768 / 1024 / 1440 / 1600 verificate (fără overflow; layout-uri corecte).
+- **Neacoperit automat:** Firefox (binarul Playwright de pe această mașină e corupt: „side-by-side configuration is incorrect”; instalarea lui = descărcare ~100 MB — de decis) → verificare manuală de către client în Firefox și pe telefon real.
+- **Playwright** rulează și în CI (job `e2e`, Chromium + WebKit) pe `wrangler dev` cu `MAIL_MODE=log`.
 - Diff automat `verify-content` + verificare umană pagină cu pagină cu screenshot-urile din `content/screenshots/` alături.
 - Toate linkurile (interne, ancore, QuestionPro, Vecteezy), toate slide-urile, formularul, 404, redirecturile.
 - Cross-browser (Chrome/Edge/Firefox/Safari/iOS) + telefon real.

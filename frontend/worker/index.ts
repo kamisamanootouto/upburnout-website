@@ -52,6 +52,12 @@ export default {
     if (!PRODUCTION_HOSTS.has(url.hostname)) {
       const headers = new Headers(response.headers);
       headers.set('x-robots-tag', 'noindex');
+      // Doar local (http://127.0.0.1): fără upgrade-insecure-requests, altfel WebKit urcă resursele pe https și blochează pagina.
+      if (url.protocol === 'http:') {
+        const csp = headers.get('content-security-policy');
+        if (csp)
+          headers.set('content-security-policy', csp.replace(/;\s*upgrade-insecure-requests/, ''));
+      }
       return new Response(response.body, {
         status: response.status,
         statusText: response.statusText,

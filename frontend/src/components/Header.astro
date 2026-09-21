@@ -68,7 +68,7 @@ const { current } = Astro.props;
     </button>
   </div>
 
-  <div id="meniu-mobil" class="border-line bg-surface hidden border-t md:hidden" hidden>
+  <div id="meniu-mobil" class="mobile-panel border-line bg-surface border-t md:hidden">
     <nav aria-label="Navigare mobilă" class="container-site flex flex-col gap-1 py-3">
       {
         site.nav.map((item) => (
@@ -120,8 +120,8 @@ const { current } = Astro.props;
     const setOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
-      panel.hidden = !open;
-      panel.classList.toggle('hidden', !open);
+      if (open) panel.setAttribute('data-open', '');
+      else panel.removeAttribute('data-open');
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);
     };
