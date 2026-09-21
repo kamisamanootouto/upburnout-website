@@ -172,7 +172,7 @@ cheile reale (`PUBLIC_TURNSTILE_SITE_KEY` ca variabilă de build + `TURNSTILE_SE
 ### Deja răspunse (2026-09-20)
 - Fără CRM → N/A pentru USER_ROLES/CRM/DATABASE.
 - Design: clean, clinic, fără roșu/trigger; **libertate completă** pe fonturi, culori, layout, ilustrații (vezi latitudinea de mai sus).
-- #1 Backend formular: Cloudflare Pages Functions. #15 GitHub: `kamisamanootouto` (repo privat).
+- #1 Backend formular: în Cloudflare (inițial Pages Functions, implementat ca Worker — aceeași platformă). #15 GitHub: `kamisamanootouto` (repo privat).
 - E-mail formular: inițial al clientului, pentru teste.
 - Domeniul expiră/reînnoiește 5 feb 2027 (la Wix).
 - Folderele: `D:\Creatii_Claude\upburnout-website`.

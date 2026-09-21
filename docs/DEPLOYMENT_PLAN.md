@@ -5,8 +5,8 @@
 | Mediu | URL | Sursă | Scop |
 |---|---|---|---|
 | Local | `http://localhost:4321` (`astro dev`) + `wrangler pages dev` pentru funcție/`_headers` | working tree | dezvoltare |
-| Preview | `https://<branch>.upburnout.pages.dev` | orice branch ≠ `main` | review design/conținut de către client și soră, fără risc |
-| Staging = Production înainte de cut-over | `https://upburnout.pages.dev` | `main` | verificare finală (Sesiunile 4–6) |
+| Preview de branch | `https://<hash>-upburnout-website.bogdan-gandila.workers.dev` | orice branch ≠ `main` | review fără risc |
+| Preview permanent = Production înainte de cut-over | `https://upburnout-website.bogdan-gandila.workers.dev` | `main` | verificare finală; `X-Robots-Tag: noindex` |
 | Production | `https://www.upburnout.com` (+ `upburnout.com` → redirect) | `main` | după cut-over (Sesiunea 7) |
 
 Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
@@ -26,7 +26,7 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
    `npm run build`, Deploy command `npx wrangler deploy` (branch-uri: `npx wrangler versions upload`). Node 22 din `frontend/.node-version`.
    Worker-ul `upburnout-website` → `https://upburnout-website.bogdan-gandila.workers.dev` (preview).
 3. **Variabile de mediu** (Production și Preview separat): vezi `API_DESIGN.md` §3. Pe Preview: chei Turnstile de test + `CONTACT_TO_EMAIL` de test.
-4. **Turnstile**: Cloudflare → Turnstile → Add widget → hostnames `upburnout.pages.dev`, `www.upburnout.com`, `upburnout.com`; mod Managed.
+4. **Turnstile**: Cloudflare → Turnstile → Add widget → hostnames `upburnout-website.bogdan-gandila.workers.dev`, `www.upburnout.com`, `upburnout.com`; mod Managed (pași detaliați: `OPEN_QUESTIONS.md` #34).
 5. **Resend**: cont creat pe `bogdan.gandila@yahoo.com` (2026-09-20) → API key → până la verificarea domeniului, `from = onboarding@resend.dev`
    (funcționează doar către adresa contului, deci `CONTACT_TO_EMAIL` = adresa de Yahoo până la cut-over).
    Secretele se pun în Worker → Settings → **Runtime variables and secrets** (nu în „Build → Variables and secrets”, care sunt doar pentru build).
@@ -35,13 +35,13 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 ## 3. Fluxul de deploy curent
 
 `git push` pe branch → Cloudflare face build + preview URL (comentat în PR) → review → merge în `main` → build de producție
-(~1–2 min) → live pe `upburnout.pages.dev` (și pe domeniu, după cut-over). Rollback: Pages → Deployments → „Rollback to this deployment”.
+(~1–2 min) → live pe `upburnout-website.bogdan-gandila.workers.dev` (și pe domeniu, după cut-over). Rollback: Worker → Deployments → versiunea anterioară → Rollback.
 
 ## 4. Cut-over domeniu (Sesiunea 7) — runbook pas cu pas
 
 ### 4.0 Pre-condiții (toate bifate înainte de a atinge DNS-ul)
-- [ ] Sesiunile 2–6 aprobate; `upburnout.pages.dev` verificat pagină cu pagină, formular testat real.
-- [ ] Sora clientului a aprobat designul final și a văzut site-ul pe `pages.dev`.
+- [x] Sesiunile 2–6 aprobate; preview-ul `workers.dev` verificat pagină cu pagină (50 teste e2e), formular testat real (e-mail primit).
+- [ ] Sora clientului a văzut site-ul pe preview și politica de confidențialitate (#36, #13).
 - [x] Wix → Manage DNS records (2026-09-21): A ×3 → IP-uri Wix, CNAME `www`/`en` → `cdn3.wixdns.net`, **fără MX/TXT/SRV** → nimic de replicat. La import în Cloudflare, aceste înregistrări Wix se **șterg** (altfel domeniul ar arăta tot site-ul vechi).
 - [ ] Wix → Domains: domeniul nu are „transfer lock” care să blocheze schimbarea NS (schimbarea NS nu e transfer; ar trebui permisă).
 - [ ] Contul Cloudflare al clientului e pregătit; are 2FA.

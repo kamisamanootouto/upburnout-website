@@ -16,8 +16,9 @@ fără aprobare explicită.
    câmpuri de formular. Sursa de adevăr: `content/` (inventar complet făcut în Sesiunea 1, vezi `content/README.md`).
    **Regulă fermă (client, 2026-09-21): nu adăugăm niciun text** — conținutul e scris și verificat de doctori/profesori;
    excepțiile aprobate (typo-uri) sunt în `content/approved-deviations.json`; mesajele de interfață sunt listate în `OPEN_QUESTIONS.md` #33.
-2. **Domeniul rămâne cumpărat la Wix** (expiră/reînnoiește 5 feb 2027). Se schimbă doar nameserverele către Cloudflare;
-   transferul la Cloudflare Registrar este opțional, mai târziu.
+2. **Domeniul se transferă de la Wix la un registrar extern** (Porkbun recomandat) — Wix nu permite schimbarea nameserverelor
+   pentru domeniile cumpărate de la el (descoperit 2026-09-21, `DEPLOYMENT_PLAN.md` §4.3). Apoi nameservere → Cloudflare.
+   (Planul inițial „rămâne la Wix, doar NS” nu era posibil.)
 3. **Fără CRM** — decizie client 2026-09-20. Formularul de contact trimite e-mail; nu se stochează nimic într-o bază de date.
 4. **Fără roșu / culori și imagini „trigger”** în design; ton calm, clinic, curat. În rest, **libertate completă de design**
    (fonturi, culori, layout, ilustrații — clarificat de client 2026-09-20). Rămân fixe, ca *conținut*: textele, logo-ul
@@ -51,7 +52,7 @@ fără aprobare explicită.
 | 2026-09-20 | E-mailul destinatar al formularului: inițial cel al clientului (`gandilabogdan10@gmail.com`) pentru teste; final: de stabilit | Client |
 | 2026-09-20 | Politica de confidențialitate: se discută când ajungem acolo (înainte de lansare) | Client |
 | 2026-09-20 | Folderul proiectului: `D:\Creatii_Claude\upburnout-website` (fără `upburnout-crm`) | Client |
-| 2026-09-20 | Backend formular: **Cloudflare Pages Functions** (abatere aprobată de la „Render” din template) | Client, la recomandarea noastră |
+| 2026-09-20 | Backend formular: în Cloudflare, fără Render (abatere aprobată de la template); implementat în final ca **Worker** | Client, la recomandarea noastră |
 | 2026-09-20 | Repo GitHub privat pe contul personal **`kamisamanootouto`**; cont Cloudflare al clientului | Client |
 | 2026-09-20 | Design: libertate completă (fonturi, culori, ilustrații înlocuibile); singura regulă: fără trigger-e | Client |
 | 2026-09-20 | Hosting: Cloudflare **Workers static assets** (Git builds) în loc de Pages — dashboard-ul nou; aceeași platformă, 0 cost | Noi, la conectarea repo-ului |

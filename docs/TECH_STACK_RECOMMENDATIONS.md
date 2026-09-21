@@ -33,7 +33,7 @@ cu greutăți statice, dacă se dorește vreodată (Lighthouse e deja 100).
 
 | Opțiune | Pro | Contra | Verdict |
 |---|---|---|---|
-| **Cloudflare Pages Functions** (`frontend/functions/api/contact.ts`, rulează pe Workers) | Același repo, același deploy, aceeași origine (fără CORS); 0 cold start; 100.000 req/zi gratuit; integrare nativă Turnstile + Rate Limiting; secretele în Pages | Nu e Node complet (fără SMTP, fără fs) → e-mailul se trimite prin API HTTP (Resend); **abatere de la template** (care spune „Backend: Render”) | **Recomandat — APROBAT de client 2026-09-20** (OPEN_QUESTIONS #1) |
+| **Cloudflare Workers** (implementat: `frontend/worker/contact.ts`; planificat inițial ca Pages Function — același runtime) | Același repo, același deploy, aceeași origine (fără CORS); 0 cold start; 100.000 req/zi gratuit; integrare nativă Turnstile + Rate Limiting; secretele în Pages | Nu e Node complet (fără SMTP, fără fs) → e-mailul se trimite prin API HTTP (Resend); **abatere de la template** (care spune „Backend: Render”) | **Recomandat — APROBAT de client 2026-09-20** (OPEN_QUESTIONS #1) |
 | Render + **Fastify** (Node) | Conform template-ului; clientul cunoaște Fastify; poate face SMTP | Free tier: serviciul adoarme după 15 min → **prima trimitere a formularului așteaptă ~30–60 s** (UX inacceptabil) sau instanță plătită (~7 $/lună) pentru un endpoint; CORS + 2 deploy-uri + 2 locuri cu secrete; mai multă suprafață de atac | Acceptabil doar dacă clientul cere strict template-ul |
 | Render + Express | La fel ca Fastify, mai lent, mai puțin type-safe | — | Nu (Fastify e mai bun în aceeași categorie) |
 | Render + NestJS | Structură enterprise | Overkill masiv pentru un endpoint | Nu |
@@ -100,6 +100,6 @@ Până atunci: `onboarding@resend.dev` → e-mailul clientului (testare).
 ## 9. Recomandarea finală (pe scurt)
 
 **Astro 5 + Tailwind v4 + TypeScript**, fonturi self-hostate, imagini optimizate la build, **Cloudflare Pages** cu
-**Pages Function** pentru `/api/contact` → **Resend**, protejat de **Turnstile** + honeypot + rate limiting.
+**Worker** pentru `/api/contact` → **Resend**, protejat de **Turnstile** + honeypot + rate limiting.
 **Fără bază de date, fără Render** (cu excepția cazului în care clientul cere strict template-ul — atunci Fastify pe
 Render, cu avertismentul privind cold start-ul). Cost lunar: **0 €**.

@@ -24,7 +24,7 @@ așa că roadmap-ul are 8 sesiuni.
 - Test de acceptare: clientul citește `OPEN_QUESTIONS.md` și răspunde; sora confirmă că `content/pages/*.md` reflectă exact site-ul.
 
 ## Sesiunea 2 — Design + Website Frontend Foundation
-Scop: site-ul complet, static, cu tot conținutul, pe `https://upburnout.pages.dev`, în designul nou.
+Scop: site-ul complet, static, cu tot conținutul, pe preview-ul Cloudflare (`upburnout-website.bogdan-gandila.workers.dev`), în designul nou.
 
 **Stare (2026-09-20):** implementat integral local (`frontend/`), commit `90fcdc2` pe `main`. Abatere de la planul
 inițial: în loc de checkpoint „hero + o secțiune”, s-a construit tot site-ul (transcrierea conținutului nu depinde de
@@ -44,7 +44,7 @@ Cloudflare Pages la repo, arătarea preview-ului sorei. Detalii de design în `d
 1. `worker/contact.ts` conform `API_DESIGN.md`; schema zod (server) + aceleași reguli pe client; Turnstile; honeypot; rate limit binding.
 2. Resend: cont, API key, `onboarding@resend.dev` → e-mailul clientului; e-mail text+HTML; `Reply-To`.
 3. Vitest pentru schemă + funcție (mock-uri); Playwright pentru fluxul de formular.
-4. Test real: mesaj trimis de pe `pages.dev` → primit în inbox-ul clientului (dovadă: screenshot).
+4. Test real: mesaj trimis de pe preview → primit în inbox-ul clientului (confirmat de client 2026-09-20).
 - Test de acceptare: cazurile din `API_DESIGN.md` §6 trec; niciun mesaj pierdut în 10 trimiteri consecutive (cu pauze).
 
 ## Sesiunea 4 — SEO, Accesibilitate, Performanță
