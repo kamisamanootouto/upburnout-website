@@ -15,7 +15,7 @@ așa că roadmap-ul are 8 sesiuni.
 | 4 | SEO, Accesibilitate, Performanță | **DONE local — 2026-09-21; așteaptă push + confirmare pe preview** | indexabil, description din text existent, sitemap, OG image, axe 0 violări, Lighthouse 100/100/100/100 (SEO 100 pe domeniul real; pe *.workers.dev e intenționat noindex) |
 | 5 | Security Review | **DONE local — 2026-09-21; rămân la client: chei Turnstile reale (#34), confirmare 2FA** | CSP cu hash-uri, HSTS, teste de abuz verzi, audit 0 vulnerabilități, Dependabot |
 | 6 | QA & Content Fidelity | **DONE local — 2026-09-21; rămâne: verificare manuală pe telefon real + Firefox de către client** | 46 teste Playwright (Chromium + WebKit, desktop + mobil) verzi; conținut 71/71 + 4 corecții; Wix neschimbat față de inventar; live: headere, rute, abuz OK |
-| 7 | Domain Cut-over | **ÎN CURS — 2026-09-21: zona Cloudflare creată (NS `aria`/`chase`), worker cu `upburnout.com` + `www` adăugate; BLOCAT de Wix (nu permite schimbarea NS) → transfer de domeniu necesar, ~5–7 zile** | `DEPLOYMENT_PLAN.md` §4.3 revizuit |
+| 7 | Domain Cut-over | **PREGĂTIT — 2026-09-21: zonă Cloudflare (NS `aria`/`chase`), worker cu `upburnout.com` + `www`, înregistrările Resend (DKIM/CNAME×2/DMARC) în zonă, SSL Full (strict), Always Use HTTPS, Bot Fight Mode. AȘTEAPTĂ transferul domeniului de la Wix (client) → apoi NS la noul registrar + verificări (§4.4)** | `DEPLOYMENT_PLAN.md` §4.3 |
 | 8 | Final Polish + Handover | după S7 | verificare completă pe domeniul real, documentație de întreținere |
 
 ## Sesiunea 1 — Business Analysis + Architecture (DONE)

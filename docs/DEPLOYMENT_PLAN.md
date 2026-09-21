@@ -82,6 +82,12 @@ din Wix la „Transfer away”), registrar Wix.com Ltd.
    activarea întârzie > ~28 de zile, Cloudflare poate șterge zona pending — se re-adaugă în 5 minute.)
 4. Continuă cu §4.4. Cloudflare Registrar rămâne opțiune ulterioară (după 60 de zile de la transfer).
 
+**Pregătite deja în zona Cloudflare (2026-09-21), active automat la comutare:** înregistrările Worker pentru apex + `www`;
+Resend: TXT `resend._domainkey`, CNAME `rsend` → `rsend-euw1.forge.rmta.net`, CNAME `send` → `send.forge.rmta.net` (ambele DNS only),
+TXT `_dmarc` `v=DMARC1; p=none;` (domeniul e adăugat în Resend, regiune eu-west-1, click/open tracking oprite — status Pending până la
+activare); SSL/TLS Full (strict); Always Use HTTPS; Bot Fight Mode ON; AI Labyrinth OFF (ar injecta text). Verificat cu `nslookup` pe
+`aria.ns.cloudflare.com` că toate răspund.
+
 Wix Premium (lunar, 16 ale lunii) se anulează abia după ce site-ul nou e live pe domeniu. Până atunci site-ul Wix rămâne activ
 — transferul domeniului NU întrerupe nimic (DNS-ul Wix funcționează până schimbăm noi nameserverele la noul registrar).
 
