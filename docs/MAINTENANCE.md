@@ -129,4 +129,4 @@ branch decât `main` produce un preview separat (`<branch>-upburnout-website…w
   de citit și aprobat de coordonatoarea studiului (ideal și de DPO-ul UVT, gdpr@e-uvt.ro), apoi se pornește din comutator (§2.6).
 - #34 chei Turnstile reale (până atunci: cheia de test, bannerul „Numai pentru testare" vizibil).
 - #35 confirmare 2FA; #36 review-ul sorei; ajustări de ilustrații („revenim mai încolo").
-- Firefox: neverificat automat (binarul Playwright de pe PC e corupt) — de deschis o dată manual.
+- Telefon real: de deschis o dată site-ul pe un telefon (Firefox e acoperit automat din 2026-09-22).

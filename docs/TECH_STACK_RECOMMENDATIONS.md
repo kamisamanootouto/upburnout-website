@@ -93,8 +93,7 @@ Până atunci: `onboarding@resend.dev` → e-mailul clientului (testare).
 
 - Analytics: **niciunul** (parity). Dacă se dorește: Cloudflare Web Analytics (gratuit, fără cookie-uri, fără consimțământ necesar) — OPEN_QUESTIONS #14.
 - Monitorizare formular: Resend dashboard (livrări/bounce-uri) + test lunar manual; opțional un e-mail de alertă la eșec (funcția loghează în Cloudflare).
-- Teste (implementate): **Vitest** (16 teste worker), **Playwright 1.61** (46 teste: Chromium + WebKit, desktop + mobil; Firefox
-  neacoperit — binar corupt pe mașina de dezvoltare), `verify-content` (fidelitate), Lighthouse + axe rulate manual (S4).
+- Teste (implementate): **Vitest** (16 teste worker), **Playwright 1.61** (70 teste: Chromium + WebKit desktop + mobil, Firefox desktop), `verify-content` (fidelitate), Lighthouse + axe rulate manual (S4).
 - Calitate cod: ESLint + Prettier, `tsc --noEmit` în CI (GitHub Actions), Dependabot săptămânal.
 
 ## 9. Recomandarea finală (pe scurt)

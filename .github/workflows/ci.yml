@@ -40,13 +40,13 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
-      - run: npx playwright install --with-deps chromium webkit
+      - run: npx playwright install --with-deps chromium webkit firefox
       - run: npm run build
       # wrangler dev citește .dev.vars (gitignored): chei Turnstile de test + MAIL_MODE=log — nimic nu pleacă din CI
       - run: cp .dev.vars.example .dev.vars && printf '
 MAIL_MODE=log
 ' >> .dev.vars
-      - name: Playwright (Chromium + WebKit, desktop + mobil) pe wrangler dev
+      - name: Playwright (Chromium + WebKit desktop + mobil, Firefox desktop) pe wrangler dev
         run: npm run e2e
       - uses: actions/upload-artifact@v4
         if: failure()
