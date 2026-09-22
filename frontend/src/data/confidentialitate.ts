@@ -3,6 +3,12 @@
 // De verificat de coordonatoarea studiului și, ideal, de Responsabilul cu protecția datelor al UVT (gdpr@e-uvt.ro)
 // înainte de lansare. Elementele de confirmat sunt marcate în docs/OPEN_QUESTIONS.md #13.
 
+/**
+ * Comutator: `false` = pagina nu se generează (404), fără link în footer și fără nota de sub formular.
+ * Scoasă temporar la cererea clientului (2026-09-22) până la validarea textului. Pentru reactivare: `true` + push.
+ */
+export const PRIVACY_ENABLED = false;
+
 export const confidentialitate = {
   title: 'Politica de confidențialitate',
   updated: '21 septembrie 2026',

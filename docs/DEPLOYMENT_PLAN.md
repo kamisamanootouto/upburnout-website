@@ -41,7 +41,7 @@ Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
 
 ### 4.0 Pre-condiții (toate bifate înainte de a atinge DNS-ul)
 - [x] Sesiunile 2–6 aprobate; preview-ul `workers.dev` verificat pagină cu pagină (50 teste e2e), formular testat real (e-mail primit).
-- [ ] Sora clientului a văzut site-ul pe preview și politica de confidențialitate (#36, #13).
+- [ ] Sora clientului a văzut site-ul pe preview (#36); politica de confidențialitate e oprită temporar (#13) — se pornește din comutator după validarea textului.
 - [x] Wix → Manage DNS records (2026-09-21): A ×3 → IP-uri Wix, CNAME `www`/`en` → `cdn3.wixdns.net`, **fără MX/TXT/SRV** → nimic de replicat. La import în Cloudflare, aceste înregistrări Wix se **șterg** (altfel domeniul ar arăta tot site-ul vechi).
 - [ ] Wix → Domains: domeniul nu are „transfer lock” care să blocheze schimbarea NS (schimbarea NS nu e transfer; ar trebui permisă).
 - [ ] Contul Cloudflare al clientului e pregătit; are 2FA.

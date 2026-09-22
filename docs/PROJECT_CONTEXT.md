@@ -59,6 +59,7 @@ fără aprobare explicită.
 | 2026-09-21 | Site-ul **se indexează** în Google (S4); meta description doar din propoziții existente | Client |
 | 2026-09-21 | Typo-urile (4) se corectează; ilustrațiile cartoon originale revin (+ credit Vecteezy); zero text adăugat | Client |
 | 2026-09-21 | Termen: planul Premium Wix se reînnoiește ~16 oct 2026 → cut-over înainte, apoi anulare Premium | Client |
+| 2026-09-22 | Politica de confidențialitate (proiect) **scoasă temporar** de pe site; rămâne în cod, dezactivată (`PRIVACY_ENABLED`, #13) | Client |
 
 ## Structura repo-ului (țintă)
 

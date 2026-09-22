@@ -1,7 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
-import { confidentialitate as c } from '../data/confidentialitate';
+import { confidentialitate as c, PRIVACY_ENABLED } from '../data/confidentialitate';
+
+// Rută dinamică cu o singură cale (/confidentialitate), ca pagina să poată fi scoasă complet din build
+// (fără fișier HTML, fără intrare în sitemap) când PRIVACY_ENABLED = false — vezi src/data/confidentialitate.ts.
+export function getStaticPaths() {
+  return PRIVACY_ENABLED ? [{ params: { confidentialitate: c.path.slice(1) } }] : [];
+}
 ---
 
 <Base title={`${c.title} | ${site.name}`} path={c.path} description={c.intro}>

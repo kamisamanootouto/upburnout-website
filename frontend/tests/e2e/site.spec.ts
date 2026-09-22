@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { hero, abordare, participare, inscriere, contact } from '../../src/data/acasa';
 import { site } from '../../src/data/site';
+import { PRIVACY_ENABLED } from '../../src/data/confidentialitate';
 
 const isMobile = (page: Page) => (page.viewportSize()?.width ?? 1280) < 768;
 
@@ -184,6 +185,7 @@ test.describe('Echipă', () => {
 
 test.describe('Confidențialitate', () => {
   test('pagina există, e legată din footer și de sub formular', async ({ page }) => {
+    test.skip(!PRIVACY_ENABLED, 'politica e dezactivată temporar (PRIVACY_ENABLED=false)');
     await page.goto('/');
     await expect(
       page.locator('footer').getByRole('link', { name: 'Politica de confidențialitate' }),
@@ -195,6 +197,18 @@ test.describe('Confidențialitate', () => {
     await expect(page).toHaveURL(/\/confidentialitate$/);
     await expect(page.locator('h1')).toHaveText('Politica de confidențialitate');
     await expect(page.getByText('gdpr@e-uvt.ro').first()).toBeVisible();
+  });
+
+  test('dezactivată: pagina dă 404 și nu există niciun link către ea', async ({
+    page,
+    request,
+  }) => {
+    test.skip(PRIVACY_ENABLED, 'politica e activă (PRIVACY_ENABLED=true)');
+    const res = await request.get('/confidentialitate');
+    expect(res.status()).toBe(404);
+    await page.goto('/');
+    await expect(page.locator('a[href="/confidentialitate"]')).toHaveCount(0);
+    await expect(page.getByText('Politica de confidențialitate')).toHaveCount(0);
   });
 });
 

@@ -57,6 +57,13 @@ Copie de siguranță către o a doua adresă: adaugă secretul `CONTACT_BCC_EMAI
 `frontend/src/styles/global.css` → blocul `@theme` (culori `--color-*`, fonturi `--font-*`). Regula proiectului: fără roșu,
 portocaliu-roșu, roz aprins, galben de alertă; contrast text/fundal ≥ 4,5:1.
 
+### 2.6 Pornesc / opresc politica de confidențialitate
+
+Pagina `/confidentialitate` (text-proiect, nevalidat încă — `OPEN_QUESTIONS.md` #13) e **oprită temporar** de pe 2026-09-22.
+Comutatorul e o singură linie în `frontend/src/data/confidentialitate.ts`: `export const PRIVACY_ENABLED = false;`.
+Pui `true` → la următorul push apar pagina, linkul din footer și nota de sub formular; `false` → toate dispar (pagina dă 404
+și nu intră în sitemap). Textul politicii stă în același fișier, nu trebuie rescris.
+
 ## 3. Cum funcționează formularul (ca să știi ce să verifici când „nu merge")
 
 Browser → `POST /api/contact` (worker) → validare → honeypot + timp minim 3 s → Turnstile (anti-bot) → Resend → e-mail la
@@ -118,8 +125,8 @@ branch decât `main` produce un preview separat (`<branch>-upburnout-website…w
 ## 8. Ce a rămas deschis la predare (vezi `OPEN_QUESTIONS.md`)
 
 - #7 adresa finală (`athena.gandila@e-uvt.ro`) se setează după verificarea domeniului în Resend (pasul 5 de mai sus).
-- #13 politica de confidențialitate: PROIECT la `/confidentialitate` — de citit și aprobat de coordonatoarea studiului (ideal și de
-  DPO-ul UVT, gdpr@e-uvt.ro) înainte de lansare; textul e în `frontend/src/data/confidentialitate.ts`.
+- #13 politica de confidențialitate: **oprită temporar** (client, 2026-09-22) — proiectul rămâne în `frontend/src/data/confidentialitate.ts`;
+  de citit și aprobat de coordonatoarea studiului (ideal și de DPO-ul UVT, gdpr@e-uvt.ro), apoi se pornește din comutator (§2.6).
 - #34 chei Turnstile reale (până atunci: cheia de test, bannerul „Numai pentru testare" vizibil).
 - #35 confirmare 2FA; #36 review-ul sorei; ajustări de ilustrații („revenim mai încolo").
 - Firefox: neverificat automat (binarul Playwright de pe PC e corupt) — de deschis o dată manual.

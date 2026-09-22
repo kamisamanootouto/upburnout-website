@@ -1,6 +1,10 @@
 ---
 import { site } from '../data/site';
+import { confidentialitate, PRIVACY_ENABLED } from '../data/confidentialitate';
 const { footer } = site;
+const links = PRIVACY_ENABLED
+  ? [...footer.links, { label: confidentialitate.title, href: confidentialitate.path }]
+  : footer.links;
 ---
 
 <footer class="bg-surface-tint border-line mt-10 border-t">
@@ -21,7 +25,7 @@ const { footer } = site;
     <nav aria-label="Linkuri footer">
       <ul class="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-2">
         {
-          footer.links.map((l) => (
+          links.map((l) => (
             <li>
               <a
                 href={l.href}
