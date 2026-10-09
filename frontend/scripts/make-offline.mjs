@@ -20,7 +20,13 @@ const src = path.join(root, 'dist');
 const out = path.join(root, 'dist-offline');
 
 // Fișiere care au sens doar pe server (Cloudflare / motoare de căutare).
-const SKIP = new Set(['_headers', '_redirects', 'robots.txt', 'sitemap-index.xml', 'sitemap-0.xml']);
+const SKIP = new Set([
+  '_headers',
+  '_redirects',
+  'robots.txt',
+  'sitemap-index.xml',
+  'sitemap-0.xml',
+]);
 const TEAM_SRC = 'echipă.html';
 const TEAM_OUT = 'echipa.html';
 
@@ -85,4 +91,6 @@ if (leftovers.length) {
   console.error('Căi absolute rămase:\n' + leftovers.join('\n'));
   process.exit(1);
 }
-console.log(`Copie pentru deschidere locală: dist-offline/ (${fs.readdirSync(out).length} intrări)`);
+console.log(
+  `Copie pentru deschidere locală: dist-offline/ (${fs.readdirSync(out).length} intrări)`,
+);
