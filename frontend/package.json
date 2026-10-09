@@ -17,7 +17,7 @@
     "format:check": "prettier --check .",
     "images": "node scripts/prepare-images.mjs",
     "verify-content": "node scripts/verify-content.mjs",
-    "offline": "node scripts/make-offline.mjs",
+    "copies": "node scripts/make-copies.mjs",
     "test": "vitest run",
     "e2e": "playwright test"
   },
