@@ -19,7 +19,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * cheia de test și sub formular apare bannerul „Numai pentru testare”.
  * `1x00000000000000000000AA` = cheia de test Cloudflare (trece întotdeauna, pe orice domeniu).
  */
-const TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
+const TURNSTILE_SITE_KEY = '0x4AAAAAAFWmbvFT9C1X_1gE';
 
 const env = {
   ...process.env,
