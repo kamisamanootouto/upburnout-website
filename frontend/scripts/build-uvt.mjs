@@ -41,4 +41,9 @@ for (const args of [
   if (res.status !== 0) process.exit(res.status ?? 1);
 }
 
-console.log(`\nSite: ${env.PUBLIC_SITE_ORIGIN}\nFormular → ${env.PUBLIC_CONTACT_ENDPOINT}`);
+const turnstile = TURNSTILE_SITE_KEY.startsWith('1x000000')
+  ? 'CHEIE DE TEST (bannerul „Numai pentru testare” rămâne vizibil)'
+  : `cheie reală (${TURNSTILE_SITE_KEY})`;
+console.log(
+  `\nSite: ${env.PUBLIC_SITE_ORIGIN}\nFormular → ${env.PUBLIC_CONTACT_ENDPOINT}\nTurnstile: ${turnstile}`,
+);
