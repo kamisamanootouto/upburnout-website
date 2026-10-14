@@ -121,11 +121,11 @@ Site-ul public e `https://upburnout.uvt.ro` (găzduit de UVT). Ce a mai rămas, 
 | # | Pas | Cine |
 |---|---|---|
 | 1 | ✅ Push → worker-ul Cloudflare are CORS pentru `upburnout.uvt.ro` (verificat: preflight 204) | făcut |
-| 2 | Turnstile: widget nou (hostname-uri `upburnout.uvt.ro` + `…workers.dev`, mod *Managed*); **Secret key** → worker → Settings → Variables and Secrets → `TURNSTILE_SECRET_KEY`; **Site key** (publică) → `TURNSTILE_SITE_KEY` în `frontend/scripts/build-uvt.mjs` | client + noi |
-| 3 | `npm run build:uvt` → se urcă **conținutul** `frontend/dist-server/` în `/home/upburnout/public_html` (SFTP); se șterg rămășițele vechi (`_headers`, `_redirects`, `echipă.html`) | noi + client |
-| 4 | Verificare pe domeniu: Acasă, „Echipă", mesaj real prin formular, `/api/health` | împreună |
+| 2 | ✅ Turnstile: widget de producție (`0x4AAAAAAFWmbvFT9C1X_1gE`, hostname-uri `upburnout.uvt.ro` + `…workers.dev`, *Managed*); secretul în worker (`/api/health` → `turnstileSecret: set`); cheia publică în `frontend/scripts/build-uvt.mjs` | făcut 14.10 |
+| 3 | ✅ Fișierele urcate în `/home/upburnout/public_html` (verificat: canonical uvt.ro, `/echipă/` 200, `/echipă.html` și `_headers` 404, cheia reală în pagină) | făcut 14.10 |
+| 4 | ✅ Formular testat de pe domeniu: mesajul ajunge în inbox | făcut 14.10 |
 | 5 | IT-ul UVT: forțare **HTTPS** pe subdomeniu (acum `http://upburnout.uvt.ro` răspunde pe http, fără redirecționare) și, opțional, `ErrorDocument 404 /404.html` | client → IT UVT |
-| 6 | Resend: verificarea unui domeniu (înregistrări DNS în panoul Wix al lui `upburnout.com`) → apoi `CONTACT_FROM_EMAIL` = `contact@upburnout.com` (`wrangler.jsonc`) și `CONTACT_TO_EMAIL` = `athena.gandila@e-uvt.ro` (+ `CONTACT_BCC_EMAIL` prima lună). Până atunci mesajele ajung la adresa contului Resend | client + noi |
+| 6 | **Următorul pas:** Resend → domeniul `upburnout.com` verificat cu înregistrări DNS adăugate în panoul Wix (editarea DNS nu cere plan Premium) → apoi `CONTACT_FROM_EMAIL` = `contact@upburnout.com` (`wrangler.jsonc`) și `CONTACT_TO_EMAIL` = `athena.gandila@e-uvt.ro` (+ `CONTACT_BCC_EMAIL` prima lună). Atenție: depinde de păstrarea domeniului `upburnout.com` (expiră feb. 2027) | client + noi |
 | 7 | Google Search Console → URL prefix `https://upburnout.uvt.ro/` → verificare prin fișierul HTML urcat în `public_html` → Sitemaps → `sitemap-index.xml` | client |
 | 8 | Decizie `upburnout.com` (Wix Premium se reînnoiește ~16 oct): redirecționare către `upburnout.uvt.ro`, sau se lasă să expire | client |
 | 9 | Politica de confidențialitate: validare text → `PRIVACY_ENABLED = true` (§2.6) → build + urcat | sora clientului + noi |
