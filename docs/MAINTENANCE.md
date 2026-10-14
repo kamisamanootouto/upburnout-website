@@ -114,28 +114,31 @@ branch decât `main` produce un preview separat (`<branch>-upburnout-website…w
 - **Domeniul (după activare):** dacă e nevoie să revii la Wix în primele săptămâni: la registrar pui nameserverele Wix
   (`ns0.wixdns.net`, `ns1.wixdns.net`) — doar cât timp site-ul Wix e încă publicat și planul Premium activ.
 
-## 7. Ziua activării domeniului (checklist, împreună)
+## 7. Lista de finalizare (actualizată 14.10.2026, după mutarea pe serverul UVT)
 
-1. Registrar → Name servers → `aria.ns.cloudflare.com`, `chase.ns.cloudflare.com`.
-2. Cloudflare → zona `upburnout.com` → Overview → „Check nameservers"; statusul devine **Active** (minute–ore).
-3. `https://www.upburnout.com` → site-ul nou; `https://upburnout.com` → redirect la `www`; `/echipă`; `/api/health`.
-4. Formular: trimitere reală de pe domeniu → e-mailul ajunge.
-5. Resend → Domains → `upburnout.com` → **Verify** → Verified → `CONTACT_FROM_EMAIL` se schimbă în `frontend/wrangler.jsonc` → `vars`
-   la `contact@upburnout.com` → push. Apoi Cloudflare → worker → Runtime variables and secrets → `CONTACT_TO_EMAIL` =
-   `athena.gandila@e-uvt.ro` (decizia #7) și, recomandat pentru prima lună, `CONTACT_BCC_EMAIL` = adresa de Yahoo a clientului
-   (verificare că mesajele nu ajung în spam la e-uvt.ro). Test: un mesaj real → ajunge la ambele.
-6. Google Search Console → Add property → Domain `upburnout.com` → înregistrarea TXT dată de Google → Cloudflare DNS → Verify →
-   Sitemaps → `https://www.upburnout.com/sitemap-index.xml`.
-7. Cloudflare → DNS → Export → fișierul salvat în `docs/dns/` (backup).
-8. După 2–4 săptămâni fără probleme: Wix → Subscriptions → anulează **planul Premium al site-ului** (nu există alt abonament de anulat
-   la Wix după transferul domeniului). Opțional, „Unpublish" pe site-ul Wix.
-9. Tot atunci: în `public/_headers`, `Strict-Transport-Security` → `max-age=31536000; includeSubDomains` (întărire HSTS).
+Site-ul public e `https://upburnout.uvt.ro` (găzduit de UVT). Ce a mai rămas, în ordine:
+
+| # | Pas | Cine |
+|---|---|---|
+| 1 | ✅ Push → worker-ul Cloudflare are CORS pentru `upburnout.uvt.ro` (verificat: preflight 204) | făcut |
+| 2 | Turnstile: widget nou (hostname-uri `upburnout.uvt.ro` + `…workers.dev`, mod *Managed*); **Secret key** → worker → Settings → Variables and Secrets → `TURNSTILE_SECRET_KEY`; **Site key** (publică) → `TURNSTILE_SITE_KEY` în `frontend/scripts/build-uvt.mjs` | client + noi |
+| 3 | `npm run build:uvt` → se urcă **conținutul** `frontend/dist-server/` în `/home/upburnout/public_html` (SFTP); se șterg rămășițele vechi (`_headers`, `_redirects`, `echipă.html`) | noi + client |
+| 4 | Verificare pe domeniu: Acasă, „Echipă", mesaj real prin formular, `/api/health` | împreună |
+| 5 | IT-ul UVT: forțare **HTTPS** pe subdomeniu (acum `http://upburnout.uvt.ro` răspunde pe http, fără redirecționare) și, opțional, `ErrorDocument 404 /404.html` | client → IT UVT |
+| 6 | Resend: verificarea unui domeniu (înregistrări DNS în panoul Wix al lui `upburnout.com`) → apoi `CONTACT_FROM_EMAIL` = `contact@upburnout.com` (`wrangler.jsonc`) și `CONTACT_TO_EMAIL` = `athena.gandila@e-uvt.ro` (+ `CONTACT_BCC_EMAIL` prima lună). Până atunci mesajele ajung la adresa contului Resend | client + noi |
+| 7 | Google Search Console → URL prefix `https://upburnout.uvt.ro/` → verificare prin fișierul HTML urcat în `public_html` → Sitemaps → `sitemap-index.xml` | client |
+| 8 | Decizie `upburnout.com` (Wix Premium se reînnoiește ~16 oct): redirecționare către `upburnout.uvt.ro`, sau se lasă să expire | client |
+| 9 | Politica de confidențialitate: validare text → `PRIVACY_ENABLED = true` (§2.6) → build + urcat | sora clientului + noi |
+| 10 | Review final de conținut (inclusiv „faceți parte" vs „faci parte", #39), 2FA pe conturi (#35), o verificare pe telefon real | client |
+
+Pașii 2–4 și 9 se termină cu același ritual: `npm run build:uvt` → urcat prin FileZilla → verificat în browser.
 
 ## 8. Ce a rămas deschis la predare (vezi `OPEN_QUESTIONS.md`)
 
-- #7 adresa finală (`athena.gandila@e-uvt.ro`) se setează după verificarea domeniului în Resend (pasul 5 de mai sus).
+- #7 adresa finală (`athena.gandila@e-uvt.ro`) se setează după verificarea unui domeniu în Resend (pasul 6 de mai sus).
 - #13 politica de confidențialitate: **oprită temporar** (client, 2026-09-22) — proiectul rămâne în `frontend/src/data/confidentialitate.ts`;
   de citit și aprobat de coordonatoarea studiului (ideal și de DPO-ul UVT, gdpr@e-uvt.ro), apoi se pornește din comutator (§2.6).
-- #34 chei Turnstile reale (până atunci: cheia de test, bannerul „Numai pentru testare" vizibil).
+- #34 chei Turnstile reale (până atunci: cheia de test, bannerul „Numai pentru testare" vizibil) — pasul 2.
+- Găzduirea e la UVT: **push-ul nu mai actualizează site-ul public** (§5) — fișierele se urcă prin SFTP.
 - #35 confirmare 2FA; #36 review-ul sorei; ajustări de ilustrații („revenim mai încolo").
 - Telefon real: de deschis o dată site-ul pe un telefon (Firefox e acoperit automat din 2026-09-22).
