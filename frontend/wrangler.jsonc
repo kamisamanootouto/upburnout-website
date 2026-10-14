@@ -9,8 +9,8 @@
     "binding": "ASSETS",
     // toate cererile trec prin Worker (adaugă X-Robots-Tag: noindex pe preview-urile *.workers.dev)
     "run_worker_first": true,
-    // /echipă → dist/echipă.html; /echipă/ → 301 /echipă (parity cu Wix: fără slash final)
-    "html_handling": "drop-trailing-slash",
+    // paginile sunt `nume/index.html`; /echipă → 301 /echipă/ (același format ca pe serverul UVT)
+    "html_handling": "force-trailing-slash",
     // rutele inexistente primesc dist/404.html cu status 404
     "not_found_handling": "404-page",
   },
@@ -18,7 +18,8 @@
   // dashboard: Worker → Settings → Variables and Secrets (docs/API_DESIGN.md §3).
   "vars": {
     "CONTACT_FROM_EMAIL": "onboarding@resend.dev",
-    "ALLOWED_ORIGINS": "https://www.upburnout.com,https://upburnout.com,*.workers.dev",
+    // upburnout.uvt.ro = site-ul public (găzduit de UVT); worker-ul primește formularul de acolo (CORS).
+    "ALLOWED_ORIGINS": "https://upburnout.uvt.ro,http://upburnout.uvt.ro,https://www.upburnout.com,https://upburnout.com,*.workers.dev",
   },
   // 5 trimiteri / minut / IP (Workers Rate Limiting, gratuit)
   "ratelimits": [

@@ -54,7 +54,7 @@ test.describe('Acasă', () => {
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       'href',
-      'https://www.upburnout.com/',
+      'https://upburnout.uvt.ro/',
     );
     await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
@@ -81,7 +81,7 @@ test.describe('Acasă', () => {
     await expect(qp).toHaveAttribute('rel', /noopener/);
 
     await page.getByRole('link', { name: /Descoperă echipa proiectului/ }).click();
-    await expect(page).toHaveURL(/\/echip%C4%83#echipa-de-cercetare$/);
+    await expect(page).toHaveURL(/\/echip%C4%83\/#echipa-de-cercetare$/);
     await expect(page.locator('#echipa-de-cercetare')).toBeInViewport();
   });
 
@@ -90,6 +90,11 @@ test.describe('Acasă', () => {
   }) => {
     await page.goto('/#contact');
     const form = page.locator('#formular-contact');
+    // dist/ trebuie să fie build-ul local: `npm run build:uvt` pune adresa worker-ului de producție,
+    // iar testul ar trimite un e-mail real.
+    expect(await form.getAttribute('action'), 'rulează `npm run build` înainte de e2e').toBe(
+      '/api/contact',
+    );
     // scriptul formularului e gata când a completat câmpul ascuns `ts` (evită un click înaintea hidratării)
     await expect(form.locator('input[name="ts"]')).not.toHaveValue('');
     await form.getByRole('button', { name: contact.submit }).click();
@@ -139,7 +144,7 @@ test.describe('Acasă', () => {
     await expect(page.locator('#meniu-mobil')).toBeHidden();
     await toggle.click();
     await page.locator('#meniu-mobil').getByRole('link', { name: 'Echipă' }).click();
-    await expect(page).toHaveURL(/echip%C4%83$/);
+    await expect(page).toHaveURL(/echip%C4%83\/$/);
   });
 
   test('fără scroll orizontal', async ({ page }) => {
@@ -154,7 +159,7 @@ test.describe('Acasă', () => {
 test.describe('Echipă', () => {
   test('cei 10 membri în ordine, H1 „Despre noi”, fără erori', async ({ page }) => {
     const errors = await collectErrors(page);
-    await page.goto('/echipă');
+    await page.goto('/echipă/');
     await expect(page).toHaveTitle(site.titles.echipa);
     await expect(page.locator('h1')).toHaveText('Despre noi');
     // Lista de mai jos e independentă de src/data (echipa.ts importă imagini, pe care Playwright nu le poate încărca)
@@ -213,15 +218,16 @@ test.describe('Confidențialitate', () => {
 });
 
 test.describe('Rutare', () => {
-  test('/echipa → 301 /echipă; slash final → /echipă; 404 în design; /acasa → /', async ({
+  test('/echipa → 301 /echipă/; fără slash final → /echipă/; 404 în design; /acasa → /', async ({
     request,
     page,
   }) => {
     const r1 = await request.get('/echipa', { maxRedirects: 0 });
     expect(r1.status()).toBe(301);
-    expect(r1.headers()['location']).toMatch(/\/echip%C4%83$/);
-    const r2 = await request.get('/echip%C4%83/', { maxRedirects: 0 });
+    expect(r1.headers()['location']).toMatch(/\/echip%C4%83\/$/);
+    const r2 = await request.get('/echip%C4%83', { maxRedirects: 0 });
     expect([301, 307, 308]).toContain(r2.status());
+    expect(r2.headers()['location']).toMatch(/\/echip%C4%83\/$/);
     const r3 = await request.get('/acasa', { maxRedirects: 0 });
     expect(r3.status()).toBe(301);
     const res = await page.goto('/pagina-inexistenta');
@@ -235,11 +241,11 @@ test.describe('Rutare', () => {
     expect(sm.status()).toBe(200);
     const s0 = await request.get('/sitemap-0.xml');
     const xml = await s0.text();
-    expect(xml).toContain('https://www.upburnout.com/</loc>');
-    expect(xml).toContain('https://www.upburnout.com/echip%C4%83</loc>');
+    expect(xml).toContain('https://upburnout.uvt.ro/</loc>');
+    expect(xml).toContain('https://upburnout.uvt.ro/echip%C4%83/</loc>');
     expect(xml).not.toContain('404');
     const robots = await (await request.get('/robots.txt')).text();
-    expect(robots).toContain('Sitemap: https://www.upburnout.com/sitemap-index.xml');
+    expect(robots).toContain('Sitemap: https://upburnout.uvt.ro/sitemap-index.xml');
   });
 });
 

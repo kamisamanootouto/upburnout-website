@@ -99,7 +99,7 @@ export const scop = {
     'Aceste etape ne permit să îmbunătățim intervenția și să ne asigurăm că oferă o experiență valoroasă și benefică pentru cei care o urmează.',
   ],
   cta: 'Descoperă echipa proiectului',
-  ctaHref: '/echipă#echipa-de-cercetare',
+  ctaHref: '/echipă/#echipa-de-cercetare',
 } as const;
 
 export const participare = {

@@ -106,6 +106,50 @@ describe('isAllowedOrigin', () => {
   });
 });
 
+describe('CORS (site găzduit pe alt domeniu)', () => {
+  const UVT = 'https://upburnout.uvt.ro';
+  const envUvt: ContactEnv = { ...env, ALLOWED_ORIGINS: `${UVT},https://www.upburnout.com` };
+
+  it('preflight OPTIONS: 204 cu antetele CORS pentru originea permisă', async () => {
+    const { deps } = makeDeps();
+    const res = await handleContact(
+      new Request(`${UVT}/api/contact`, { method: 'OPTIONS', headers: { origin: UVT } }),
+      envUvt,
+      deps,
+    );
+    expect(res.status).toBe(204);
+    expect(res.headers.get('access-control-allow-origin')).toBe(UVT);
+    expect(res.headers.get('access-control-allow-methods')).toContain('POST');
+    expect(res.headers.get('vary')).toBe('Origin');
+  });
+
+  it('preflight de pe o origine străină: 403, fără antete CORS', async () => {
+    const { deps } = makeDeps();
+    const res = await handleContact(
+      new Request(`${UVT}/api/contact`, {
+        method: 'OPTIONS',
+        headers: { origin: 'https://evil.example' },
+      }),
+      envUvt,
+      deps,
+    );
+    expect(res.status).toBe(403);
+    expect(res.headers.get('access-control-allow-origin')).toBeNull();
+  });
+
+  it('POST reușit de pe domeniul UVT primește antetele CORS', async () => {
+    const { deps } = makeDeps();
+    const res = await handleContact(post(validFields, { origin: UVT }), envUvt, deps);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('access-control-allow-origin')).toBe(UVT);
+  });
+
+  it('fără ALLOWED_ORIGINS, domeniul UVT nu e acceptat implicit', () => {
+    expect(isAllowedOrigin(post(validFields, { origin: UVT }), {})).toBe(false);
+    expect(isAllowedOrigin(post(validFields, { origin: UVT }), envUvt)).toBe(true);
+  });
+});
+
 describe('buildEmail', () => {
   it('escapează HTML-ul și păstrează textul brut în varianta text', () => {
     const data = contactSchema.parse({ ...validFields, mesaj: '<script>alert(1)</script>' });

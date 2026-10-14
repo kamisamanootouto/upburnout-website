@@ -93,6 +93,15 @@ Conturi: GitHub (`kamisamanootouto`), Cloudflare (contul clientului), Resend (`b
 
 ## 5. Deploy: ce se întâmplă la push
 
+**Atenție (din 14.10.2026): site-ul public NU se actualizează singur la push.** Push-ul actualizează doar worker-ul
+(formularul) și oglinda de pe Cloudflare. Site-ul de pe `upburnout.uvt.ro` stă pe serverul UVT, deci după push trebuie
+urcate fișierele prin FileZilla:
+
+1. `cd frontend` → `npm run build:uvt`
+2. FileZilla (SFTP, user `upburnout`) → `/home/upburnout/public_html`
+3. Urci **conținutul** folderului `frontend/dist-server/` (suprascrie tot) și ștergi ce a rămas vechi.
+4. Verifici în browser: pagina Acasă, click pe „Echipă", un mesaj de test în formular.
+
 `git push` → GitHub Actions rulează verificările (format, tipuri, teste, build, fidelitate conținut, teste în browser) → în
 paralel Cloudflare Workers Builds face build + deploy (~2 min). Statusul: Cloudflare → worker → Deployments. Un push pe alt
 branch decât `main` produce un preview separat (`<branch>-upburnout-website…workers.dev`), fără să atingă site-ul live.

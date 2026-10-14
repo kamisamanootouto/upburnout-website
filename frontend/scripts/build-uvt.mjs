@@ -1,0 +1,34 @@
+// Build-ul pentru găzduirea de la UVT (`https://upburnout.uvt.ro`, Apache):
+//   - adresele publice (canonical, OG, sitemap) sunt ale domeniului UVT;
+//   - formularul trimite către worker-ul Cloudflare, cu adresa completă (site și worker sunt
+//     pe domenii diferite; worker-ul acceptă originea prin ALLOWED_ORIGINS, vezi wrangler.jsonc).
+// La final scrie și cele două copii de distribuit (dist-server/, dist-offline/).
+//
+// Rulare: npm run build:uvt
+
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+const env = {
+  ...process.env,
+  PUBLIC_SITE_ORIGIN: process.env.PUBLIC_SITE_ORIGIN ?? 'https://upburnout.uvt.ro',
+  PUBLIC_CONTACT_ENDPOINT:
+    process.env.PUBLIC_CONTACT_ENDPOINT ??
+    'https://upburnout-website.bogdan-gandila.workers.dev/api/contact',
+};
+
+// Pașii se rulează direct cu Node: pe Windows, `npx` e un `.cmd` și nu poate fi pornit fără shell.
+const astroBin = fileURLToPath(new URL('../node_modules/astro/bin/astro.mjs', import.meta.url));
+for (const args of [
+  [astroBin, 'build'],
+  ['scripts/inject-csp-hashes.mjs'],
+  ['scripts/make-copies.mjs'],
+]) {
+  const res = spawnSync(process.execPath, args, { stdio: 'inherit', env, cwd: root });
+  if (res.status !== 0) process.exit(res.status ?? 1);
+}
+
+console.log(`\nSite: ${env.PUBLIC_SITE_ORIGIN}\nFormular → ${env.PUBLIC_CONTACT_ENDPOINT}`);

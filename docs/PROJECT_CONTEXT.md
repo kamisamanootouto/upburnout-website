@@ -60,6 +60,7 @@ fără aprobare explicită.
 | 2026-09-21 | Typo-urile (4) se corectează; ilustrațiile cartoon originale revin (+ credit Vecteezy); zero text adăugat | Client |
 | 2026-09-21 | Termen: planul Premium Wix se reînnoiește ~16 oct 2026 → cut-over înainte, apoi anulare Premium | Client |
 | 2026-09-22 | Politica de confidențialitate (proiect) **scoasă temporar** de pe site; rămâne în cod, dezactivată (`PRIVACY_ENABLED`, #13) | Client |
+| 2026-10-14 | **Găzduire la UVT:** site-ul public e `https://upburnout.uvt.ro` (Apache, fișiere prin SFTP). Transferul domeniului de la Wix nu mai e necesar; worker-ul Cloudflare rămâne doar pentru formular (CORS) | Client |
 
 ## Structura repo-ului (țintă)
 

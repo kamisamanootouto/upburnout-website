@@ -147,6 +147,22 @@ export function isAllowedOrigin(request: Request, env: ContactEnv): boolean {
   });
 }
 
+/**
+ * Antete CORS pentru cererile venite de pe alt domeniu (site-ul e găzduit de UVT, worker-ul rămâne la
+ * Cloudflare). Se trimit doar pentru originile permise — restul primesc 403 din `isAllowedOrigin`.
+ */
+export function corsHeaders(request: Request, env: ContactEnv): Record<string, string> {
+  const origin = request.headers.get('origin');
+  if (!origin || !isAllowedOrigin(request, env)) return {};
+  return {
+    'access-control-allow-origin': origin,
+    'access-control-allow-methods': 'POST, OPTIONS',
+    'access-control-allow-headers': 'content-type',
+    'access-control-max-age': '86400',
+    vary: 'Origin',
+  };
+}
+
 async function verifyTurnstile(
   token: string,
   ip: string | null,
@@ -284,6 +300,20 @@ export async function handleContact(
   env: ContactEnv,
   deps: ContactDeps,
 ): Promise<Response> {
+  const cors = corsHeaders(request, env);
+  // Preflight-ul trimis de browser înainte de un POST JSON de pe alt domeniu.
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: Object.keys(cors).length ? 204 : 403,
+      headers: { ...SECURITY_HEADERS, ...cors },
+    });
+  }
+  const response = await respond(request, env, deps);
+  for (const [k, v] of Object.entries(cors)) response.headers.set(k, v);
+  return response;
+}
+
+async function respond(request: Request, env: ContactEnv, deps: ContactDeps): Promise<Response> {
   if (request.method !== 'POST') {
     return json(405, { ok: false, error: 'method' }, { allow: 'POST' });
   }

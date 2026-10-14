@@ -7,9 +7,21 @@
 | Local | `http://localhost:4321` (`astro dev`) + `wrangler pages dev` pentru funcție/`_headers` | working tree | dezvoltare |
 | Preview de branch | `https://<hash>-upburnout-website.bogdan-gandila.workers.dev` | orice branch ≠ `main` | review fără risc |
 | Preview permanent = Production înainte de cut-over | `https://upburnout-website.bogdan-gandila.workers.dev` | `main` | verificare finală; `X-Robots-Tag: noindex` |
-| Production | `https://www.upburnout.com` (+ `upburnout.com` → redirect) | `main` | după cut-over (Sesiunea 7) |
+| Production (din 2026-10-14) | `https://upburnout.uvt.ro` — **găzduit de UVT (Apache)**, fișiere urcate prin SFTP în `public_html` | `dist-server/` din `main` | site-ul public |
+| ~~Production planificat~~ | ~~`https://www.upburnout.com`~~ | — | abandonat: UVT a oferit subdomeniul (decizie client 2026-10-14) |
 
-Site-ul Wix rămâne **live și neatins** pe domeniu până la pasul 5 din §4.
+Site-ul Wix rămâne **live și neatins** pe `upburnout.com` până când clientul decide ce face cu domeniul (redirect către
+`upburnout.uvt.ro` sau renunțare). Transferul domeniului de la Wix (§4.3) **nu mai e necesar** pentru lansare.
+
+### 1.1 Cum ajunge site-ul pe serverul UVT (procedura curentă)
+
+1. `cd frontend && npm run build:uvt` → `dist-server/` (adresele publice = `upburnout.uvt.ro`, formularul = adresa completă a worker-ului).
+2. SFTP (FileZilla) pe serverul UVT → `/home/upburnout/public_html` → se urcă **conținutul** folderului `dist-server/`, suprascriind.
+   Fișierele vechi rămase din build-urile anterioare (ex. `echipă.html`, `_headers`, `_redirects`) se șterg.
+3. Verificare: pagina Acasă, click pe „Echipă", trimiterea formularului.
+
+Worker-ul Cloudflare (`upburnout-website`) rămâne desfășurat din GitHub și servește **doar** `/api/contact` + `/api/health`
+pentru site-ul de la UVT (plus o oglindă `noindex` a site-ului, utilă la testare).
 
 ## 2. Conturi și configurare inițială (Sesiunea 2)
 

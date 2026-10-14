@@ -39,8 +39,13 @@ Corpul cererii limitat la 16 KB.
 Headere pe toate răspunsurile: `Cache-Control: no-store`, `Content-Type: application/json; charset=utf-8`.
 Submit fără JS (form-urlencoded): răspunsul este o pagină HTML minimală cu același mesaj (succes/eroare) și link înapoi.
 
-### Verificări de origine
-- Acceptă doar `Origin`/`Referer` de pe `https://www.upburnout.com`, `https://upburnout.com` și `https://*upburnout*.workers.dev` (preview-urile Cloudflare, inclusiv versiunile de branch); altfel `403`. Local: `http://127.0.0.1:8787`.
+### Verificări de origine și CORS
+- Acceptă doar `Origin`/`Referer` din lista `ALLOWED_ORIGINS` (implicit: `https://upburnout.uvt.ro` + `http://…` pentru vizitele fără HTTPS, `https://www.upburnout.com`, `https://upburnout.com`, `https://*upburnout*.workers.dev`); altfel `403`. Local: `http://127.0.0.1:8787`.
+- **CORS (din 2026-10-14):** site-ul public e găzduit de UVT, worker-ul a rămas la Cloudflare → cererea e cross-origin.
+  Pentru originile permise, răspunsurile poartă `Access-Control-Allow-Origin: <origin>` + `Vary: Origin`, iar `OPTIONS /api/contact`
+  (preflight-ul browserului, pentru `content-type: application/json`) întoarce `204` cu `Access-Control-Allow-Methods: POST, OPTIONS`,
+  `Access-Control-Allow-Headers: content-type`, `Access-Control-Max-Age: 86400`. Origine nepermisă → `OPTIONS` dă `403`, fără antete CORS.
+  Pagina trimite către adresa din `site.contactEndpoint` (`PUBLIC_CONTACT_ENDPOINT` la build; implicit calea relativă `/api/contact`).
 - Nu folosim cookie-uri → nu există sesiune de protejat; CSRF clasic nu se aplică, dar verificarea de origine + Turnstile
   împiedică folosirea endpoint-ului din alte site-uri.
 

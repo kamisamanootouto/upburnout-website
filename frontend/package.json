@@ -18,6 +18,7 @@
     "images": "node scripts/prepare-images.mjs",
     "verify-content": "node scripts/verify-content.mjs",
     "copies": "node scripts/make-copies.mjs",
+    "build:uvt": "node scripts/build-uvt.mjs",
     "test": "vitest run",
     "e2e": "playwright test"
   },

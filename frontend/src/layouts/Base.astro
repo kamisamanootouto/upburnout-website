@@ -8,7 +8,7 @@ import { site } from '../data/site';
 
 interface Props {
   title: string;
-  /** calea canonică, ex. "/" sau "/echipă" */
+  /** calea canonică, ex. "/" sau "/echipă/" */
   path: string;
   /**
    * Meta description — EXCLUSIV o propoziție existentă pe pagină (regula „zero text adăugat”,
@@ -16,7 +16,7 @@ interface Props {
    */
   description?: string;
   /** pagina curentă pentru marcarea în meniu */
-  current?: '/' | '/echipă';
+  current?: '/' | '/echipă/';
   /** doar pentru pagini care nu trebuie indexate (404) */
   noindex?: boolean;
 }

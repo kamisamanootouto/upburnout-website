@@ -1,5 +1,6 @@
 ---
 import { contact } from '../data/acasa';
+import { site } from '../data/site';
 import { confidentialitate, PRIVACY_ENABLED } from '../data/confidentialitate';
 const f = contact.fields;
 // Cheia publică Turnstile: variabilă de build PUBLIC_TURNSTILE_SITE_KEY (Workers Builds → Settings → Build variables).
@@ -16,7 +17,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x0000000
         id="formular-contact"
         class="card reveal relative mt-10 p-6 sm:p-10"
         method="post"
-        action="/api/contact"
+        action={site.contactEndpoint}
         novalidate
         aria-describedby="form-status"
         data-turnstile-sitekey={turnstileSiteKey}
