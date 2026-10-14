@@ -12,8 +12,18 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
+/**
+ * Cheia PUBLICĂ Turnstile a widget-ului de producție (Cloudflare → Turnstile → widget → Sitekey).
+ * Apare oricum în HTML, deci nu e un secret. Cheia SECRETĂ stă doar în worker
+ * (Settings → Variables and Secrets → TURNSTILE_SECRET_KEY) — fără ea, verificarea folosește
+ * cheia de test și sub formular apare bannerul „Numai pentru testare”.
+ * `1x00000000000000000000AA` = cheia de test Cloudflare (trece întotdeauna, pe orice domeniu).
+ */
+const TURNSTILE_SITE_KEY = '1x00000000000000000000AA';
+
 const env = {
   ...process.env,
+  PUBLIC_TURNSTILE_SITE_KEY: process.env.PUBLIC_TURNSTILE_SITE_KEY ?? TURNSTILE_SITE_KEY,
   PUBLIC_SITE_ORIGIN: process.env.PUBLIC_SITE_ORIGIN ?? 'https://upburnout.uvt.ro',
   PUBLIC_CONTACT_ENDPOINT:
     process.env.PUBLIC_CONTACT_ENDPOINT ??
