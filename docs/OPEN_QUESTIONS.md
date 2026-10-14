@@ -60,6 +60,8 @@ Implicit: **rămâne `noindex`** (parity).
 
 **#14 Analytics.** Site-ul nu are niciun analytics acum. Dacă vreți să știți câți oameni ajung pe site și câți apasă „Înscrie-te”: Cloudflare Web Analytics (gratuit, fără cookie-uri, fără banner). Implicit: **fără analytics** (parity).
 
+**#7 ✅ REZOLVAT (14.10.2026)** — formularul trimite la `athena.gandila@e-uvt.ro`. Fără domeniu verificat în Resend, regimul de testare permite un singur destinatar: adresa contului Resend — de aceea contul a fost mutat pe adresa coordonatoarei. Consecințe: expeditor `onboarding@resend.dev`, fără copie BCC către client, iar codurile de acces Resend ajung la ea.
+
 ## Legal / confidențialitate
 
 **#13 ⏸ SCOASĂ TEMPORAR DE PE SITE (client, 2026-09-22: „scoate temporar politica de confidențialitate”)** — proiectul rămâne în cod, dezactivat printr-un comutator: `PRIVACY_ENABLED = false` în `frontend/src/data/confidentialitate.ts` (pagina nu se generează → 404, nu apare în sitemap, fără link în footer, fără notă sub formular). Reactivare când textul e validat: `PRIVACY_ENABLED = true` + push (`MAINTENANCE.md` §2.6). Testele e2e verifică starea curentă a comutatorului.
